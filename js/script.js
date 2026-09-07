@@ -202,8 +202,8 @@ function appendGuestbookMessage(name, message) {
     const list = document.getElementById('guestbook-list');
     if(!list) return;
     const div = document.createElement('div');
-    div.className = 'bg-[#4A2E2B] p-4 rounded-[1.5rem] border border-[#6b4540]';
-    div.innerHTML = `<h4 class="font-sans font-bold text-sm text-peach">${name}</h4><p class="text-cream/80 text-xs mt-1 font-medium leading-relaxed">${message}</p>`;
+    div.className = 'bg-cream p-4 rounded-xl border border-terracotta/20';
+    div.innerHTML = `<h4 class="font-sans font-bold text-sm text-wine">${name}</h4><p class="text-wine/80 text-xs mt-1 font-medium leading-relaxed">${message}</p>`;
     list.prepend(div);
 }
 
