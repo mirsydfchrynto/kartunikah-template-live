@@ -128,8 +128,9 @@
 
         /* Cover Screen Overlay */
         #cover-screen {
-            background: rgba(255, 245, 234, 0.95);
-            backdrop-filter: blur(10px);
+            background-image: linear-gradient(to bottom, rgba(74, 46, 43, 0.3) 0%, rgba(74, 46, 43, 0.8) 100%), url('https://images.unsplash.com/photo-1544928147-79a2dbc1f389?auto=format&fit=crop&q=80&w=800');
+            background-size: cover;
+            background-position: center;
         }
     </style>
 </head>
@@ -156,17 +157,17 @@
     <!-- COVER SCREEN -->
     <div id="cover-screen" class="fixed inset-0 z-[100] flex flex-col items-center justify-center px-6 transition-transform duration-1000 cubic-bezier(0.16, 1, 0.3, 1) min-h-[100dvh]">
         <div class="relative z-10 w-full max-w-sm text-center">
-            <p class="text-[9px] md:text-[10px] font-sans tracking-[0.3em] uppercase text-wine/70 mb-2">The Wedding Of</p>
-            <h1 class="text-6xl md:text-7xl font-cursive text-terracotta mb-10 drop-shadow-sm">Romeo<br>& Juliet</h1>
+            <p class="text-[9px] md:text-[10px] font-sans tracking-[0.3em] uppercase text-cream/90 mb-2 font-bold drop-shadow-md">The Wedding Of</p>
+            <h1 class="text-7xl md:text-8xl font-cursive text-cream mb-10 drop-shadow-lg" style="text-shadow: 0 4px 15px rgba(0,0,0,0.5);">Romeo<br>& Juliet</h1>
             
-            <div class="bg-white/80 backdrop-blur-2xl p-6 md:p-8 rounded-[2rem] shadow-art border border-white mb-8">
-                <p class="text-[9px] font-bold text-wine/50 uppercase tracking-widest mb-2">Kepada Yth.</p>
-                <p class="text-xl md:text-2xl font-serif font-bold text-wine" id="guest-name">Tamu Undangan</p>
+            <div class="bg-black/30 backdrop-blur-md p-6 md:p-8 rounded-[2rem] shadow-art border border-white/20 mb-8">
+                <p class="text-[9px] font-bold text-cream/70 uppercase tracking-widest mb-2">Kepada Yth.</p>
+                <p class="text-xl md:text-2xl font-serif font-bold text-cream drop-shadow-md" id="guest-name">Tamu Undangan</p>
             </div>
             
-            <button id="btn-open-invitation" class="w-full bg-terracotta text-white px-6 py-4 rounded-full hover:bg-wine transition-colors duration-500 uppercase tracking-[0.2em] text-[10px] font-bold shadow-float flex items-center justify-center gap-3">
+            <button id="btn-open-invitation" class="w-full bg-cream text-wine px-6 py-4 rounded-full hover:bg-terracotta hover:text-white transition-colors duration-500 uppercase tracking-[0.2em] text-[10px] font-bold shadow-float flex items-center justify-center gap-3">
                 <span>Buka Undangan</span>
-                <svg class="w-4 h-4 animate-bounce" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3"></path></svg>
+                <svg class="w-4 h-4 animate-bounce" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M19 14l-7 7m0 0l-7-7m7 7V3"></path></svg>
             </button>
         </div>
     </div>
