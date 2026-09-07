@@ -60,15 +60,9 @@
         }
         #bg-scroll-layer {
             width: 100%;
-            height: 150vh; /* Taller than viewport to allow parallax scrolling */
-            display: flex;
-            flex-direction: column;
-        }
-        #bg-scroll-layer img {
-            width: 100%;
-            height: 50vh;
+            height: 110vh; /* Sedikit lebih tinggi dari layar untuk efek parallax */
             object-fit: cover;
-            filter: grayscale(20%) sepia(20%); /* Adds a cinematic/elegant tone */
+            /* Filter warna dihapus, biarkan warna asli memancar 100% */
         }
         
         /* Wash overlay so content is super readable but photo vibes shine through */
@@ -129,8 +123,8 @@
         <img src="images/prewed.jpeg" class="w-full h-full object-cover scale-110" id="bg-scroll-layer" alt="Background Pengantin">
     </div>
     
-    <!-- MASTER BACKGROUND OVERLAY (Subtle vignette to keep image 80% visible while preserving text contrast) -->
-    <div id="master-bg-overlay" class="fixed inset-0 z-[-1] bg-gradient-to-b from-black/30 via-black/10 to-black/40"></div>
+    <!-- MASTER BACKGROUND OVERLAY (Subtle vignette to keep image 80-100% visible while preserving text contrast) -->
+    <div id="master-bg-overlay" class="fixed inset-0 z-[-1] bg-gradient-to-b from-black/20 via-transparent to-black/30 pointer-events-none"></div>
 
     <audio id="bg-music" loop preload="auto">
         <source src="audio/janji-suci.mp3" type="audio/mpeg">
