@@ -230,3 +230,14 @@ window.copyRekening = function() {
         setTimeout(() => btnText.innerText = originalText, 2000);
     }
 };
+
+// 3D AI Parallax Effect (Scroll)
+document.addEventListener('scroll', () => {
+    const avatar = document.getElementById('hero-avatar');
+    if (avatar) {
+        let scrollPos = window.scrollY;
+        // Fade out and move down slightly
+        avatar.style.opacity = 1 - (scrollPos / 500);
+        avatar.style.transform = `translateY(${scrollPos * 0.3}px)`;
+    }
+});
