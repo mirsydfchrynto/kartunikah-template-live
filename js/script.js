@@ -1,56 +1,39 @@
-// Production-Ready JS Setup (Bento & Confetti Edition)
-
-window.addEventListener('load', () => {
-    const loader = document.getElementById('loading-screen');
-    if (loader) {
-        loader.classList.add('opacity-0');
-        setTimeout(() => {
-            loader.classList.add('hidden');
-        }, 700);
-    }
-});
-
 document.addEventListener('DOMContentLoaded', () => {
-    // Initialize AOS
-    AOS.init({ duration: 1000, once: true, offset: 50 });
-
-    // 1. Setup Data & Config
-    if (window.CONFIG) {
-        const coverNames = document.getElementById('cover-couple-names');
-        if (coverNames) coverNames.textContent = `${CONFIG.couple.name1} & ${CONFIG.couple.name2}`;
-        
-        const heroNames = document.getElementById('hero-couple-names');
-        if (heroNames) heroNames.textContent = `${CONFIG.couple.name1} & ${CONFIG.couple.name2}`;
-        
-        const year = document.getElementById('year');
-        if (year) year.textContent = new Date().getFullYear();
+    // 1. Dynamic Guest Name & QR
+    const urlParams = new URLSearchParams(window.location.search);
+    const guestNameParam = urlParams.get('to');
+    const guestName = guestNameParam ? guestNameParam.replace(/\+/g, ' ') : (CONFIG?.guestName || "Tamu Undangan");
+    
+    document.querySelectorAll('#guest-name, #qr-guest-name-display').forEach(el => el.textContent = guestName);
+    
+    if (typeof QRCode !== 'undefined') {
+        const qrContainer = document.getElementById('dynamic-qr-container');
+        if (qrContainer) {
+            new QRCode(qrContainer, {
+                text: guestName,
+                width: 150,
+                height: 150,
+                colorDark: "#E07A5F",
+                colorLight: "#ffffff",
+                correctLevel: QRCode.CorrectLevel.H
+            });
+        }
     }
 
-    // 2. Parse URL parameter for Guest Name (?to=Nama+Tamu)
-    const urlParams = new URLSearchParams(window.location.search);
-    const guestNameParam = urlParams.get('to') || 'Tamu Undangan';
-    
-    const guestNameEl = document.getElementById('guest-name');
-    if (guestNameEl) guestNameEl.textContent = guestNameParam;
-    document.title = `Undangan - Yth. ${guestNameParam}`;
-
-    // 2.5 Generate QR Code
-    const qrContainer = document.getElementById('dynamic-qr-container');
-    const qrDisplay = document.getElementById('qr-guest-name-display');
-    if (qrContainer && typeof QRCode !== 'undefined') {
-        qrContainer.innerHTML = ''; // clear existing
-        new QRCode(qrContainer, {
-            text: `VIP-${guestNameParam.replace(/\s+/g, '-').toUpperCase()}`,
-            width: 140,
-            height: 140,
-            colorDark : "#4A2E2B",
-            colorLight : "#FFF5EA",
-            correctLevel : QRCode.CorrectLevel.H
+    // 2. Init Fancybox
+    if(typeof Fancybox !== 'undefined') {
+        Fancybox.bind('[data-fancybox="gallery"]', {
+            compact: false,
+            idle: false,
+            animated: false,
+            showClass: false,
+            hideClass: false,
+            dragToClose: false,
+            images: { zoom: false },
         });
     }
-    if (qrDisplay) qrDisplay.textContent = guestNameParam;
 
-    // 3. Handle Cover Screen & Music & Bottom Nav
+    // 3. Audio & Opening Cover
     const btnOpen = document.getElementById('btn-open-invitation');
     const coverScreen = document.getElementById('cover-screen');
     const body = document.body;
@@ -67,8 +50,8 @@ document.addEventListener('DOMContentLoaded', () => {
             
             setTimeout(() => {
                 if(musicControl) musicControl.classList.remove('hidden', 'scale-50', 'opacity-0');
-                if(mobileNav) mobileNav.classList.remove('translate-y-32', 'opacity-0'); // Pill nav
-            }, 500);
+                if(mobileNav) mobileNav.classList.remove('translate-y-32', 'opacity-0');
+            }, 800);
 
             if (bgMusic) {
                 bgMusic.play().then(() => {
@@ -92,17 +75,89 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // Smooth Scrolling
-    document.querySelectorAll('.bottom-nav a, nav a').forEach(anchor => {
+    // 4. Smooth Scrolling for internal links
+    document.querySelectorAll('#mobile-nav a, a[href^="#"]').forEach(anchor => {
         anchor.addEventListener('click', function (e) {
-            e.preventDefault();
-            const targetId = this.getAttribute('href').substring(1);
-            const target = document.getElementById(targetId);
-            if(target) target.scrollIntoView({ behavior: 'smooth' });
+            if(this.getAttribute('href').startsWith('#')) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if(target) target.scrollIntoView({ behavior: 'smooth' });
+            }
         });
     });
 
-    // 4. Countdown Timer
+    // 5. GSAP Animations (The Art)
+    gsap.registerPlugin(ScrollTrigger);
+
+    // Hero Avatar Parallax Depth
+    gsap.to('#avatar-layer', {
+        yPercent: 30,
+        ease: "none",
+        scrollTrigger: {
+            trigger: "#hero",
+            start: "top top",
+            end: "bottom top",
+            scrub: true
+        }
+    });
+
+    // Hero Text Parallax (moves up faster than avatar to create 3D depth)
+    gsap.to('#text-layer', {
+        yPercent: -50,
+        opacity: 0,
+        ease: "none",
+        scrollTrigger: {
+            trigger: "#hero",
+            start: "top top",
+            end: "bottom top",
+            scrub: true
+        }
+    });
+
+    // Fade Up Elements (Titles, buttons)
+    gsap.utils.toArray('.gsap-fade-up').forEach(element => {
+        gsap.from(element, {
+            y: 50,
+            opacity: 0,
+            duration: 1,
+            ease: "power3.out",
+            scrollTrigger: {
+                trigger: element,
+                start: "top 85%",
+            }
+        });
+    });
+
+    // Bento Grid Staggered Reveal
+    gsap.utils.toArray('.bento-grid').forEach(grid => {
+        const items = grid.querySelectorAll('.bento-item');
+        gsap.from(items, {
+            y: 80,
+            opacity: 0,
+            duration: 1.2,
+            stagger: 0.15,
+            ease: "back.out(1.2)",
+            scrollTrigger: {
+                trigger: grid,
+                start: "top 80%",
+            }
+        });
+    });
+
+    // Gallery Staggered Reveal
+    gsap.from('.bento-gallery .bento-item', {
+        scale: 0.9,
+        opacity: 0,
+        duration: 1,
+        stagger: 0.1,
+        ease: "power3.out",
+        scrollTrigger: {
+            trigger: '.bento-gallery',
+            start: "top 85%"
+        }
+    });
+
+    // 6. Countdown Timer
     const targetDate = new Date(CONFIG?.weddingDate || '2025-12-10T08:00:00').getTime();
     const countdownElement = document.getElementById('countdown');
     if (countdownElement && !isNaN(targetDate)) {
@@ -124,20 +179,16 @@ document.addEventListener('DOMContentLoaded', () => {
         }, 1000);
     }
 
-    // 5. Add to Calendar
+    // 7. Add to Calendar
     const calBtn = document.getElementById('add-to-calendar');
     if (calBtn) {
         calBtn.addEventListener('click', () => {
-            const title = encodeURIComponent(`Pernikahan ${CONFIG?.couple?.name1 || 'Romeo'} & ${CONFIG?.couple?.name2 || 'Juliet'}`);
-            const dates = "20251210T010000Z/20251210T080000Z"; 
-            const details = encodeURIComponent("Merupakan suatu kehormatan apabila Bapak/Ibu berkenan hadir.");
-            const location = encodeURIComponent("Grand Ballroom Hotel Merdeka, Bandung");
-            const url = `https://calendar.google.com/calendar/render?action=TEMPLATE&text=${title}&dates=${dates}&details=${details}&location=${location}`;
+            const url = `https://calendar.google.com/calendar/render?action=TEMPLATE&text=Pernikahan+Romeo+%26+Juliet&dates=20251210T010000Z/20251210T080000Z`;
             window.open(url, '_blank');
         });
     }
 
-    // 6. API-Ready Forms (RSVP & Guestbook) with Confetti!
+    // 8. API-Ready Forms (RSVP & Guestbook) with Confetti!
     const guestbookList = document.getElementById('guestbook-list');
     if (guestbookList && window.CONFIG && CONFIG.guestbook.mockMessages) {
         CONFIG.guestbook.mockMessages.forEach(msg => appendGuestbookMessage(msg.name, msg.message));
@@ -152,7 +203,7 @@ document.addEventListener('DOMContentLoaded', () => {
             btn.textContent = "MENGIRIM...";
             btn.disabled = true;
 
-            await new Promise(resolve => setTimeout(resolve, 1000));
+            await new Promise(resolve => setTimeout(resolve, 800));
 
             appendGuestbookMessage(
                 document.getElementById('guest-name-input').value,
@@ -173,13 +224,13 @@ document.addEventListener('DOMContentLoaded', () => {
             btn.textContent = "MENGIRIM...";
             btn.disabled = true;
 
-            await new Promise(resolve => setTimeout(resolve, 1000));
+            await new Promise(resolve => setTimeout(resolve, 800));
 
-            // FIRE CONFETTI!
-            if (typeof confetti !== 'undefined') {
+            // FIRE CONFETTI! Use canvas-confetti directly if included or from CDN
+            if (window.confetti) {
                 confetti({
-                    particleCount: 100,
-                    spread: 70,
+                    particleCount: 150,
+                    spread: 80,
                     origin: { y: 0.6 },
                     colors: ['#E07A5F', '#FFD5A5', '#FFF5EA']
                 });
@@ -187,7 +238,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
             const statusDiv = document.getElementById('rsvp-status');
             if(statusDiv) {
-                statusDiv.textContent = "Yeay! Konfirmasi berhasil dikirim.";
+                statusDiv.textContent = "Terkirim dengan cinta!";
                 statusDiv.classList.remove('hidden');
                 setTimeout(() => statusDiv.classList.add('hidden'), 5000);
             }
@@ -196,14 +247,17 @@ document.addEventListener('DOMContentLoaded', () => {
             btn.disabled = false;
         });
     }
+
+    document.getElementById('year').textContent = new Date().getFullYear();
 });
 
 function appendGuestbookMessage(name, message) {
     const list = document.getElementById('guestbook-list');
     if(!list) return;
     const div = document.createElement('div');
-    div.className = 'bg-cream p-4 rounded-xl border border-terracotta/20';
-    div.innerHTML = `<h4 class="font-sans font-bold text-sm text-wine">${name}</h4><p class="text-wine/80 text-xs mt-1 font-medium leading-relaxed">${message}</p>`;
+    // Aesthetic chat bubble for guestbook
+    div.className = 'bg-white p-5 rounded-[1.5rem] border border-peach/50 shadow-sm transition-transform hover:-translate-y-1';
+    div.innerHTML = `<h4 class="font-sans font-bold text-[11px] uppercase tracking-widest text-terracotta mb-2">${name}</h4><p class="text-wine/80 text-xs font-medium leading-relaxed">${message}</p>`;
     list.prepend(div);
 }
 
@@ -218,7 +272,7 @@ window.copyRekening = function() {
         textArea.focus();
         textArea.select();
         try { document.execCommand('copy'); showSuccess(); } 
-        catch (err) { console.error('Fallback: Oops, unable to copy', err); }
+        catch (err) { }
         document.body.removeChild(textArea);
     }
 
@@ -230,14 +284,3 @@ window.copyRekening = function() {
         setTimeout(() => btnText.innerText = originalText, 2000);
     }
 };
-
-// 3D AI Parallax Effect (Scroll)
-document.addEventListener('scroll', () => {
-    const avatar = document.getElementById('hero-avatar');
-    if (avatar) {
-        let scrollPos = window.scrollY;
-        // Fade out and move down slightly
-        avatar.style.opacity = 1 - (scrollPos / 500);
-        avatar.style.transform = `translateY(${scrollPos * 0.3}px)`;
-    }
-});
