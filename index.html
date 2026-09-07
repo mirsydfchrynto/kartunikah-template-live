@@ -124,15 +124,14 @@
 </head>
 <body class="text-wine font-sans antialiased selection:bg-terracotta selection:text-cream no-scroll relative">
 
-    <!-- MASTER BACKGROUND GALLERY (The "Memanjang ke bawah" luxury idea) -->
-    <div id="master-bg">
-        <div id="bg-scroll-layer">
-            <img src="https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&q=80&w=800" alt="Pengantin">
-            <img src="https://images.unsplash.com/photo-1522673607200-164d1b6ce486?auto=format&fit=crop&q=80&w=800" alt="Cincin">
-            <img src="https://images.unsplash.com/photo-1519225421980-715cb0215aed?auto=format&fit=crop&q=80&w=800" alt="Dekorasi">
-        </div>
+    <!-- MASTER BACKGROUND (One Single Luxurious Portrait Photo) -->
+    <div id="master-bg" class="fixed inset-0 z-[-2] w-full h-full overflow-hidden">
+        <img src="https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&q=80&w=1200&h=2000" class="w-full h-full object-cover scale-110" id="bg-scroll-layer" alt="Background Pengantin">
     </div>
-    <div id="master-bg-overlay"></div>
+    
+    <!-- MASTER BACKGROUND OVERLAY (Ensures text readability without hiding the photo) -->
+    <!-- Gelap di atas untuk teks putih, terang di bawah untuk bento box -->
+    <div id="master-bg-overlay" class="fixed inset-0 z-[-1] bg-gradient-to-b from-wine/50 via-wine/20 to-cream/90"></div>
 
     <audio id="bg-music" loop preload="auto">
         <source src="audio/janji-suci.mp3" type="audio/mpeg">
@@ -142,27 +141,26 @@
         <svg id="music-icon" class="w-5 h-5 music-spin text-terracotta" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19V6l12-3v13M9 19c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zm12-3c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zM9 10l12-3"></path></svg>
     </button>
 
-    <!-- COVER SCREEN -->
-    <div id="cover-screen" class="fixed inset-0 z-[100] flex flex-col items-center justify-end pb-12 md:pb-20 px-6 transition-transform duration-1000 cubic-bezier(0.16, 1, 0.3, 1) min-h-[100dvh]">
-        <!-- Area atas dibiarkan kosong agar foto dari master-bg (wajah pengantin) terekspos jelas -->
-        
+    <!-- COVER SCREEN (Transparent background so Master BG shows perfectly) -->
+    <div id="cover-screen" class="fixed inset-0 z-[100] flex flex-col items-center justify-end pb-12 md:pb-20 px-6 transition-all duration-1000 cubic-bezier(0.16, 1, 0.3, 1) min-h-[100dvh] bg-gradient-to-b from-transparent via-transparent to-cream/95">
         <div class="relative z-10 w-full max-w-sm text-center mt-auto">
-            <p class="text-[9px] md:text-[10px] font-sans tracking-[0.3em] uppercase text-wine/70 mb-2 font-bold drop-shadow-sm">The Wedding Of</p>
-            <h1 class="text-6xl md:text-7xl font-cursive text-terracotta mb-8 drop-shadow-sm" style="text-shadow: 0 4px 20px rgba(255,255,255,0.8);">Romeo<br>& Juliet</h1>
+            <p class="text-[9px] md:text-[10px] font-sans tracking-[0.3em] uppercase text-cream/90 mb-2 font-bold drop-shadow-md">The Wedding Of</p>
+            <h1 class="text-7xl md:text-8xl font-cursive text-cream mb-8 drop-shadow-lg" style="text-shadow: 0 4px 20px rgba(0,0,0,0.6);">Romeo<br>& Juliet</h1>
             
-            <div class="bg-white/80 backdrop-blur-2xl p-6 md:p-8 rounded-[2rem] shadow-art border border-white mb-8">
-                <p class="text-[9px] font-bold text-wine/50 uppercase tracking-widest mb-2">Kepada Yth.</p>
-                <p class="text-xl md:text-2xl font-serif font-bold text-wine" id="guest-name">Tamu Undangan</p>
+            <div class="bg-black/30 backdrop-blur-md p-6 md:p-8 rounded-[2rem] shadow-art border border-white/20 mb-8">
+                <p class="text-[9px] font-bold text-cream/70 uppercase tracking-widest mb-2">Kepada Yth.</p>
+                <p class="text-xl md:text-2xl font-serif font-bold text-cream drop-shadow-md" id="guest-name">Tamu Undangan</p>
             </div>
             
-            <button id="btn-open-invitation" class="w-full bg-terracotta text-white px-6 py-4 rounded-full hover:bg-wine transition-colors duration-500 uppercase tracking-[0.2em] text-[10px] font-bold shadow-float flex items-center justify-center gap-3">
+            <button id="btn-open-invitation" class="w-full bg-cream text-wine px-6 py-4 rounded-full hover:bg-terracotta hover:text-white transition-colors duration-500 uppercase tracking-[0.2em] text-[10px] font-bold shadow-float flex items-center justify-center gap-3">
                 <span>Buka Undangan</span>
                 <svg class="w-4 h-4 animate-bounce" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M19 14l-7 7m0 0l-7-7m7 7V3"></path></svg>
             </button>
         </div>
     </div>
 
-    <div id="main-content" class="relative z-10">
+    <!-- MAIN CONTENT (Hidden initially to prevent text overlap/bocor with cover screen) -->
+    <div id="main-content" class="relative z-10 opacity-0 transition-opacity duration-1000 pointer-events-none">
         
         <!-- HERO SECTION -->
         <header id="hero" class="pt-20">
@@ -289,17 +287,17 @@
 
                 <!-- Bento Gallery grid -->
                 <div class="grid grid-cols-2 md:grid-cols-4 gap-3 md:gap-4 auto-rows-[200px] md:auto-rows-[250px] bento-gallery">
-                    <a href="https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&q=80&w=1200" data-fancybox="gallery" class="col-span-2 row-span-2 rounded-[2rem] md:rounded-[3rem] overflow-hidden group block bento-item bg-white p-2 shadow-sm">
-                        <img src="https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&q=80&w=800" class="w-full h-full object-cover rounded-[1.5rem] md:rounded-[2.5rem] transition-transform duration-700 group-hover:scale-105">
+                    <a href="https://images.unsplash.com/photo-1606800052052-a08af7148866?auto=format&fit=crop&q=80&w=1200" data-fancybox="gallery" class="col-span-2 row-span-2 rounded-[2rem] md:rounded-[3rem] overflow-hidden group block bento-item bg-white p-2 shadow-sm">
+                        <img src="https://images.unsplash.com/photo-1606800052052-a08af7148866?auto=format&fit=crop&q=80&w=800" class="w-full h-full object-cover rounded-[1.5rem] md:rounded-[2.5rem] transition-transform duration-700 group-hover:scale-105" alt="Gallery 1">
                     </a>
-                    <a href="https://images.unsplash.com/photo-1519225421980-715cb0215aed?auto=format&fit=crop&q=80&w=1200" data-fancybox="gallery" class="rounded-[1.5rem] md:rounded-[2rem] overflow-hidden group block bento-item bg-white p-1.5 shadow-sm">
-                        <img src="https://images.unsplash.com/photo-1519225421980-715cb0215aed?auto=format&fit=crop&q=80&w=400" class="w-full h-full object-cover rounded-[1.2rem] md:rounded-[1.7rem] transition-transform duration-700 group-hover:scale-105">
+                    <a href="https://images.unsplash.com/photo-1583939003579-730e3918a45a?auto=format&fit=crop&q=80&w=1200" data-fancybox="gallery" class="rounded-[1.5rem] md:rounded-[2rem] overflow-hidden group block bento-item bg-white p-1.5 shadow-sm">
+                        <img src="https://images.unsplash.com/photo-1583939003579-730e3918a45a?auto=format&fit=crop&q=80&w=400" class="w-full h-full object-cover rounded-[1.2rem] md:rounded-[1.7rem] transition-transform duration-700 group-hover:scale-105" alt="Gallery 2">
                     </a>
-                    <a href="https://images.unsplash.com/photo-1522673607200-164d1b6ce486?auto=format&fit=crop&q=80&w=1200" data-fancybox="gallery" class="rounded-[1.5rem] md:rounded-[2rem] overflow-hidden group block bento-item bg-white p-1.5 shadow-sm">
-                        <img src="https://images.unsplash.com/photo-1522673607200-164d1b6ce486?auto=format&fit=crop&q=80&w=400" class="w-full h-full object-cover rounded-[1.2rem] md:rounded-[1.7rem] transition-transform duration-700 group-hover:scale-105">
+                    <a href="https://images.unsplash.com/photo-1604928135898-0c306d8fc9ba?auto=format&fit=crop&q=80&w=1200" data-fancybox="gallery" class="rounded-[1.5rem] md:rounded-[2rem] overflow-hidden group block bento-item bg-white p-1.5 shadow-sm">
+                        <img src="https://images.unsplash.com/photo-1604928135898-0c306d8fc9ba?auto=format&fit=crop&q=80&w=400" class="w-full h-full object-cover rounded-[1.2rem] md:rounded-[1.7rem] transition-transform duration-700 group-hover:scale-105" alt="Gallery 3">
                     </a>
-                    <a href="https://images.unsplash.com/photo-1544928147-79a2dbc1f389?auto=format&fit=crop&q=80&w=1200" data-fancybox="gallery" class="col-span-2 rounded-[2rem] md:rounded-[3rem] overflow-hidden group block bento-item bg-white p-2 shadow-sm">
-                        <img src="https://images.unsplash.com/photo-1544928147-79a2dbc1f389?auto=format&fit=crop&q=80&w=800" class="w-full h-full object-cover rounded-[1.5rem] md:rounded-[2.5rem] transition-transform duration-700 group-hover:scale-105">
+                    <a href="https://images.unsplash.com/photo-1520854221256-17451cc331bf?auto=format&fit=crop&q=80&w=1200" data-fancybox="gallery" class="col-span-2 rounded-[2rem] md:rounded-[3rem] overflow-hidden group block bento-item bg-white p-2 shadow-sm">
+                        <img src="https://images.unsplash.com/photo-1520854221256-17451cc331bf?auto=format&fit=crop&q=80&w=800" class="w-full h-full object-cover rounded-[1.5rem] md:rounded-[2.5rem] transition-transform duration-700 group-hover:scale-105" alt="Gallery 4">
                     </a>
                 </div>
             </div>

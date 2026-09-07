@@ -1,0 +1,8 @@
+1. Fix "banyak doubel" text overlap: 
+   - Add opacity-0 to #main-content initially.
+   - In script.js, fade in #main-content when btn-open-invitation is clicked.
+2. Fix "banyak doubel" images:
+   - master-bg currently has 3 images cut at 50vh. Change it to ONE beautiful, high-res portrait image (object-cover) that covers the screen.
+   - Adjust GSAP so the single image just slightly scales or moves, rather than moving 3 cut images.
+3. Fix Gallery duplicates:
+   - Since master-bg now uses 1 photo, the gallery can keep the 3-4 photos, but make sure they don't feel redundant.

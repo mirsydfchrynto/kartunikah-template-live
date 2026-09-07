@@ -48,6 +48,13 @@ document.addEventListener('DOMContentLoaded', () => {
             coverScreen.style.transform = 'translateY(-100%)';
             body.classList.remove('no-scroll');
             
+            // Tampilkan main-content (agar tidak doubel/bocor saat cover aktif)
+            const mainContent = document.getElementById('main-content');
+            if (mainContent) {
+                mainContent.classList.remove('opacity-0', 'pointer-events-none');
+                mainContent.classList.add('opacity-100');
+            }
+            
             setTimeout(() => {
                 if(musicControl) musicControl.classList.remove('hidden', 'scale-50', 'opacity-0');
                 if(mobileNav) mobileNav.classList.remove('translate-y-32', 'opacity-0');
@@ -90,11 +97,12 @@ document.addEventListener('DOMContentLoaded', () => {
     gsap.registerPlugin(ScrollTrigger);
 
     // MASTER BACKGROUND PARALLAX
-    // This makes the background photos scroll slowly downwards as the user scrolls the page
+    // This makes the background photo scale down & move slightly for a premium parallax feel
     const masterBg = document.getElementById('bg-scroll-layer');
     if (masterBg) {
         gsap.to(masterBg, {
-            yPercent: -30, // Move the background up by 30% of its height over the full scroll distance
+            scale: 1, // scales down from 1.1 to 1
+            yPercent: -5,
             ease: "none",
             scrollTrigger: {
                 trigger: document.body,
