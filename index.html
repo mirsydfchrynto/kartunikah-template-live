@@ -129,8 +129,8 @@
         <img src="images/prewed.jpeg" class="w-full h-full object-cover scale-110" id="bg-scroll-layer" alt="Background Pengantin">
     </div>
     
-    <!-- MASTER BACKGROUND OVERLAY (Cinematic dark vignette so photo pops and text is highly readable) -->
-    <div id="master-bg-overlay" class="fixed inset-0 z-[-1] bg-gradient-to-b from-black/50 via-black/20 to-black/70"></div>
+    <!-- MASTER BACKGROUND OVERLAY (Subtle vignette to keep image 80% visible while preserving text contrast) -->
+    <div id="master-bg-overlay" class="fixed inset-0 z-[-1] bg-gradient-to-b from-black/30 via-black/10 to-black/40"></div>
 
     <audio id="bg-music" loop preload="auto">
         <source src="audio/janji-suci.mp3" type="audio/mpeg">
@@ -143,10 +143,10 @@
     <!-- COVER SCREEN (Mobile First: text sized properly, extra bottom padding for mobile browsers) -->
     <div id="cover-screen" class="fixed inset-0 z-[100] flex flex-col items-center justify-end pb-16 md:pb-24 px-6 transition-all duration-1000 cubic-bezier(0.16, 1, 0.3, 1) min-h-[100dvh]">
         <div class="relative z-10 w-full max-w-sm text-center mt-auto">
-            <p class="text-[9px] md:text-[10px] font-sans tracking-[0.3em] uppercase text-cream/90 mb-2 font-bold drop-shadow-md">The Wedding Of</p>
-            <h1 class="text-6xl md:text-8xl font-cursive text-cream mb-8 drop-shadow-lg" style="text-shadow: 0 4px 20px rgba(0,0,0,0.8);">Romeo<br>& Juliet</h1>
+            <p class="text-[9px] md:text-[10px] font-sans tracking-[0.3em] uppercase text-cream/90 mb-2 font-bold" style="text-shadow: 0 2px 10px rgba(0,0,0,0.8);">The Wedding Of</p>
+            <h1 class="text-6xl md:text-8xl font-cursive text-cream mb-8 drop-shadow-lg" style="text-shadow: 0 4px 25px rgba(0,0,0,0.9);">Romeo<br>& Juliet</h1>
             
-            <div class="bg-black/40 backdrop-blur-md p-5 md:p-8 rounded-[1.5rem] md:rounded-[2rem] shadow-art border border-white/20 mb-8">
+            <div class="bg-black/30 backdrop-blur-md p-5 md:p-8 rounded-[1.5rem] md:rounded-[2rem] shadow-art border border-white/20 mb-8">
                 <p class="text-[9px] font-bold text-cream/70 uppercase tracking-widest mb-2">Kepada Yth.</p>
                 <p class="text-xl md:text-2xl font-serif font-bold text-cream drop-shadow-md" id="guest-name">Tamu Undangan</p>
             </div>
@@ -166,8 +166,8 @@
             <!-- LAYER 20: Floating Typography over Master Background -->
             <div id="text-layer" class="relative z-20 flex flex-col items-center justify-center text-center pointer-events-none px-4 w-full h-full">
                 
-                <p class="uppercase tracking-[0.3em] text-[9px] md:text-[10px] text-cream/80 mb-3 md:mb-4 font-bold relative z-10 drop-shadow-md">We Are Tying The Knot</p>
-                <h1 class="text-7xl md:text-9xl font-cursive text-cream mb-6 leading-tight relative z-10" style="text-shadow: 0 4px 20px rgba(0,0,0,0.6);">
+                <p class="uppercase tracking-[0.3em] text-[9px] md:text-[10px] text-cream/90 mb-3 md:mb-4 font-bold relative z-10" style="text-shadow: 0 2px 10px rgba(0,0,0,0.8);">We Are Tying The Knot</p>
+                <h1 class="text-7xl md:text-9xl font-cursive text-cream mb-6 leading-tight relative z-10" style="text-shadow: 0 4px 25px rgba(0,0,0,0.9);">
                     Romeo & Juliet
                 </h1>
                 <div class="h-[1px] w-12 bg-terracotta mb-6 relative z-10"></div>
