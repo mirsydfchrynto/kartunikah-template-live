@@ -1,0 +1,24 @@
+/* Custom CSS for Kartunikah Template */
+:root {
+    --primary: #e91e63;
+    --secondary: #9c27b0;
+    --accent: #ff9800;
+    --light: #f8f9fa;
+    --dark: #212529;
+}
+
+[data-aos] {
+    opacity: 0;
+    transition-property: opacity, transform;
+}
+
+[data-aos].aos-animate {
+    opacity: 1;
+    transform: translateZ(0);
+}
+
+@media (max-width: 768px) {
+    header {
+        min-height: 50vh !important;
+    }
+}
