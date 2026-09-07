@@ -11,9 +11,9 @@ document.addEventListener('DOMContentLoaded', () => {
         if (qrContainer) {
             new QRCode(qrContainer, {
                 text: guestName,
-                width: 150,
-                height: 150,
-                colorDark: "#E07A5F",
+                width: 130,
+                height: 130,
+                colorDark: "#4A2E2B",
                 colorLight: "#ffffff",
                 correctLevel: QRCode.CorrectLevel.H
             });
@@ -89,6 +89,22 @@ document.addEventListener('DOMContentLoaded', () => {
     // 5. GSAP Animations (The Art)
     gsap.registerPlugin(ScrollTrigger);
 
+    // MASTER BACKGROUND PARALLAX
+    // This makes the background photos scroll slowly downwards as the user scrolls the page
+    const masterBg = document.getElementById('bg-scroll-layer');
+    if (masterBg) {
+        gsap.to(masterBg, {
+            yPercent: -30, // Move the background up by 30% of its height over the full scroll distance
+            ease: "none",
+            scrollTrigger: {
+                trigger: document.body,
+                start: "top top",
+                end: "bottom bottom",
+                scrub: true
+            }
+        });
+    }
+
     // Hero Avatar Parallax Depth
     gsap.to('#avatar-layer', {
         yPercent: 30,
@@ -103,7 +119,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Hero Text Parallax (moves up faster than avatar to create 3D depth)
     gsap.to('#text-layer', {
-        yPercent: -50,
+        yPercent: -40,
         opacity: 0,
         ease: "none",
         scrollTrigger: {
@@ -117,13 +133,13 @@ document.addEventListener('DOMContentLoaded', () => {
     // Fade Up Elements (Titles, buttons)
     gsap.utils.toArray('.gsap-fade-up').forEach(element => {
         gsap.from(element, {
-            y: 50,
+            y: 30,
             opacity: 0,
             duration: 1,
             ease: "power3.out",
             scrollTrigger: {
                 trigger: element,
-                start: "top 85%",
+                start: "top 90%",
             }
         });
     });
@@ -132,25 +148,25 @@ document.addEventListener('DOMContentLoaded', () => {
     gsap.utils.toArray('.bento-grid').forEach(grid => {
         const items = grid.querySelectorAll('.bento-item');
         gsap.from(items, {
-            y: 80,
+            y: 50,
             opacity: 0,
-            duration: 1.2,
-            stagger: 0.15,
-            ease: "back.out(1.2)",
+            duration: 1,
+            stagger: 0.1,
+            ease: "power2.out",
             scrollTrigger: {
                 trigger: grid,
-                start: "top 80%",
+                start: "top 85%",
             }
         });
     });
 
     // Gallery Staggered Reveal
     gsap.from('.bento-gallery .bento-item', {
-        scale: 0.9,
+        scale: 0.95,
         opacity: 0,
-        duration: 1,
+        duration: 0.8,
         stagger: 0.1,
-        ease: "power3.out",
+        ease: "power2.out",
         scrollTrigger: {
             trigger: '.bento-gallery',
             start: "top 85%"
@@ -256,8 +272,8 @@ function appendGuestbookMessage(name, message) {
     if(!list) return;
     const div = document.createElement('div');
     // Aesthetic chat bubble for guestbook
-    div.className = 'bg-white p-5 rounded-[1.5rem] border border-peach/50 shadow-sm transition-transform hover:-translate-y-1';
-    div.innerHTML = `<h4 class="font-sans font-bold text-[11px] uppercase tracking-widest text-terracotta mb-2">${name}</h4><p class="text-wine/80 text-xs font-medium leading-relaxed">${message}</p>`;
+    div.className = 'bg-white p-4 md:p-5 rounded-[1.5rem] border border-peach/50 shadow-sm transition-transform hover:-translate-y-1';
+    div.innerHTML = `<h4 class="font-sans font-bold text-[10px] md:text-[11px] uppercase tracking-widest text-terracotta mb-1 md:mb-2">${name}</h4><p class="text-wine/80 text-xs font-medium leading-relaxed">${message}</p>`;
     list.prepend(div);
 }
 

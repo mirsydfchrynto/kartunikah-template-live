@@ -7,20 +7,18 @@
     
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <!-- Typography: Elegant Script (Alex Brush), Serif (Cormorant), Clean Sans (DM Sans) -->
     <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=Alex+Brush&family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,700&display=swap" rel="stylesheet">
     
-    <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
         tailwind.config = {
             theme: {
                 extend: {
                     colors: {
-                        cream: '#FFF5EA',     /* Dominant 60% */
-                        peach: '#FFD5A5',     /* Secondary 30% */
-                        terracotta: '#E07A5F', /* Accent 10% */
-                        wine: '#4A2E2B',      /* Contrast Text */
+                        cream: '#FFF5EA',     
+                        peach: '#FFD5A5',     
+                        terracotta: '#E07A5F', 
+                        wine: '#4A2E2B',      
                     },
                     fontFamily: {
                         sans: ['"DM Sans"', 'sans-serif'], 
@@ -28,139 +26,142 @@
                         cursive: ['"Alex Brush"', 'cursive'], 
                     },
                     boxShadow: {
-                        'art': '0 20px 40px -10px rgba(224, 122, 95, 0.15)',
-                        'float': '0 30px 60px -15px rgba(74, 46, 43, 0.1)',
+                        'art': '0 20px 40px -10px rgba(74, 46, 43, 0.15)',
+                        'float': '0 30px 60px -15px rgba(74, 46, 43, 0.2)',
                     }
                 }
             }
         }
     </script>
 
-    <!-- Fancybox for Elegant Gallery -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0/dist/fancybox/fancybox.css" />
-    
-    <!-- QRCode & Confetti -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
 
     <style>
-        /* Smooth, Artistic Global Styles */
-        body { background-color: #FFF5EA; overflow-x: hidden; }
+        body { background-color: #000; overflow-x: hidden; } /* Black bg to prevent flash */
         body.no-scroll { overflow: hidden; }
         
         .music-spin { animation: spin 4s linear infinite; }
         @keyframes spin { 100% { transform: rotate(360deg); } }
 
-        /* Custom Scrollbar */
         ::-webkit-scrollbar { width: 6px; }
-        ::-webkit-scrollbar-track { background: #FFF5EA; }
+        ::-webkit-scrollbar-track { background: transparent; }
         ::-webkit-scrollbar-thumb { background: #FFD5A5; border-radius: 10px; }
         ::-webkit-scrollbar-thumb:hover { background: #E07A5F; }
 
-        /* 3D Depth Layering (Hero) */
+        /* The Master Background Gallery Parallax */
+        #master-bg {
+            position: fixed;
+            top: 0; left: 0;
+            width: 100vw; height: 100vh;
+            z-index: -2;
+            overflow: hidden;
+        }
+        #bg-scroll-layer {
+            width: 100%;
+            height: 150vh; /* Taller than viewport to allow parallax scrolling */
+            display: flex;
+            flex-direction: column;
+        }
+        #bg-scroll-layer img {
+            width: 100%;
+            height: 50vh;
+            object-fit: cover;
+            filter: grayscale(20%) sepia(20%); /* Adds a cinematic/elegant tone */
+        }
+        
+        /* Wash overlay so content is super readable but photo vibes shine through */
+        #master-bg-overlay {
+            position: fixed;
+            inset: 0;
+            background: linear-gradient(to bottom, rgba(255, 245, 234, 0.85) 0%, rgba(255, 245, 234, 0.92) 50%, rgba(255, 245, 234, 0.98) 100%);
+            z-index: -1;
+        }
+
+        /* 3D Hero Fixes for Responsive */
         #hero {
             position: relative;
             height: 100dvh;
             width: 100vw;
-            overflow: hidden;
-            background: linear-gradient(180deg, #FFF5EA 0%, #FFD5A5 100%);
-        }
-        
-        /* The AI Avatar Layer (Behind Text) */
-        #avatar-layer {
-            position: absolute;
-            bottom: 0;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 100%;
-            max-width: 500px;
-            height: 85vh;
-            z-index: 10;
-            display: flex;
-            align-items: flex-end;
-            justify-content: center;
-        }
-
-        #avatar-layer img, #avatar-layer video {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            object-position: top;
-            /* Fade bottom to blend smoothly into the next section */
-            -webkit-mask-image: linear-gradient(to top, transparent 5%, black 40%);
-            mask-image: linear-gradient(to top, transparent 5%, black 40%);
-        }
-
-        /* Foreground Text Layer */
-        #text-layer {
-            position: relative;
-            z-index: 20;
-            height: 100%;
             display: flex;
             flex-direction: column;
-            align-items: center;
             justify-content: center;
-            text-align: center;
-            pointer-events: none;
+        }
+        
+        #avatar-layer {
+            position: absolute;
+            bottom: 0; left: 50%;
+            transform: translateX(-50%);
+            width: 100%; max-width: 450px;
+            height: 75vh;
+            z-index: 10;
+        }
+        #avatar-layer img {
+            width: 100%; height: 100%;
+            object-fit: cover; object-position: top;
+            -webkit-mask-image: linear-gradient(to top, transparent 0%, black 30%);
+            mask-image: linear-gradient(to top, transparent 0%, black 30%);
         }
 
-        /* Bento Grid Artistic Overrides */
+        /* Bento Grid Artistic Glassmorphism */
         .bento-card {
-            background: rgba(255, 255, 255, 0.7);
-            backdrop-filter: blur(20px);
-            border: 1px solid rgba(255, 213, 165, 0.5);
-            border-radius: 2.5rem;
-            padding: 2.5rem;
-            box-shadow: 0 20px 40px -10px rgba(224, 122, 95, 0.1);
-            transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.5s ease;
+            background: rgba(255, 255, 255, 0.75);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.8);
+            border-radius: 2rem;
+            padding: 1.5rem;
+            box-shadow: 0 10px 30px -10px rgba(74, 46, 43, 0.1);
+            transition: transform 0.4s ease, box-shadow 0.4s ease;
+        }
+        @media (min-width: 768px) {
+            .bento-card {
+                border-radius: 2.5rem;
+                padding: 2.5rem;
+            }
         }
         .bento-card:hover {
             transform: translateY(-5px);
-            box-shadow: 0 30px 60px -15px rgba(224, 122, 95, 0.2);
-        }
-
-        /* Organic shapes for decoration */
-        .blob {
-            position: absolute;
-            filter: blur(60px);
-            z-index: 0;
-            opacity: 0.6;
-            animation: float 10s ease-in-out infinite;
-        }
-        @keyframes float {
-            0%, 100% { transform: translate(0, 0) scale(1); }
-            50% { transform: translate(20px, -20px) scale(1.1); }
+            box-shadow: 0 20px 40px -10px rgba(74, 46, 43, 0.15);
         }
 
         /* Cover Screen Overlay */
         #cover-screen {
-            background: linear-gradient(135deg, #FFF5EA 0%, #FFD5A5 100%);
+            background: rgba(255, 245, 234, 0.95);
+            backdrop-filter: blur(10px);
         }
     </style>
 </head>
 <body class="text-wine font-sans antialiased selection:bg-terracotta selection:text-cream no-scroll relative">
 
+    <!-- MASTER BACKGROUND GALLERY (The "Memanjang ke bawah" luxury idea) -->
+    <div id="master-bg">
+        <div id="bg-scroll-layer">
+            <img src="https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&q=80&w=800" alt="bg1">
+            <img src="https://images.unsplash.com/photo-1522673607200-164d1b6ce486?auto=format&fit=crop&q=80&w=800" alt="bg2">
+            <img src="https://images.unsplash.com/photo-1519225421980-715cb0215aed?auto=format&fit=crop&q=80&w=800" alt="bg3">
+        </div>
+    </div>
+    <div id="master-bg-overlay"></div>
+
     <audio id="bg-music" loop preload="auto">
         <source src="audio/janji-suci.mp3" type="audio/mpeg">
     </audio>
 
-    <button id="music-control" class="fixed top-6 right-6 z-[90] flex items-center justify-center w-12 h-12 bg-white/80 backdrop-blur-md text-terracotta border border-peach rounded-full shadow-float transition-all duration-500 hidden opacity-0 scale-50" aria-label="Toggle Music">
+    <button id="music-control" class="fixed top-4 right-4 md:top-6 md:right-6 z-[90] flex items-center justify-center w-12 h-12 bg-white/90 backdrop-blur-md text-terracotta border border-white/50 rounded-full shadow-art transition-all duration-500 hidden opacity-0 scale-50" aria-label="Toggle Music">
         <svg id="music-icon" class="w-5 h-5 music-spin text-terracotta" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19V6l12-3v13M9 19c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zm12-3c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zM9 10l12-3"></path></svg>
     </button>
 
     <!-- COVER SCREEN -->
     <div id="cover-screen" class="fixed inset-0 z-[100] flex flex-col items-center justify-center px-6 transition-transform duration-1000 cubic-bezier(0.16, 1, 0.3, 1) min-h-[100dvh]">
-        <!-- Decorative blobs -->
-        <div class="blob bg-peach w-64 h-64 rounded-full top-0 left-0"></div>
-        <div class="blob bg-terracotta w-64 h-64 rounded-full bottom-0 right-0 opacity-20"></div>
-        
         <div class="relative z-10 w-full max-w-sm text-center">
-            <p class="text-[10px] font-sans tracking-[0.3em] uppercase text-wine/60 mb-2">The Wedding Of</p>
-            <h1 class="text-7xl font-cursive text-terracotta mb-10 drop-shadow-sm">Romeo<br>& Juliet</h1>
+            <p class="text-[9px] md:text-[10px] font-sans tracking-[0.3em] uppercase text-wine/70 mb-2">The Wedding Of</p>
+            <h1 class="text-6xl md:text-7xl font-cursive text-terracotta mb-10 drop-shadow-sm">Romeo<br>& Juliet</h1>
             
-            <div class="bg-white/60 backdrop-blur-xl p-8 rounded-[2rem] shadow-art border border-white/50 mb-8">
+            <div class="bg-white/80 backdrop-blur-2xl p-6 md:p-8 rounded-[2rem] shadow-art border border-white mb-8">
                 <p class="text-[9px] font-bold text-wine/50 uppercase tracking-widest mb-2">Kepada Yth.</p>
-                <p class="text-2xl font-serif font-bold text-wine mb-1" id="guest-name">Tamu Undangan</p>
+                <p class="text-xl md:text-2xl font-serif font-bold text-wine" id="guest-name">Tamu Undangan</p>
             </div>
             
             <button id="btn-open-invitation" class="w-full bg-terracotta text-white px-6 py-4 rounded-full hover:bg-wine transition-colors duration-500 uppercase tracking-[0.2em] text-[10px] font-bold shadow-float flex items-center justify-center gap-3">
@@ -170,70 +171,64 @@
         </div>
     </div>
 
-    <div id="main-content">
+    <div id="main-content" class="relative z-10">
         
-        <!-- HERO SECTION (3D Parallax & GSAP) -->
-        <header id="hero">
-            <!-- Blobs for depth -->
-            <div class="blob bg-white w-96 h-96 rounded-full top-1/4 left-1/4"></div>
-
+        <!-- HERO SECTION -->
+        <header id="hero" class="pt-20">
             <!-- LAYER 10: 3D AI Host Avatar -->
             <div id="avatar-layer">
                 <!-- Replace src with your .webm from Luma/HeyGen -->
-                <img src="https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&q=80&w=600&h=800" alt="AI Host">
+                <img src="https://images.unsplash.com/photo-1544928147-79a2dbc1f389?auto=format&fit=crop&q=80&w=600&h=800" alt="AI Host">
             </div>
 
             <!-- LAYER 20: Floating Typography -->
-            <div id="text-layer">
-                <p class="uppercase tracking-[0.4em] text-[10px] text-wine/80 mb-4 font-bold">We Are Tying The Knot</p>
-                <!-- Title drops shadow to separate from background avatar -->
-                <h1 class="text-8xl md:text-9xl font-cursive text-wine mb-6" style="text-shadow: 0 4px 30px rgba(255, 245, 234, 0.9);">
+            <div id="text-layer" class="relative z-20 flex flex-col items-center justify-center text-center pointer-events-none px-4">
+                <p class="uppercase tracking-[0.3em] text-[9px] md:text-[10px] text-wine/80 mb-3 md:mb-4 font-bold">We Are Tying The Knot</p>
+                <h1 class="text-7xl md:text-9xl font-cursive text-wine mb-6 leading-tight" style="text-shadow: 0 10px 40px rgba(255,255,255,0.9);">
                     Romeo & Juliet
                 </h1>
                 <div class="h-[1px] w-12 bg-terracotta mb-6"></div>
-                <p class="text-xs font-sans tracking-[0.2em] uppercase text-wine font-bold bg-white/50 backdrop-blur-md px-6 py-3 rounded-full border border-white">
+                <p class="text-[10px] md:text-xs font-sans tracking-[0.2em] uppercase text-wine font-bold bg-white/70 backdrop-blur-xl px-6 py-3 rounded-full border border-white shadow-sm">
                     10 Desember 2025
                 </p>
             </div>
         </header>
 
         <!-- BENTO GRID: JADWAL ACARA -->
-        <section id="acara" class="py-24 px-4 relative">
-            <div class="blob bg-peach w-[500px] h-[500px] rounded-full -top-32 -right-32"></div>
-            
-            <div class="max-w-5xl mx-auto relative z-10">
-                <div class="text-center mb-16 gsap-fade-up">
-                    <p class="uppercase tracking-[0.3em] text-[10px] text-terracotta mb-3 font-bold">Waktu & Tempat</p>
+        <section id="acara" class="py-16 md:py-24 px-4 relative">
+            <div class="max-w-5xl mx-auto">
+                <div class="text-center mb-12 md:mb-16 gsap-fade-up">
+                    <p class="uppercase tracking-[0.3em] text-[9px] md:text-[10px] text-terracotta mb-2 md:mb-3 font-bold">Waktu & Tempat</p>
                     <h2 class="text-4xl md:text-5xl font-serif text-wine font-bold">Momen Bahagia</h2>
                 </div>
                 
-                <div class="grid grid-cols-1 md:grid-cols-12 gap-6 bento-grid">
+                <div class="grid grid-cols-1 md:grid-cols-12 gap-4 md:gap-6 bento-grid">
                     
                     <!-- Countdown (Span 12) -->
                     <div class="md:col-span-12 bento-card flex flex-col md:flex-row items-center justify-between text-center md:text-left bento-item">
-                        <div class="mb-8 md:mb-0">
-                            <h3 class="text-2xl font-serif text-wine font-bold mb-2">Menanti Hari Baik</h3>
-                            <p class="text-xs text-wine/60 font-sans tracking-widest uppercase">10 Desember 2025</p>
+                        <div class="mb-6 md:mb-0">
+                            <h3 class="text-2xl md:text-3xl font-serif text-wine font-bold mb-2">Menanti Hari Baik</h3>
+                            <p class="text-[10px] md:text-xs text-wine/60 font-sans tracking-widest uppercase font-bold">10 Desember 2025</p>
                         </div>
-                        <div id="countdown" class="flex gap-4">
+                        <div id="countdown" class="flex gap-3 md:gap-6">
                             <div class="flex flex-col items-center">
                                 <span class="text-3xl md:text-4xl font-serif font-bold text-terracotta mb-1" id="days">00</span>
-                                <span class="text-[9px] uppercase tracking-widest font-bold text-wine/50">Hari</span>
+                                <span class="text-[8px] md:text-[9px] uppercase tracking-widest font-bold text-wine/50">Hari</span>
                             </div>
                             <span class="text-2xl text-wine/20 font-light">:</span>
                             <div class="flex flex-col items-center">
                                 <span class="text-3xl md:text-4xl font-serif font-bold text-terracotta mb-1" id="hours">00</span>
-                                <span class="text-[9px] uppercase tracking-widest font-bold text-wine/50">Jam</span>
+                                <span class="text-[8px] md:text-[9px] uppercase tracking-widest font-bold text-wine/50">Jam</span>
                             </div>
                             <span class="text-2xl text-wine/20 font-light">:</span>
                             <div class="flex flex-col items-center">
                                 <span class="text-3xl md:text-4xl font-serif font-bold text-terracotta mb-1" id="minutes">00</span>
-                                <span class="text-[9px] uppercase tracking-widest font-bold text-wine/50">Menit</span>
+                                <span class="text-[8px] md:text-[9px] uppercase tracking-widest font-bold text-wine/50">Menit</span>
                             </div>
                             <span class="text-2xl text-wine/20 font-light">:</span>
                             <div class="flex flex-col items-center">
                                 <span class="text-3xl md:text-4xl font-serif font-bold text-terracotta mb-1" id="seconds">00</span>
-                                <span class="text-[9px] uppercase tracking-widest font-bold text-wine/50">Detik</span>
+                                <span class="text-[8px] md:text-[9px] uppercase tracking-widest font-bold text-wine/50">Detik</span>
                             </div>
                         </div>
                     </div>
@@ -241,171 +236,171 @@
                     <!-- Akad Nikah (Span 6) -->
                     <div class="md:col-span-6 bento-card bento-item flex flex-col justify-between">
                         <div>
-                            <p class="text-[10px] font-bold tracking-[0.2em] uppercase text-terracotta mb-4">Prosesi Suci</p>
-                            <h3 class="text-4xl font-serif text-wine font-bold mb-6">Akad Nikah</h3>
+                            <p class="text-[9px] md:text-[10px] font-bold tracking-[0.2em] uppercase text-terracotta mb-3">Prosesi Suci</p>
+                            <h3 class="text-3xl md:text-4xl font-serif text-wine font-bold mb-6">Akad Nikah</h3>
                             <div class="space-y-4 mb-8">
                                 <div>
-                                    <p class="text-[9px] uppercase tracking-widest text-wine/50 font-bold mb-1">Tanggal</p>
+                                    <p class="text-[8px] md:text-[9px] uppercase tracking-widest text-wine/50 font-bold mb-1">Tanggal</p>
                                     <p class="text-sm font-bold text-wine">10 Desember 2025</p>
                                 </div>
                                 <div>
-                                    <p class="text-[9px] uppercase tracking-widest text-wine/50 font-bold mb-1">Pukul</p>
+                                    <p class="text-[8px] md:text-[9px] uppercase tracking-widest text-wine/50 font-bold mb-1">Pukul</p>
                                     <p class="text-sm font-bold text-wine">08.00 - 10.00 WIB</p>
                                 </div>
                                 <div>
-                                    <p class="text-[9px] uppercase tracking-widest text-wine/50 font-bold mb-1">Lokasi</p>
+                                    <p class="text-[8px] md:text-[9px] uppercase tracking-widest text-wine/50 font-bold mb-1">Lokasi</p>
                                     <p class="text-sm font-bold text-wine">Masjid Agung Al-Muhajirin</p>
                                     <p class="text-xs text-wine/70 mt-1">Jl. Pahlawan No. 123, Bandung</p>
                                 </div>
                             </div>
                         </div>
-                        <a href="https://maps.google.com" target="_blank" class="w-full bg-white text-terracotta border border-peach py-4 rounded-full text-[10px] font-bold uppercase tracking-widest hover:bg-terracotta hover:text-white hover:border-terracotta transition-all text-center">Buka Google Maps</a>
+                        <a href="https://maps.google.com" target="_blank" class="w-full bg-white/50 text-terracotta border border-terracotta/30 py-4 rounded-full text-[9px] md:text-[10px] font-bold uppercase tracking-widest hover:bg-terracotta hover:text-white transition-all text-center">Buka Google Maps</a>
                     </div>
 
                     <!-- Resepsi (Span 6) -->
-                    <div class="md:col-span-6 bento-card bg-terracotta/5 border-none bento-item flex flex-col justify-between relative overflow-hidden">
-                        <div class="absolute -right-10 -top-10 w-40 h-40 bg-terracotta/10 rounded-full blur-2xl"></div>
-                        <div class="relative z-10">
-                            <p class="text-[10px] font-bold tracking-[0.2em] uppercase text-terracotta mb-4">Perayaan</p>
-                            <h3 class="text-4xl font-serif text-wine font-bold mb-6">Resepsi</h3>
+                    <div class="md:col-span-6 bento-card border-terracotta/20 bg-gradient-to-br from-white/80 to-peach/20 bento-item flex flex-col justify-between">
+                        <div>
+                            <p class="text-[9px] md:text-[10px] font-bold tracking-[0.2em] uppercase text-terracotta mb-3">Perayaan</p>
+                            <h3 class="text-3xl md:text-4xl font-serif text-wine font-bold mb-6">Resepsi</h3>
                             <div class="space-y-4 mb-8">
                                 <div>
-                                    <p class="text-[9px] uppercase tracking-widest text-wine/50 font-bold mb-1">Tanggal</p>
+                                    <p class="text-[8px] md:text-[9px] uppercase tracking-widest text-wine/50 font-bold mb-1">Tanggal</p>
                                     <p class="text-sm font-bold text-wine">10 Desember 2025</p>
                                 </div>
                                 <div>
-                                    <p class="text-[9px] uppercase tracking-widest text-wine/50 font-bold mb-1">Pukul</p>
+                                    <p class="text-[8px] md:text-[9px] uppercase tracking-widest text-wine/50 font-bold mb-1">Pukul</p>
                                     <p class="text-sm font-bold text-wine">11.00 - 15.00 WIB</p>
                                 </div>
                                 <div>
-                                    <p class="text-[9px] uppercase tracking-widest text-wine/50 font-bold mb-1">Lokasi</p>
+                                    <p class="text-[8px] md:text-[9px] uppercase tracking-widest text-wine/50 font-bold mb-1">Lokasi</p>
                                     <p class="text-sm font-bold text-wine">Grand Ballroom Hotel</p>
                                     <p class="text-xs text-wine/70 mt-1">Jl. Sudirman No. 456, Bandung</p>
                                 </div>
                             </div>
                         </div>
-                        <a href="https://maps.google.com" target="_blank" class="relative z-10 w-full bg-terracotta text-white py-4 rounded-full text-[10px] font-bold uppercase tracking-widest hover:bg-wine transition-all text-center shadow-art">Buka Google Maps</a>
+                        <a href="https://maps.google.com" target="_blank" class="w-full bg-terracotta text-white border border-terracotta py-4 rounded-full text-[9px] md:text-[10px] font-bold uppercase tracking-widest hover:bg-wine hover:border-wine transition-all text-center shadow-md">Buka Google Maps</a>
                     </div>
                 </div>
                 
                 <div class="mt-8 text-center gsap-fade-up">
-                    <button id="add-to-calendar" class="inline-block bg-white text-wine px-8 py-4 rounded-full text-[10px] font-bold uppercase tracking-widest hover:text-terracotta transition-colors shadow-float border border-peach/50">
+                    <button id="add-to-calendar" class="inline-block bg-white text-wine px-8 py-4 rounded-full text-[9px] md:text-[10px] font-bold uppercase tracking-widest hover:text-terracotta transition-colors shadow-sm border border-white">
                         Simpan ke Kalender
                     </button>
                 </div>
             </div>
         </section>
 
-        <!-- ARTISTIC GALLERY -->
-        <section id="galeri" class="py-24 px-4 overflow-hidden relative">
-            <div class="max-w-6xl mx-auto">
-                <div class="text-center mb-16 gsap-fade-up">
-                    <p class="uppercase tracking-[0.3em] text-[10px] text-terracotta mb-3 font-bold">Album Kenangan</p>
+        <!-- ARTISTIC GALLERY (The only place we use horizontal borders is the masonry layout) -->
+        <!-- No more massive blobs, just crisp, clear, luxury layout -->
+        <section id="galeri" class="py-16 md:py-24 px-4 overflow-hidden relative">
+            <div class="max-w-5xl mx-auto">
+                <div class="text-center mb-12 md:mb-16 gsap-fade-up">
+                    <p class="uppercase tracking-[0.3em] text-[9px] md:text-[10px] text-terracotta mb-2 md:mb-3 font-bold">Album Kenangan</p>
                     <h2 class="text-4xl md:text-5xl font-serif text-wine font-bold">Kisah Kami</h2>
                 </div>
 
-                <div class="grid grid-cols-2 md:grid-cols-4 gap-4 auto-rows-[250px] bento-gallery">
-                    <!-- Smooth corner radius for organic feel -->
-                    <a href="https://images.unsplash.com/photo-1544928147-79a2dbc1f389?auto=format&fit=crop&q=80&w=1200" data-fancybox="gallery" class="col-span-2 row-span-2 rounded-[3rem] overflow-hidden group block bento-item">
-                        <img src="https://images.unsplash.com/photo-1544928147-79a2dbc1f389?auto=format&fit=crop&q=80&w=800" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105">
+                <!-- Bento Gallery grid -->
+                <div class="grid grid-cols-2 md:grid-cols-4 gap-3 md:gap-4 auto-rows-[200px] md:auto-rows-[250px] bento-gallery">
+                    <a href="https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&q=80&w=1200" data-fancybox="gallery" class="col-span-2 row-span-2 rounded-[2rem] md:rounded-[3rem] overflow-hidden group block bento-item bg-white p-2 shadow-sm">
+                        <img src="https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&q=80&w=800" class="w-full h-full object-cover rounded-[1.5rem] md:rounded-[2.5rem] transition-transform duration-700 group-hover:scale-105">
                     </a>
-                    <a href="https://images.unsplash.com/photo-1519225421980-715cb0215aed?auto=format&fit=crop&q=80&w=1200" data-fancybox="gallery" class="rounded-[2rem] overflow-hidden group block bento-item">
-                        <img src="https://images.unsplash.com/photo-1519225421980-715cb0215aed?auto=format&fit=crop&q=80&w=400" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105">
+                    <a href="https://images.unsplash.com/photo-1519225421980-715cb0215aed?auto=format&fit=crop&q=80&w=1200" data-fancybox="gallery" class="rounded-[1.5rem] md:rounded-[2rem] overflow-hidden group block bento-item bg-white p-1.5 shadow-sm">
+                        <img src="https://images.unsplash.com/photo-1519225421980-715cb0215aed?auto=format&fit=crop&q=80&w=400" class="w-full h-full object-cover rounded-[1.2rem] md:rounded-[1.7rem] transition-transform duration-700 group-hover:scale-105">
                     </a>
-                    <a href="https://images.unsplash.com/photo-1522673607200-164d1b6ce486?auto=format&fit=crop&q=80&w=1200" data-fancybox="gallery" class="rounded-[2rem] overflow-hidden group block bento-item">
-                        <img src="https://images.unsplash.com/photo-1522673607200-164d1b6ce486?auto=format&fit=crop&q=80&w=400" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105">
+                    <a href="https://images.unsplash.com/photo-1522673607200-164d1b6ce486?auto=format&fit=crop&q=80&w=1200" data-fancybox="gallery" class="rounded-[1.5rem] md:rounded-[2rem] overflow-hidden group block bento-item bg-white p-1.5 shadow-sm">
+                        <img src="https://images.unsplash.com/photo-1522673607200-164d1b6ce486?auto=format&fit=crop&q=80&w=400" class="w-full h-full object-cover rounded-[1.2rem] md:rounded-[1.7rem] transition-transform duration-700 group-hover:scale-105">
                     </a>
-                    <a href="https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&q=80&w=1200" data-fancybox="gallery" class="col-span-2 rounded-[3rem] overflow-hidden group block bento-item">
-                        <img src="https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&q=80&w=800" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105 transform translate-y-0">
+                    <a href="https://images.unsplash.com/photo-1544928147-79a2dbc1f389?auto=format&fit=crop&q=80&w=1200" data-fancybox="gallery" class="col-span-2 rounded-[2rem] md:rounded-[3rem] overflow-hidden group block bento-item bg-white p-2 shadow-sm">
+                        <img src="https://images.unsplash.com/photo-1544928147-79a2dbc1f389?auto=format&fit=crop&q=80&w=800" class="w-full h-full object-cover rounded-[1.5rem] md:rounded-[2.5rem] transition-transform duration-700 group-hover:scale-105">
                     </a>
                 </div>
             </div>
         </section>
 
         <!-- RSVP, GUESTBOOK, VIP & GIFT (ASYMMETRIC BENTO) -->
-        <section id="rsvp" class="py-24 px-4 bg-white relative">
-            <div class="max-w-5xl mx-auto grid grid-cols-1 md:grid-cols-12 gap-6 bento-grid">
+        <section id="rsvp" class="py-16 md:py-24 px-4 relative">
+            <div class="max-w-5xl mx-auto grid grid-cols-1 md:grid-cols-12 gap-4 md:gap-6 bento-grid">
                 
                 <!-- VIP Pass -->
-                <div class="md:col-span-5 bento-card bg-cream bento-item flex flex-col items-center justify-center text-center">
-                    <p class="uppercase tracking-[0.3em] text-[10px] text-terracotta mb-2 font-bold">Akses Masuk</p>
-                    <h2 class="text-3xl font-serif text-wine font-bold mb-8">Digital VIP Pass</h2>
-                    <div class="bg-white p-4 rounded-[2rem] border border-peach/50 shadow-art mb-6">
+                <div class="md:col-span-5 bento-card bento-item flex flex-col items-center justify-center text-center">
+                    <p class="uppercase tracking-[0.3em] text-[9px] md:text-[10px] text-terracotta mb-2 font-bold">Akses Masuk</p>
+                    <h2 class="text-3xl md:text-4xl font-serif text-wine font-bold mb-8">Digital VIP Pass</h2>
+                    <div class="bg-white p-4 rounded-[1.5rem] md:rounded-[2rem] border border-peach/50 shadow-sm mb-6 inline-block">
                         <div id="dynamic-qr-container"></div>
                     </div>
-                    <p class="font-sans text-sm font-bold text-wine tracking-widest uppercase" id="qr-guest-name-display">Tamu Undangan</p>
+                    <p class="font-sans text-xs md:text-sm font-bold text-wine tracking-widest uppercase" id="qr-guest-name-display">Tamu Undangan</p>
                 </div>
 
                 <!-- Tanda Kasih -->
                 <div class="md:col-span-7 bento-card bento-item flex flex-col justify-center">
-                    <p class="uppercase tracking-[0.3em] text-[10px] text-terracotta mb-2 font-bold">Digital Gift</p>
-                    <h2 class="text-3xl font-serif text-wine font-bold mb-6">Tanda Kasih</h2>
-                    <p class="text-xs text-wine/70 leading-relaxed mb-8">Bagi keluarga dan sahabat yang ingin memberikan tanda kasih secara digital, dapat mengirimkannya melalui tautan rekening di bawah ini:</p>
+                    <p class="uppercase tracking-[0.3em] text-[9px] md:text-[10px] text-terracotta mb-2 font-bold">Digital Gift</p>
+                    <h2 class="text-3xl md:text-4xl font-serif text-wine font-bold mb-6">Tanda Kasih</h2>
+                    <p class="text-xs md:text-sm text-wine/80 leading-relaxed mb-8">Bagi keluarga dan sahabat yang ingin memberikan tanda kasih secara digital, dapat mengirimkannya melalui tautan rekening di bawah ini:</p>
                     
-                    <div class="bg-cream/50 p-6 rounded-[2rem] border border-peach/30 flex flex-col md:flex-row items-center justify-between gap-4">
+                    <div class="bg-white/50 p-5 md:p-6 rounded-[1.5rem] md:rounded-[2rem] border border-white flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
                         <div>
-                            <p class="font-bold text-sm text-wine mb-1">Bank BCA</p>
-                            <p class="text-2xl font-sans text-terracotta tracking-widest font-bold mb-1">123 456 7890</p>
-                            <p class="text-[10px] text-wine/50 uppercase tracking-widest font-bold">A.n. Romeo Montague</p>
+                            <p class="font-bold text-xs md:text-sm text-wine mb-1">Bank BCA</p>
+                            <p class="text-xl md:text-2xl font-sans text-terracotta tracking-widest font-bold mb-1">123 456 7890</p>
+                            <p class="text-[9px] md:text-[10px] text-wine/60 uppercase tracking-widest font-bold">A.n. Romeo Montague</p>
                         </div>
-                        <button onclick="copyRekening()" class="w-full md:w-auto bg-white border border-peach text-terracotta px-6 py-4 rounded-full text-[10px] font-bold uppercase tracking-widest hover:bg-terracotta hover:text-white transition-colors shadow-sm">
+                        <button onclick="copyRekening()" class="w-full md:w-auto bg-white border border-peach text-terracotta px-6 py-3 md:py-4 rounded-full text-[9px] md:text-[10px] font-bold uppercase tracking-widest hover:bg-terracotta hover:text-white hover:border-terracotta transition-colors shadow-sm">
                             <span id="copy-text">Salin Rekening</span>
                         </button>
                     </div>
                 </div>
 
                 <!-- Kehadiran (RSVP) -->
+                <!-- The RSVP block is colored Terracotta to pop out and invite action -->
                 <div class="md:col-span-5 bento-card bg-terracotta text-white border-none bento-item">
-                    <h2 class="text-3xl font-serif font-bold mb-6">Kehadiran</h2>
-                    <form id="rsvp-form" class="space-y-4">
-                        <input type="text" id="name" required placeholder="Nama Lengkap" class="w-full px-5 py-4 bg-white/10 border border-white/20 text-white focus:outline-none focus:border-white rounded-2xl text-xs font-medium placeholder-white/50 backdrop-blur-sm transition-colors">
+                    <h2 class="text-3xl md:text-4xl font-serif font-bold mb-6">Kehadiran</h2>
+                    <form id="rsvp-form" class="space-y-3 md:space-y-4">
+                        <input type="text" id="name" required placeholder="Nama Lengkap" class="w-full px-4 md:px-5 py-3 md:py-4 bg-white/10 border border-white/20 text-white focus:outline-none focus:border-white rounded-[1rem] md:rounded-[1.5rem] text-xs font-medium placeholder-white/60 transition-colors">
                         <div class="grid grid-cols-2 gap-3">
-                            <input type="number" id="jumlah" required placeholder="Jml Tamu" min="1" max="2" class="w-full px-5 py-4 bg-white/10 border border-white/20 text-white focus:outline-none focus:border-white rounded-2xl text-xs font-medium placeholder-white/50 backdrop-blur-sm transition-colors">
-                            <select id="attendance" required class="w-full px-5 py-4 bg-white/10 border border-white/20 text-white focus:outline-none focus:border-white rounded-2xl text-xs font-bold appearance-none backdrop-blur-sm transition-colors">
+                            <input type="number" id="jumlah" required placeholder="Jml Tamu" min="1" max="2" class="w-full px-4 md:px-5 py-3 md:py-4 bg-white/10 border border-white/20 text-white focus:outline-none focus:border-white rounded-[1rem] md:rounded-[1.5rem] text-xs font-medium placeholder-white/60 transition-colors">
+                            <select id="attendance" required class="w-full px-4 md:px-5 py-3 md:py-4 bg-white/10 border border-white/20 text-white focus:outline-none focus:border-white rounded-[1rem] md:rounded-[1.5rem] text-xs font-bold appearance-none transition-colors">
                                 <option value="" disabled class="text-wine">Hadir?</option>
                                 <option value="hadir" class="text-wine">Ya, Hadir</option>
                                 <option value="tidak_hadir" class="text-wine">Maaf, Tidak</option>
                             </select>
                         </div>
-                        <button type="submit" id="btn-submit-rsvp" class="w-full bg-white text-terracotta py-4 rounded-full text-[10px] font-bold uppercase tracking-widest hover:bg-wine hover:text-white transition-colors mt-4 shadow-float">Kirim Konfirmasi</button>
-                        <div id="rsvp-status" class="hidden text-center text-white py-3 mt-4 rounded-2xl text-[10px] font-bold border border-white/20 bg-white/10"></div>
+                        <button type="submit" id="btn-submit-rsvp" class="w-full bg-white text-terracotta py-3 md:py-4 rounded-full text-[9px] md:text-[10px] font-bold uppercase tracking-widest hover:bg-wine hover:text-white transition-colors mt-2 md:mt-4 shadow-sm">Kirim Konfirmasi</button>
+                        <div id="rsvp-status" class="hidden text-center text-wine py-3 mt-4 rounded-xl text-[10px] font-bold border border-white bg-white"></div>
                     </form>
                 </div>
 
                 <!-- Guestbook -->
                 <div class="md:col-span-7 bento-card bento-item flex flex-col">
-                    <h2 class="text-3xl font-serif text-wine font-bold mb-6">Ucapan & Doa</h2>
-                    <form id="guestbook-form" class="mb-8 space-y-4">
-                        <input type="text" id="guest-name-input" required placeholder="Nama Anda" class="w-full px-5 py-4 bg-cream border border-peach/50 text-wine focus:outline-none focus:border-terracotta rounded-2xl text-xs font-medium placeholder-wine/40 transition-colors">
-                        <textarea id="guest-message" required rows="2" placeholder="Tuliskan pesan bahagia..." class="w-full px-5 py-4 bg-cream border border-peach/50 text-wine focus:outline-none focus:border-terracotta rounded-2xl text-xs font-medium placeholder-wine/40 transition-colors"></textarea>
-                        <button type="submit" id="btn-submit-guestbook" class="w-full bg-wine text-white py-4 rounded-full text-[10px] font-bold uppercase tracking-widest hover:bg-terracotta transition-colors shadow-float">Kirim Pesan</button>
+                    <h2 class="text-3xl md:text-4xl font-serif text-wine font-bold mb-6">Ucapan & Doa</h2>
+                    <form id="guestbook-form" class="mb-8 space-y-3 md:space-y-4">
+                        <input type="text" id="guest-name-input" required placeholder="Nama Anda" class="w-full px-4 md:px-5 py-3 md:py-4 bg-white/60 border border-white focus:outline-none focus:border-terracotta rounded-[1rem] md:rounded-[1.5rem] text-xs font-medium placeholder-wine/40 transition-colors">
+                        <textarea id="guest-message" required rows="2" placeholder="Tuliskan pesan bahagia..." class="w-full px-4 md:px-5 py-3 md:py-4 bg-white/60 border border-white focus:outline-none focus:border-terracotta rounded-[1rem] md:rounded-[1.5rem] text-xs font-medium placeholder-wine/40 transition-colors"></textarea>
+                        <button type="submit" id="btn-submit-guestbook" class="w-full bg-wine text-white py-3 md:py-4 rounded-full text-[9px] md:text-[10px] font-bold uppercase tracking-widest hover:bg-terracotta transition-colors shadow-sm">Kirim Pesan</button>
                     </form>
                     
-                    <div id="guestbook-list" class="space-y-4 max-h-[300px] overflow-y-auto pr-2"></div>
+                    <div id="guestbook-list" class="space-y-3 md:space-y-4 max-h-[250px] md:max-h-[300px] overflow-y-auto pr-2"></div>
                 </div>
 
             </div>
         </section>
 
         <!-- FOOTER -->
-        <footer class="bg-wine py-24 text-center px-4 relative overflow-hidden">
-            <div class="blob bg-terracotta/20 w-96 h-96 rounded-full top-0 left-1/2 -translate-x-1/2"></div>
-            <div class="relative z-10 max-w-lg mx-auto">
-                <p class="uppercase tracking-[0.3em] text-[10px] text-peach mb-6 font-bold">Terima Kasih</p>
-                <h2 class="text-5xl md:text-6xl font-cursive text-cream mb-8">Romeo & Juliet</h2>
-                <p class="font-sans text-xs text-cream/70 leading-relaxed mb-12">Merupakan suatu kehormatan dan kebahagiaan bagi kami apabila Bapak/Ibu/Saudara/i berkenan hadir.<br><br><span class="font-bold text-cream text-sm mt-4 block font-serif">Keluarga Besar Bpk. Montague & Bpk. Capulet</span></p>
-                <p class="text-[9px] font-sans font-bold uppercase tracking-[0.3em] text-cream/30">&copy; <span id="year"></span> Template by Kartunikah.</p>
+        <footer class="py-16 md:py-24 text-center px-4">
+            <div class="max-w-lg mx-auto bento-card border-none bg-white/40 shadow-none">
+                <p class="uppercase tracking-[0.3em] text-[9px] md:text-[10px] text-terracotta mb-4 md:mb-6 font-bold">Terima Kasih</p>
+                <h2 class="text-5xl md:text-6xl font-cursive text-wine mb-6 md:mb-8">Romeo & Juliet</h2>
+                <p class="font-sans text-xs text-wine/70 leading-relaxed mb-8 md:mb-10">Merupakan suatu kehormatan dan kebahagiaan bagi kami apabila Bapak/Ibu/Saudara/i berkenan hadir.<br><br><span class="font-bold text-wine text-sm mt-4 block font-serif">Keluarga Besar Bpk. Montague & Bpk. Capulet</span></p>
+                <p class="text-[8px] md:text-[9px] font-sans font-bold uppercase tracking-[0.3em] text-wine/40">&copy; <span id="year"></span> Template by Kartunikah.</p>
             </div>
         </footer>
     </div>
 
     <!-- FLOATING PILL NAV -->
-    <nav class="fixed bottom-8 left-1/2 -translate-x-1/2 z-[80] flex md:hidden justify-around items-center px-6 py-4 bg-white/80 backdrop-blur-xl rounded-full shadow-float border border-white/50 translate-y-32 opacity-0 transition-all duration-700 w-[90%] max-w-[350px]" id="mobile-nav">
-        <a href="#hero" class="text-[9px] font-bold tracking-widest uppercase text-wine/50 hover:text-terracotta transition-colors">Home</a>
-        <div class="w-[4px] h-[4px] rounded-full bg-peach"></div>
-        <a href="#acara" class="text-[9px] font-bold tracking-widest uppercase text-wine/50 hover:text-terracotta transition-colors">Acara</a>
-        <div class="w-[4px] h-[4px] rounded-full bg-peach"></div>
-        <a href="#rsvp" class="text-[9px] font-bold tracking-widest uppercase text-wine/50 hover:text-terracotta transition-colors">RSVP</a>
+    <nav class="fixed bottom-6 md:bottom-8 left-1/2 -translate-x-1/2 z-[80] flex md:hidden justify-around items-center px-5 py-3 md:px-6 md:py-4 bg-white/85 backdrop-blur-xl rounded-full shadow-float border border-white/80 translate-y-32 opacity-0 transition-all duration-700 w-[90%] max-w-[350px]" id="mobile-nav">
+        <a href="#hero" class="text-[8px] md:text-[9px] font-bold tracking-widest uppercase text-wine/50 hover:text-terracotta transition-colors">Home</a>
+        <div class="w-[3px] h-[3px] rounded-full bg-peach"></div>
+        <a href="#acara" class="text-[8px] md:text-[9px] font-bold tracking-widest uppercase text-wine/50 hover:text-terracotta transition-colors">Acara</a>
+        <div class="w-[3px] h-[3px] rounded-full bg-peach"></div>
+        <a href="#rsvp" class="text-[8px] md:text-[9px] font-bold tracking-widest uppercase text-wine/50 hover:text-terracotta transition-colors">RSVP</a>
     </nav>
 
     <!-- Scripts: GSAP, ScrollTrigger, Fancybox, Confetti, Logic -->
