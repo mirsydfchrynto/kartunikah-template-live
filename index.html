@@ -129,9 +129,8 @@
         <img src="https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&q=80&w=1200&h=2000" class="w-full h-full object-cover scale-110" id="bg-scroll-layer" alt="Background Pengantin">
     </div>
     
-    <!-- MASTER BACKGROUND OVERLAY (Ensures text readability without hiding the photo) -->
-    <!-- Gelap di atas untuk teks putih, terang di bawah untuk bento box -->
-    <div id="master-bg-overlay" class="fixed inset-0 z-[-1] bg-gradient-to-b from-wine/50 via-wine/20 to-cream/90"></div>
+    <!-- MASTER BACKGROUND OVERLAY (Cinematic dark vignette so photo pops and text is highly readable) -->
+    <div id="master-bg-overlay" class="fixed inset-0 z-[-1] bg-gradient-to-b from-black/50 via-black/20 to-black/70"></div>
 
     <audio id="bg-music" loop preload="auto">
         <source src="audio/janji-suci.mp3" type="audio/mpeg">
@@ -141,13 +140,13 @@
         <svg id="music-icon" class="w-5 h-5 music-spin text-terracotta" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19V6l12-3v13M9 19c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zm12-3c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zM9 10l12-3"></path></svg>
     </button>
 
-    <!-- COVER SCREEN (Transparent background so Master BG shows perfectly) -->
-    <div id="cover-screen" class="fixed inset-0 z-[100] flex flex-col items-center justify-end pb-12 md:pb-20 px-6 transition-all duration-1000 cubic-bezier(0.16, 1, 0.3, 1) min-h-[100dvh] bg-gradient-to-b from-transparent via-transparent to-cream/95">
+    <!-- COVER SCREEN (Mobile First: text sized properly, extra bottom padding for mobile browsers) -->
+    <div id="cover-screen" class="fixed inset-0 z-[100] flex flex-col items-center justify-end pb-16 md:pb-24 px-6 transition-all duration-1000 cubic-bezier(0.16, 1, 0.3, 1) min-h-[100dvh]">
         <div class="relative z-10 w-full max-w-sm text-center mt-auto">
             <p class="text-[9px] md:text-[10px] font-sans tracking-[0.3em] uppercase text-cream/90 mb-2 font-bold drop-shadow-md">The Wedding Of</p>
-            <h1 class="text-7xl md:text-8xl font-cursive text-cream mb-8 drop-shadow-lg" style="text-shadow: 0 4px 20px rgba(0,0,0,0.6);">Romeo<br>& Juliet</h1>
+            <h1 class="text-6xl md:text-8xl font-cursive text-cream mb-8 drop-shadow-lg" style="text-shadow: 0 4px 20px rgba(0,0,0,0.8);">Romeo<br>& Juliet</h1>
             
-            <div class="bg-black/30 backdrop-blur-md p-6 md:p-8 rounded-[2rem] shadow-art border border-white/20 mb-8">
+            <div class="bg-black/40 backdrop-blur-md p-5 md:p-8 rounded-[1.5rem] md:rounded-[2rem] shadow-art border border-white/20 mb-8">
                 <p class="text-[9px] font-bold text-cream/70 uppercase tracking-widest mb-2">Kepada Yth.</p>
                 <p class="text-xl md:text-2xl font-serif font-bold text-cream drop-shadow-md" id="guest-name">Tamu Undangan</p>
             </div>
@@ -166,15 +165,13 @@
         <header id="hero" class="pt-20">
             <!-- LAYER 20: Floating Typography over Master Background -->
             <div id="text-layer" class="relative z-20 flex flex-col items-center justify-center text-center pointer-events-none px-4 w-full h-full">
-                <!-- Soft glow behind text for readability -->
-                <div class="absolute inset-0 bg-radial-glow z-[-1] rounded-full scale-150 opacity-80"></div>
                 
-                <p class="uppercase tracking-[0.3em] text-[9px] md:text-[10px] text-wine/80 mb-3 md:mb-4 font-bold relative z-10">We Are Tying The Knot</p>
-                <h1 class="text-7xl md:text-9xl font-cursive text-wine mb-6 leading-tight relative z-10" style="text-shadow: 0 10px 40px rgba(255,255,255,0.9);">
+                <p class="uppercase tracking-[0.3em] text-[9px] md:text-[10px] text-cream/80 mb-3 md:mb-4 font-bold relative z-10 drop-shadow-md">We Are Tying The Knot</p>
+                <h1 class="text-7xl md:text-9xl font-cursive text-cream mb-6 leading-tight relative z-10" style="text-shadow: 0 4px 20px rgba(0,0,0,0.6);">
                     Romeo & Juliet
                 </h1>
                 <div class="h-[1px] w-12 bg-terracotta mb-6 relative z-10"></div>
-                <p class="text-[10px] md:text-xs font-sans tracking-[0.2em] uppercase text-wine font-bold bg-white/70 backdrop-blur-xl px-6 py-3 rounded-full border border-white shadow-sm relative z-10">
+                <p class="text-[10px] md:text-xs font-sans tracking-[0.2em] uppercase text-cream font-bold bg-black/40 backdrop-blur-xl px-6 py-3 rounded-full border border-white/20 shadow-xl relative z-10">
                     10 Desember 2025
                 </p>
             </div>
@@ -184,8 +181,8 @@
         <section id="acara" class="py-16 md:py-24 px-4 relative">
             <div class="max-w-5xl mx-auto">
                 <div class="text-center mb-12 md:mb-16 gsap-fade-up">
-                    <p class="uppercase tracking-[0.3em] text-[9px] md:text-[10px] text-terracotta mb-2 md:mb-3 font-bold">Waktu & Tempat</p>
-                    <h2 class="text-4xl md:text-5xl font-serif text-wine font-bold">Momen Bahagia</h2>
+                    <p class="uppercase tracking-[0.3em] text-[9px] md:text-[10px] text-terracotta mb-2 md:mb-3 font-bold drop-shadow-md">Waktu & Tempat</p>
+                    <h2 class="text-4xl md:text-5xl font-serif text-cream font-bold drop-shadow-md">Momen Bahagia</h2>
                 </div>
                 
                 <div class="grid grid-cols-1 md:grid-cols-12 gap-4 md:gap-6 bento-grid">
@@ -281,8 +278,8 @@
         <section id="galeri" class="py-16 md:py-24 px-4 overflow-hidden relative">
             <div class="max-w-5xl mx-auto">
                 <div class="text-center mb-12 md:mb-16 gsap-fade-up">
-                    <p class="uppercase tracking-[0.3em] text-[9px] md:text-[10px] text-terracotta mb-2 md:mb-3 font-bold">Album Kenangan</p>
-                    <h2 class="text-4xl md:text-5xl font-serif text-wine font-bold">Kisah Kami</h2>
+                    <p class="uppercase tracking-[0.3em] text-[9px] md:text-[10px] text-terracotta mb-2 md:mb-3 font-bold drop-shadow-md">Album Kenangan</p>
+                    <h2 class="text-4xl md:text-5xl font-serif text-cream font-bold drop-shadow-md">Kisah Kami</h2>
                 </div>
 
                 <!-- Bento Gallery grid -->
