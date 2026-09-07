@@ -65,13 +65,7 @@
             /* Filter warna dihapus, biarkan warna asli memancar 100% */
         }
         
-        /* Wash overlay so content is super readable but photo vibes shine through */
-        #master-bg-overlay {
-            position: fixed;
-            inset: 0;
-            background: linear-gradient(to bottom, rgba(255, 245, 234, 0.85) 0%, rgba(255, 245, 234, 0.92) 50%, rgba(255, 245, 234, 0.98) 100%);
-            z-index: -1;
-        }
+        /* CSS usang overlay dan radial glow telah dihapus sepenuhnya agar tidak menimpa foto prewed */
 
         /* 3D Hero Fixes for Responsive */
         #hero {
@@ -82,20 +76,16 @@
             flex-direction: column;
             justify-content: center;
         }
-        
-        .bg-radial-glow {
-            background: radial-gradient(circle at center, rgba(255, 245, 234, 0.8) 0%, rgba(255, 245, 234, 0.4) 40%, transparent 70%);
-        }
 
-        /* Bento Grid Artistic Glassmorphism */
+        /* Bento Grid Artistic Glassmorphism - Ditipiskan maksimal */
         .bento-card {
-            background: rgba(255, 255, 255, 0.75);
-            backdrop-filter: blur(16px);
-            -webkit-backdrop-filter: blur(16px);
-            border: 1px solid rgba(255, 255, 255, 0.8);
+            background: rgba(255, 255, 255, 0.15); /* Sangat transparan */
+            backdrop-filter: blur(8px); /* Blur dikurangi agar foto terlihat */
+            -webkit-backdrop-filter: blur(8px);
+            border: 1px solid rgba(255, 255, 255, 0.4);
             border-radius: 2rem;
             padding: 1.5rem;
-            box-shadow: 0 10px 30px -10px rgba(74, 46, 43, 0.1);
+            box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.1);
             transition: transform 0.4s ease, box-shadow 0.4s ease;
         }
         @media (min-width: 768px) {
@@ -106,14 +96,9 @@
         }
         .bento-card:hover {
             transform: translateY(-5px);
-            box-shadow: 0 20px 40px -10px rgba(74, 46, 43, 0.15);
+            box-shadow: 0 20px 40px -10px rgba(0, 0, 0, 0.2);
         }
-
-        /* Cover Screen Overlay */
-        #cover-screen {
-            /* Transparan di atas agar foto master-bg terlihat, solid cream di bawah agar teks terbaca jelas */
-            background: linear-gradient(to bottom, rgba(255, 245, 234, 0.1) 0%, rgba(255, 245, 234, 0.8) 40%, rgba(255, 245, 234, 1) 100%);
-        }
+        /* CSS usang cover screen telah dihapus sepenuhnya */
     </style>
 </head>
 <body class="text-wine font-sans antialiased selection:bg-terracotta selection:text-cream no-scroll relative">
@@ -140,9 +125,9 @@
             <p class="text-[9px] md:text-[10px] font-sans tracking-[0.3em] uppercase text-cream/90 mb-2 font-bold" style="text-shadow: 0 2px 10px rgba(0,0,0,0.8);">The Wedding Of</p>
             <h1 class="text-6xl md:text-8xl font-cursive text-cream mb-8 drop-shadow-lg" style="text-shadow: 0 4px 25px rgba(0,0,0,0.9);">Romeo<br>& Juliet</h1>
             
-            <div class="bg-black/30 backdrop-blur-md p-5 md:p-8 rounded-[1.5rem] md:rounded-[2rem] shadow-art border border-white/20 mb-8">
-                <p class="text-[9px] font-bold text-cream/70 uppercase tracking-widest mb-2">Kepada Yth.</p>
-                <p class="text-xl md:text-2xl font-serif font-bold text-cream drop-shadow-md" id="guest-name">Tamu Undangan</p>
+            <div class="bg-black/10 backdrop-blur-sm p-5 md:p-8 rounded-[1.5rem] md:rounded-[2rem] shadow-art border border-white/20 mb-8">
+                <p class="text-[9px] font-bold text-cream/80 uppercase tracking-widest mb-2" style="text-shadow: 0 1px 5px rgba(0,0,0,0.8);">Kepada Yth.</p>
+                <p class="text-xl md:text-2xl font-serif font-bold text-cream" style="text-shadow: 0 2px 10px rgba(0,0,0,0.8);" id="guest-name">Tamu Undangan</p>
             </div>
             
             <button id="btn-open-invitation" class="w-full bg-cream text-wine px-6 py-4 rounded-full hover:bg-terracotta hover:text-white transition-colors duration-500 uppercase tracking-[0.2em] text-[10px] font-bold shadow-float flex items-center justify-center gap-3">
@@ -165,7 +150,7 @@
                     Romeo & Juliet
                 </h1>
                 <div class="h-[1px] w-12 bg-terracotta mb-6 relative z-10"></div>
-                <p class="text-[10px] md:text-xs font-sans tracking-[0.2em] uppercase text-cream font-bold bg-black/40 backdrop-blur-xl px-6 py-3 rounded-full border border-white/20 shadow-xl relative z-10">
+                <p class="text-[10px] md:text-xs font-sans tracking-[0.2em] uppercase text-cream font-bold bg-black/10 backdrop-blur-sm px-6 py-3 rounded-full border border-white/20 shadow-xl relative z-10" style="text-shadow: 0 1px 5px rgba(0,0,0,0.8);">
                     10 Desember 2025
                 </p>
             </div>
