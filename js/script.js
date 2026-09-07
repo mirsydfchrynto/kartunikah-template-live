@@ -105,18 +105,6 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // Hero Avatar Parallax Depth
-    gsap.to('#avatar-layer', {
-        yPercent: 30,
-        ease: "none",
-        scrollTrigger: {
-            trigger: "#hero",
-            start: "top top",
-            end: "bottom top",
-            scrub: true
-        }
-    });
-
     // Hero Text Parallax (moves up faster than avatar to create 3D depth)
     gsap.to('#text-layer', {
         yPercent: -40,
