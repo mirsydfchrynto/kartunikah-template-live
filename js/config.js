@@ -1,96 +1,195 @@
-// Configuration for Kartunikah Template
-// Edit these values to personalize the wedding website
+/**
+ * ╔══════════════════════════════════════════════════════════╗
+ * ║        KARTUNIKAH — FILE KONFIGURASI UTAMA              ║
+ * ║   Ganti isi file ini saja untuk menyesuaikan undangan   ║
+ * ╚══════════════════════════════════════════════════════════╝
+ */
 
 const CONFIG = {
-    // Couple Information
-    couple: {
-        name1: "Nama Pengantin 1",
-        name2: "Nama Pengantin 2",
-        // Optional: display names separately
-        // name1Display: "Nama Pengantin 1",
-        // name2Display: "Nama Pengantin 2"
+
+  // ══════════════════════════════════════════
+  // 🎨 1. TEMA & WARNA
+  //    Ganti kode hex sesuai selera warna Anda
+  // ══════════════════════════════════════════
+  theme: {
+    // Warna Utama
+    primaryBg:    '#FDF9F1',   // Latar belakang utama (Ivory/Krem)
+    sectionBg:    '#F4EDE2',   // Latar belakang section bergantian
+    accentColor:  '#A65A41',   // Warna aksen (Terracotta)
+    darkColor:    '#3E2A1F',   // Warna teks utama (Cokelat Tua)
+    mutedColor:   '#796655',   // Warna teks sekunder
+    goldColor:    '#C9A96E',   // Warna emas
+    outerBg:      '#2a1c14',   // Background luar container (di desktop)
+    // Warna Kelopak Bunga Jatuh
+    petalColors: ['#F2C9A6', '#E8B49A', '#FDECD8', '#D4A882'],
+  },
+
+  // ══════════════════════════════════════════
+  // 🤵 2. MEMPELAI PRIA
+  // ══════════════════════════════════════════
+  groom: {
+    firstName:    'Romeo',
+    lastName:     'Montague',
+    fullName:     'Romeo Montague',
+    fatherName:   'Bapak Lord Montague',
+    motherName:   'Ibu Lady Montague',
+    instagram:    '@romeo_m',
+    photo:        'images/prewed.jpeg',
+    photoCrop:    '25% 20%',    // Posisi crop foto profil (object-position CSS)
+    photoScale:   '1.4',        // Zoom foto profil
+  },
+
+  // ══════════════════════════════════════════
+  // 👰 3. MEMPELAI WANITA
+  // ══════════════════════════════════════════
+  bride: {
+    firstName:    'Juliet',
+    lastName:     'Capulet',
+    fullName:     'Juliet Capulet',
+    fatherName:   'Bapak Lord Capulet',
+    motherName:   'Ibu Lady Capulet',
+    instagram:    '@juliet_c',
+    photo:        'images/prewed.jpeg',
+    photoCrop:    '75% 20%',    // Posisi crop foto profil
+    photoScale:   '1.4',
+  },
+
+  // ══════════════════════════════════════════
+  // 📅 4. TANGGAL PERNIKAHAN
+  // ══════════════════════════════════════════
+  weddingDate:        '2025-12-10T08:00:00',
+  weddingDateDisplay: 'Rabu, 10 Desember 2025',
+  calendarStart:      '20251210T010000Z',   // Format UTC untuk Google Calendar
+  calendarEnd:        '20251210T100000Z',
+
+  // ══════════════════════════════════════════
+  // 📍 5. RANGKAIAN ACARA
+  //    Tambah/hapus objek di dalam array sesuai jumlah acara
+  // ══════════════════════════════════════════
+  events: [
+    {
+      type:     'akad',
+      subtitle: 'Prosesi Suci',
+      title:    'Akad Nikah',
+      date:     'Rabu, 10 Desember 2025',
+      time:     '08.00 – 10.00 WIB',
+      venue:    'Masjid Agung Al-Falah',
+      address:  'Jl. Panglima Sudirman No.1, Jakarta Selatan',
+      mapsUrl:  'https://maps.google.com',
+      accent:   'terracotta',  // 'terracotta' atau 'dark'
     },
-
-    // Wedding Date & Time (in local timezone)
-    weddingDate: "2025-12-10T08:00:00", // Format: YYYY-MM-DDTHH:mm:ss
-    weddingDateDisplay: "Sabtu, 10 Desember 2025",
-
-    // Event Details
-    events: [
-        {
-            type: "akad",
-            title: "Akad Nikah",
-            date: "2025-12-10",
-            time: "08.00 - 10.00 WIB",
-            location: "Masjid Raya Al-Muhajirin, Jalan Pahlawan No. 123",
-            mapsUrl: "https://www.google.com/maps/search/?api=1&query=Masjid+Raya+Al-Muhajirin",
-            image: "assets/images/akad.jpg"
-        },
-        {
-            type: "resepsi",
-            title: "Resepsi Pernikahan",
-            date: "2025-12-10",
-            time: "11.00 - 16.00 WIB",
-            location: "Grand Ballroom Hotel Merdeka, Jalan Sudirman No. 456",
-            mapsUrl: "https://www.google.com/maps/search/?api=1&query=Grand+Ballroom+Hotel+Merdeka",
-            image: "assets/images/resepsi.jpg"
-        }
-    ],
-
-    // Love Story / About Couple
-    loveStory: [
-        "Kami bertemu pada tahun 2020 melalui teman bersama, dan sejak saat pertama kali bertemu, kami merasa ada koneksi khusus yang tidak bisa dijelaskan dengan kata-kata.",
-        "Journey kita penuh dengan petualangan, tawa, dan pertumbuhan bersama. Kami berdua saling mendukung dalam setiap langkah hidup, dan kini siap untuk memulai babak baru sebagai suami istri."
-    ],
-
-    // Gallery Images (array of objects with src and alt)
-    galleryImages: [
-        { src: "assets/images/gallery1.jpg", alt: "Moment pertama bertemu" },
-        { src: "assets/images/gallery2.jpg", alt: "Wisata bersama di Bali" },
-        { src: "assets/images/gallery3.jpg", alt: "Moment nongkrong di kafe favorit" },
-        { src: "assets/images/gallery4.jpg", alt: "Foto pre-wedding di taman bunga" },
-        { src: "assets/images/gallery5.jpg", alt: "Moment seru saat main game bersama" },
-        { src: "assets/images/gallery6.jpg", alt: "Makan malam saat anniversary" }
-    ],
-
-    // RSVP Configuration
-    rsvp: {
-        whatsappNumber: "6281234567890", // Without + for WhatsApp link
-        // Optional: redirect after submit (if using backend)
-        // redirectUrl: "https://example.com/thanks"
+    {
+      type:     'resepsi',
+      subtitle: 'Perayaan Cinta',
+      title:    'Resepsi',
+      date:     'Rabu, 10 Desember 2025',
+      time:     '11.00 – Selesai',
+      venue:    'Grand Ballroom Jakarta',
+      address:  'Jl. Sudirman No.2, Jakarta Pusat',
+      mapsUrl:  'https://maps.google.com',
+      accent:   'dark',
     },
+  ],
 
-    // Guest Book Configuration
-    guestbook: {
-        // In a real app, this would be fetched from backend
-        // For demo, we'll use mock data
-        mockMessages: [
-            { name: "Budi Santoso", message: "Selamat menempuh hidup baru! Semoga bahagia selalu." },
-            { name: "Lina Wijaya", message: "Doa kami tempatkan untuk kalian. Selamat menikah!" }
-        ]
+  // ══════════════════════════════════════════
+  // 💑 6. KISAH CINTA (Love Story Timeline)
+  //    Tambah/hapus milestone sesuai cerita Anda
+  // ══════════════════════════════════════════
+  loveStory: [
+    {
+      year:  '2020',
+      icon:  '☕',
+      title: 'Pertemuan Pertama',
+      desc:  'Kami dipertemukan oleh teman bersama di sebuah kedai kopi yang hangat. Tak ada yang menyangka pertemuan sederhana itu akan mengubah segalanya.',
     },
-
-    // Digital Envelope (Amplop) Configuration
-    donation: {
-        // Amounts in thousands (Rp)
-        presetAmounts: [50, 100, 200, 500],
-        // Note: In real implementation, connect to payment gateway
-        // For now, we'll show a mock success message
-        note: "Amplop bisa dikirim via QR code, transfer bank, atau e-wallet. Detail akan dikirim setelah konfirmasi."
+    {
+      year:  '2022',
+      icon:  '💌',
+      title: 'Resmi Berpacaran',
+      desc:  'Setelah dua tahun saling mengenal, Romeo memberanikan diri untuk menyatakan perasaannya. Juliet pun menerima dengan sepenuh hati.',
     },
-
-    // Styling
-    theme: {
-        primaryColor: "#e91e63", // Pink
-        secondaryColor: "#9c27b0", // Purple
-        accentColor: "#ff9800"   // Orange
+    {
+      year:  '2024',
+      icon:  '💍',
+      title: 'Lamaran',
+      desc:  'Di bawah langit berbintang, Romeo berlutut dan bertanya satu pertanyaan paling indah. Dengan air mata bahagia, Juliet menjawab "Ya".',
     },
+  ],
 
-    // Miscellaneous
-    footerText: "Kartunikah Template. Hak Cipta Dilindungi.",
-    // Share message for WhatsApp button
-    shareMessage: "Halo saya mau konfirmasi kehadiran di undangan pernikahan Anda 💍💑"
+  // ══════════════════════════════════════════
+  // 📸 7. GALERI FOTO
+  //    Ganti URL dengan foto asli Anda
+  //    (Bisa pakai URL Unsplash, Google Drive, atau path lokal seperti 'images/foto1.jpg')
+  // ══════════════════════════════════════════
+  gallery: [
+    {
+      src:     'https://images.unsplash.com/photo-1606800052052-a08af7148866?w=1200&q=90',
+      thumb:   'https://images.unsplash.com/photo-1606800052052-a08af7148866?w=600&q=80',
+      caption: 'Momen Pertama Bersama',
+    },
+    {
+      src:     'https://images.unsplash.com/photo-1519741497674-611481863552?w=1200&q=90',
+      thumb:   'https://images.unsplash.com/photo-1519741497674-611481863552?w=600&q=80',
+      caption: 'Sebuah Awal yang Indah',
+    },
+    {
+      src:     'https://images.unsplash.com/photo-1583939003579-730e3918a45a?w=1200&q=90',
+      thumb:   'https://images.unsplash.com/photo-1583939003579-730e3918a45a?w=600&q=80',
+      caption: 'Bersama dalam Suka Duka',
+    },
+    {
+      src:     'https://images.unsplash.com/photo-1520854221256-17451cc331bf?w=1200&q=90',
+      thumb:   'https://images.unsplash.com/photo-1520854221256-17451cc331bf?w=600&q=80',
+      caption: 'Menuju Hari Bahagia',
+    },
+    {
+      src:     'https://images.unsplash.com/photo-1604928135898-0c306d8fc9ba?w=1200&q=90',
+      thumb:   'https://images.unsplash.com/photo-1604928135898-0c306d8fc9ba?w=600&q=80',
+      caption: 'Cinta yang Tulus',
+    },
+  ],
+
+  // ══════════════════════════════════════════
+  // 💳 8. REKENING (Tanda Kasih Digital)
+  //    Tambah/hapus objek sesuai jumlah rekening
+  // ══════════════════════════════════════════
+  bankAccounts: [
+    {
+      bank:          'Bank BCA',
+      accountNumber: '1234567890',
+      accountName:   'Romeo Montague',
+    },
+    {
+      bank:          'Bank Mandiri',
+      accountNumber: '0987654321',
+      accountName:   'Juliet Capulet',
+    },
+  ],
+
+  // ══════════════════════════════════════════
+  // 📱 9. WHATSAPP
+  // ══════════════════════════════════════════
+  whatsapp: {
+    rsvpNumber:   '6281234567890',   // Nomor WA penerima RSVP (format: 62xxx tanpa +)
+    shareText:    'Bismillah, kami mengundang Anda ke pernikahan kami 💍✨',
+  },
+
+  // ══════════════════════════════════════════
+  // 💬 10. PESAN DEMO (Buku Tamu)
+  //     Hapus array ini jika tidak mau pesan demo
+  // ══════════════════════════════════════════
+  mockMessages: [
+    { name: 'Budi Santoso',  message: 'Selamat menempuh hidup baru! Semoga sakinah mawaddah warahmah 🤲' },
+    { name: 'Siti Rahayu',   message: 'Bahagia selalu untuk kalian. Doa kami menyertai dari jauh 💕' },
+    { name: 'Ahmad Fauzi',   message: 'Semoga pernikahan ini menjadi awal dari kebahagiaan yang abadi!' },
+  ],
+
+  // ══════════════════════════════════════════
+  // 🖼️ 11. FOTO UTAMA
+  // ══════════════════════════════════════════
+  coverPhoto: 'images/prewed.jpeg',   // Foto di halaman cover (arch frame)
+  heroPhoto:  'images/prewed.jpeg',   // Foto polaroid di hero section
+
 };
 
-// Make config globally accessible
 window.CONFIG = CONFIG;
