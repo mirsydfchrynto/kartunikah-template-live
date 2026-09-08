@@ -96,80 +96,21 @@ document.addEventListener('DOMContentLoaded', () => {
     // 5. GSAP Animations (The Art)
     gsap.registerPlugin(ScrollTrigger);
 
-    // MASTER BACKGROUND PARALLAX
-    // This makes the background photo scale down & move slightly for a premium parallax feel
-    const masterBg = document.getElementById('bg-scroll-layer');
-    if (masterBg) {
-        gsap.to(masterBg, {
-            scale: 1, // scales down from 1.1 to 1
-            yPercent: -5,
-            ease: "none",
-            scrollTrigger: {
-                trigger: document.body,
-                start: "top top",
-                end: "bottom bottom",
-                scrub: true
-            }
-        });
-    }
-
-    // Hero Text Parallax (moves up faster than avatar to create 3D depth)
-    gsap.to('#text-layer', {
-        yPercent: -40,
-        opacity: 0,
-        ease: "none",
-        scrollTrigger: {
-            trigger: "#hero",
-            start: "top top",
-            end: "bottom top",
-            scrub: true
-        }
-    });
-
-    // Fade Up Elements (Titles, buttons)
+    // Fade Up Elements (Cards, Titles, Profiles)
     gsap.utils.toArray('.gsap-fade-up').forEach(element => {
         gsap.from(element, {
-            y: 30,
+            y: 40,
             opacity: 0,
-            duration: 1,
+            duration: 1.2,
             ease: "power3.out",
             scrollTrigger: {
                 trigger: element,
-                start: "top 90%",
-            }
-        });
-    });
-
-    // Bento Grid Staggered Reveal
-    gsap.utils.toArray('.bento-grid').forEach(grid => {
-        const items = grid.querySelectorAll('.bento-item');
-        gsap.from(items, {
-            y: 50,
-            opacity: 0,
-            duration: 1,
-            stagger: 0.1,
-            ease: "power2.out",
-            scrollTrigger: {
-                trigger: grid,
                 start: "top 85%",
             }
         });
     });
 
-    // Gallery Staggered Reveal
-    gsap.from('.bento-gallery .bento-item', {
-        scale: 0.95,
-        opacity: 0,
-        duration: 0.8,
-        stagger: 0.1,
-        ease: "power2.out",
-        scrollTrigger: {
-            trigger: '.bento-gallery',
-            start: "top 85%"
-        }
-    });
-
-    // 6. Countdown Timer
+    // 6. Countdown Timer (If added back later, currently removed from clean layout)
     const targetDate = new Date(CONFIG?.weddingDate || '2025-12-10T08:00:00').getTime();
     const countdownElement = document.getElementById('countdown');
     if (countdownElement && !isNaN(targetDate)) {
