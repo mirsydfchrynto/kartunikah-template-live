@@ -3,7 +3,15 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Undangan Pernikahan Digital</title>
+    
+    <!-- SEO & OpenGraph Meta Tags (WhatsApp Link Preview) -->
+    <title>The Wedding of Romeo & Juliet</title>
+    <meta name="description" content="Tanpa mengurangi rasa hormat, kami mengundang Anda untuk hadir di momen bahagia pernikahan kami.">
+    <meta property="og:title" content="The Wedding of Romeo & Juliet">
+    <meta property="og:description" content="Minggu, 10 Desember 2025 | Buka undangan untuk melihat detail acara.">
+    <meta property="og:image" content="https://mirsydfchrynto.github.io/kartunikah-template-live/images/prewed.jpeg">
+    <meta property="og:url" content="https://mirsydfchrynto.github.io/kartunikah-template-live/">
+    <meta property="og:type" content="website">
     
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -186,9 +194,36 @@
                     <p class="polaroid-caption">We are tying the knot</p>
                 </div>
 
-                <div class="relative z-10 mt-6">
+                <div class="relative z-10 mt-6 w-full">
                     <h1 class="text-6xl font-cursive text-wine mb-2">Romeo & Juliet</h1>
-                    <p class="text-[10px] font-sans tracking-[0.2em] uppercase text-terracotta font-bold">10 Desember 2025</p>
+                    <p class="text-[10px] font-sans tracking-[0.2em] uppercase text-terracotta font-bold mb-8">10 Desember 2025</p>
+                    
+                    <!-- Countdown Timer -->
+                    <div id="countdown" class="flex justify-center gap-4 mb-8">
+                        <div class="flex flex-col items-center">
+                            <span id="days" class="text-2xl font-serif text-wine font-bold">00</span>
+                            <span class="text-[8px] uppercase tracking-widest text-softbrown">Hari</span>
+                        </div>
+                        <span class="text-xl font-serif text-terracotta">:</span>
+                        <div class="flex flex-col items-center">
+                            <span id="hours" class="text-2xl font-serif text-wine font-bold">00</span>
+                            <span class="text-[8px] uppercase tracking-widest text-softbrown">Jam</span>
+                        </div>
+                        <span class="text-xl font-serif text-terracotta">:</span>
+                        <div class="flex flex-col items-center">
+                            <span id="minutes" class="text-2xl font-serif text-wine font-bold">00</span>
+                            <span class="text-[8px] uppercase tracking-widest text-softbrown">Mnt</span>
+                        </div>
+                        <span class="text-xl font-serif text-terracotta">:</span>
+                        <div class="flex flex-col items-center">
+                            <span id="seconds" class="text-2xl font-serif text-wine font-bold">00</span>
+                            <span class="text-[8px] uppercase tracking-widest text-softbrown">Dtk</span>
+                        </div>
+                    </div>
+
+                    <button id="add-to-calendar" class="bg-white border border-terracotta/30 text-terracotta px-6 py-3 rounded-full text-[9px] font-bold uppercase tracking-widest hover:bg-terracotta hover:text-white transition-all shadow-sm">
+                        Simpan Tanggal
+                    </button>
                 </div>
             </header>
 
@@ -336,10 +371,10 @@
                         
                         <h2 class="text-2xl font-serif font-bold mb-5 text-center relative z-10">Kehadiran</h2>
                         <form id="rsvp-form" class="space-y-3 relative z-10">
-                            <input type="text" id="name" required placeholder="Nama Lengkap" class="w-full px-4 py-3 bg-white/10 border border-white/20 focus:outline-none focus:border-terracotta rounded-xl text-xs placeholder-white/50">
+                            <input type="text" id="name" required placeholder="Nama Lengkap" class="w-full px-4 py-3 bg-white/10 border border-white/20 focus:outline-none focus:border-terracotta rounded-xl text-xs placeholder-white/50 text-white">
                             <div class="grid grid-cols-2 gap-3">
-                                <input type="number" id="jumlah" required placeholder="Jml Tamu" min="1" max="2" class="w-full px-4 py-3 bg-white/10 border border-white/20 focus:outline-none focus:border-terracotta rounded-xl text-xs placeholder-white/50">
-                                <select id="attendance" required class="w-full px-4 py-3 bg-white/10 border border-white/20 focus:outline-none focus:border-terracotta rounded-xl text-xs font-bold appearance-none text-wine">
+                                <input type="number" id="jumlah" required placeholder="Jml Tamu" min="1" max="2" class="w-full px-4 py-3 bg-white/10 border border-white/20 focus:outline-none focus:border-terracotta rounded-xl text-xs placeholder-white/50 text-white">
+                                <select id="attendance" required class="w-full px-4 py-3 bg-white/10 border border-white/20 focus:outline-none focus:border-terracotta rounded-xl text-xs font-bold appearance-none text-wine bg-white">
                                     <option value="" disabled selected>Hadir?</option>
                                     <option value="hadir">Ya, Hadir</option>
                                     <option value="tidak_hadir">Maaf, Tidak</option>
