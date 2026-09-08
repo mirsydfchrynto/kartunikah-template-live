@@ -130,39 +130,37 @@
             <svg id="music-icon" class="w-4 h-4 music-spin text-terracotta" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19V6l12-3v13M9 19c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zm12-3c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zM9 10l12-3"></path></svg>
         </button>
 
-        <!-- COVER SCREEN (Rich Javanese Full-Photo Cover) -->
-        <div id="cover-screen" class="fixed inset-0 z-[100] bg-ivory flex flex-col transition-all duration-1000 min-h-[100dvh] overflow-hidden">
+        <!-- COVER SCREEN (Arch Photo Cover) -->
+        <div id="cover-screen" class="fixed inset-0 z-[100] bg-ivory flex flex-col items-center justify-between py-10 px-6 transition-all duration-1000 min-h-[100dvh] overflow-hidden">
             
-            <!-- Full Bleed Photo at Top -->
-            <div class="absolute top-0 left-0 w-full h-[65%]">
-                <img src="images/prewed.jpeg" alt="Romeo & Juliet" class="w-full h-full object-cover">
-                <!-- Fade to Ivory at the bottom of the image -->
-                <div class="absolute inset-0 bg-gradient-to-t from-ivory via-ivory/20 to-transparent"></div>
+            <!-- Javanese Floral Corners -->
+            <svg class="absolute -top-10 -left-10 w-40 h-40 text-terracotta opacity-20 animate-sway kawung-flower" viewBox="0 0 100 100"><path d="M50 0 C 60 30, 70 40, 100 50 C 70 60, 60 70, 50 100 C 40 70, 30 60, 0 50 C 30 40, 40 30, 50 0 Z"/></svg>
+            <svg class="absolute -bottom-10 -right-10 w-40 h-40 text-terracotta opacity-20 animate-sway kawung-flower" style="animation-direction: reverse;" viewBox="0 0 100 100"><path d="M50 0 C 60 30, 70 40, 100 50 C 70 60, 60 70, 50 100 C 40 70, 30 60, 0 50 C 30 40, 40 30, 50 0 Z"/></svg>
+
+            <!-- Title Area -->
+            <div class="relative z-10 w-full text-center mt-2 mb-4">
+                <p class="text-[9px] font-sans tracking-[0.3em] uppercase text-terracotta mb-2 font-bold">The Wedding Of</p>
+                <h1 class="text-6xl md:text-7xl font-cursive text-wine leading-none">Romeo<br>& Juliet</h1>
             </div>
             
-            <!-- Javanese Floral Corners on Cover -->
-            <svg class="absolute -top-10 -right-10 w-48 h-48 text-white opacity-40 animate-sway kawung-flower z-10 drop-shadow-md" viewBox="0 0 100 100"><path d="M50 0 C 60 30, 70 40, 100 50 C 70 60, 60 70, 50 100 C 40 70, 30 60, 0 50 C 30 40, 40 30, 50 0 Z"/></svg>
-            <svg class="absolute top-[55%] -left-12 w-40 h-40 text-terracotta opacity-10 kawung-flower animate-[spin_30s_linear_infinite] z-10" viewBox="0 0 100 100"><path d="M50 0 C 60 30, 70 40, 100 50 C 70 60, 60 70, 50 100 C 40 70, 30 60, 0 50 C 30 40, 40 30, 50 0 Z"/></svg>
+            <!-- Elegant Arch Photo (100% True Color, No Gradients!) -->
+            <div class="relative z-20 w-[85%] max-w-[280px] aspect-[3/4] rounded-t-[1000px] overflow-hidden border-[6px] border-white shadow-polaroid mb-6">
+                <img src="images/prewed.jpeg" alt="Romeo & Juliet" class="w-full h-full object-cover object-top">
+            </div>
 
             <!-- Content Container -->
-            <div class="relative z-20 w-full h-full flex flex-col justify-between px-6 pb-8 pt-16 text-center">
-                
-                <!-- Title over image -->
-                <div class="mt-4 drop-shadow-lg">
-                    <p class="text-[9px] font-sans tracking-[0.3em] uppercase text-white mb-2 font-bold" style="text-shadow: 0 2px 4px rgba(0,0,0,0.5);">The Wedding Of</p>
-                    <h1 class="text-6xl md:text-7xl font-cursive text-white leading-none" style="text-shadow: 0 4px 15px rgba(0,0,0,0.6);">Romeo<br>& Juliet</h1>
-                </div>
+            <div class="relative z-20 w-full mt-auto text-center">
                 
                 <!-- Bottom Action Area -->
-                <div class="w-full mt-auto">
+                <div class="w-full">
                     <!-- Elegant Javanese Divider -->
-                    <div class="flex items-center justify-center gap-3 mb-6 opacity-80">
-                        <div class="h-[1px] w-12 bg-terracotta/30"></div>
+                    <div class="flex items-center justify-center gap-3 mb-5 opacity-80">
+                        <div class="h-[1px] w-10 bg-terracotta/40"></div>
                         <svg class="w-4 h-4 text-terracotta animate-[spin_10s_linear_infinite] kawung-flower" viewBox="0 0 100 100"><path d="M50 0 C 60 30, 70 40, 100 50 C 70 60, 60 70, 50 100 C 40 70, 30 60, 0 50 C 30 40, 40 30, 50 0 Z"/></svg>
-                        <div class="h-[1px] w-12 bg-terracotta/30"></div>
+                        <div class="h-[1px] w-10 bg-terracotta/40"></div>
                     </div>
 
-                    <div class="bg-white/90 backdrop-blur-md p-5 rounded-[1.5rem] border border-terracotta/20 mb-5 shadow-soft relative overflow-hidden">
+                    <div class="bg-white/90 backdrop-blur-md p-4 md:p-5 rounded-[1.5rem] border border-terracotta/20 mb-5 shadow-soft relative overflow-hidden">
                         <div class="absolute inset-0 batik-overlay opacity-20"></div>
                         <p class="text-[8px] font-bold text-terracotta uppercase tracking-widest mb-1 relative z-10">Kepada Yth.</p>
                         <p class="text-xl font-serif font-bold text-wine relative z-10" id="guest-name">Tamu Undangan</p>
@@ -245,7 +243,7 @@
                     <!-- Groom -->
                     <div class="editorial-card w-full flex flex-col items-center gsap-fade-up">
                         <div class="w-32 h-32 rounded-full overflow-hidden border-[3px] border-terracotta/30 shadow-soft mb-5 relative">
-                            <img src="https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?auto=format&fit=crop&q=80&w=400" alt="Romeo" class="w-full h-full object-cover">
+                            <img src="images/prewed.jpeg" alt="Romeo" class="w-full h-full object-cover">
                         </div>
                         <h3 class="text-2xl font-serif text-wine font-bold mb-1">Romeo Montague</h3>
                         <p class="text-[10px] font-sans text-softbrown leading-relaxed mb-3 text-center">
@@ -259,7 +257,7 @@
                     <!-- Bride -->
                     <div class="editorial-card w-full flex flex-col items-center gsap-fade-up">
                         <div class="w-32 h-32 rounded-full overflow-hidden border-[3px] border-terracotta/30 shadow-soft mb-5 relative">
-                            <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&q=80&w=400" alt="Juliet" class="w-full h-full object-cover">
+                            <img src="images/prewed.jpeg" alt="Juliet" class="w-full h-full object-cover">
                         </div>
                         <h3 class="text-2xl font-serif text-wine font-bold mb-1">Juliet Capulet</h3>
                         <p class="text-[10px] font-sans text-softbrown leading-relaxed mb-3 text-center">
@@ -339,14 +337,14 @@
                 </div>
 
                 <div class="grid grid-cols-2 gap-3 auto-rows-[120px] gsap-fade-up">
-                    <a href="https://images.unsplash.com/photo-1606800052052-a08af7148866?auto=format&fit=crop&q=80&w=1200" data-fancybox="gallery" class="col-span-2 row-span-2 rounded-[1rem] overflow-hidden group block bg-white p-2 shadow-soft border border-terracotta/10">
-                        <img src="https://images.unsplash.com/photo-1606800052052-a08af7148866?auto=format&fit=crop&q=80&w=800" class="w-full h-full object-cover rounded-[0.5rem]" alt="Gallery 1">
+                    <a href="images/prewed.jpeg" data-fancybox="gallery" class="col-span-2 row-span-2 rounded-[1rem] overflow-hidden group block bg-white p-2 shadow-soft border border-terracotta/10">
+                        <img src="images/prewed.jpeg" class="w-full h-full object-cover rounded-[0.5rem]" alt="Gallery 1">
                     </a>
-                    <a href="https://images.unsplash.com/photo-1583939003579-730e3918a45a?auto=format&fit=crop&q=80&w=1200" data-fancybox="gallery" class="rounded-[1rem] overflow-hidden group block bg-white p-2 shadow-soft border border-terracotta/10">
-                        <img src="https://images.unsplash.com/photo-1583939003579-730e3918a45a?auto=format&fit=crop&q=80&w=400" class="w-full h-full object-cover rounded-[0.5rem]" alt="Gallery 2">
+                    <a href="images/prewed.jpeg" data-fancybox="gallery" class="rounded-[1rem] overflow-hidden group block bg-white p-2 shadow-soft border border-terracotta/10">
+                        <img src="images/prewed.jpeg" class="w-full h-full object-cover rounded-[0.5rem]" alt="Gallery 2">
                     </a>
-                    <a href="https://images.unsplash.com/photo-1604928135898-0c306d8fc9ba?auto=format&fit=crop&q=80&w=1200" data-fancybox="gallery" class="rounded-[1rem] overflow-hidden group block bg-white p-2 shadow-soft border border-terracotta/10">
-                        <img src="https://images.unsplash.com/photo-1604928135898-0c306d8fc9ba?auto=format&fit=crop&q=80&w=400" class="w-full h-full object-cover rounded-[0.5rem]" alt="Gallery 3">
+                    <a href="images/prewed.jpeg" data-fancybox="gallery" class="rounded-[1rem] overflow-hidden group block bg-white p-2 shadow-soft border border-terracotta/10">
+                        <img src="images/prewed.jpeg" class="w-full h-full object-cover rounded-[0.5rem]" alt="Gallery 3">
                     </a>
                 </div>
             </section>
