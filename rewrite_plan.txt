@@ -1,0 +1,9 @@
+1. Change body background to solid Cream/Ivory.
+2. Cover Screen: Elegant, prewed photo in a polaroid frame, crisp dark text.
+3. Hero: Bismillah / Quote, elegant titles.
+4. Mempelai (New): Add Bride and Groom sections with parents' names.
+5. Acara: Clear timeline for Akad and Resepsi.
+6. Galeri: Clean photo grid.
+7. RSVP, Guestbook, VIP, Tanda Kasih: Convert from heavy glassmorphism to elegant clean cards (solid white with thin elegant borders and soft shadows).
+8. Remove master-bg completely.
+9. CSS updates for polaroid frames (.polaroid).
