@@ -84,10 +84,10 @@ button, a { -webkit-tap-highlight-color: transparent; }
   width: 100%; max-width: 430px;
   height: 100dvh;
   z-index: 200;
-  background: var(--bg);
+  background: radial-gradient(circle at 50% 32%, #FFFDF8 0%, #F6ECE0 55%, #EADBCA 100%);
   display: flex; flex-direction: column;
   align-items: center; justify-content: center;
-  gap: .85rem;
+  gap: .75rem;
   padding: 1rem 1.15rem;
   overflow-y: auto;
   overflow-x: hidden;
@@ -95,6 +95,20 @@ button, a { -webkit-tap-highlight-color: transparent; }
   box-sizing: border-box;
 }
 #cover.slide-away { transform: translate(-50%, -100%); }
+
+/* Ornamen Filigree Sudut Layar Cover */
+.cover-filigree {
+  position: absolute;
+  pointer-events: none;
+  z-index: 2;
+  width: 32px; height: 32px;
+  opacity: 0.35;
+  transition: opacity .4s ease;
+}
+.cover-filigree-tl { top: 12px; left: 12px; }
+.cover-filigree-tr { top: 12px; right: 12px; transform: scaleX(-1); }
+.cover-filigree-bl { bottom: 12px; left: 12px; transform: scaleY(-1); }
+.cover-filigree-br { bottom: 12px; right: 12px; transform: scale(-1); }
 
 /* ═══════════════════════════════════════════════════════════
    PILAR 1: WARKAT SURAT UNDANGAN FISIK MEWAH & SEGEL LILIN 3D
@@ -108,16 +122,22 @@ button, a { -webkit-tap-highlight-color: transparent; }
   align-items: center;
   margin: 0 auto;
   position: relative;
+  z-index: 5;
 }
 
 .royal-letter {
   position: relative;
   width: 100%;
   background: #FFFDF9;
-  border: 1.5px solid var(--gold);
+  background-image: radial-gradient(ellipse at 50% 15%, #FFFFFF 0%, #FFFDF7 60%, #FAF3E6 100%);
+  border: 1.5px solid rgba(200, 169, 95, 0.75);
   border-radius: 18px;
-  padding: 1.5rem 1.25rem 1.35rem;
-  box-shadow: 0 20px 50px rgba(38,21,16,.25), 0 2px 12px rgba(200,169,95,.2);
+  padding: 1.35rem 1.15rem 1.25rem;
+  box-shadow:
+    0 4px 6px -1px rgba(61,35,20,.05),
+    0 12px 28px -4px rgba(61,35,20,.16),
+    0 30px 60px -12px rgba(61,35,20,.22),
+    0 0 0 1px rgba(200,169,95,.2);
   text-align: center;
   transform-style: preserve-3d;
   transition: transform .6s cubic-bezier(.34,1.56,.64,1), box-shadow .6s ease;
@@ -125,34 +145,45 @@ button, a { -webkit-tap-highlight-color: transparent; }
   box-sizing: border-box;
   cursor: pointer;
 }
-/* Lis Ganda Hiasan Emas Dalam Surat */
+/* Bingkai Ganda Emas Halus Dalam Warkat */
 .royal-letter::before {
   content: '';
   position: absolute;
-  inset: 6px;
-  border: 1px dashed rgba(200, 169, 95, 0.4);
+  inset: 5px;
+  border: 1px solid rgba(200, 169, 95, 0.35);
   border-radius: 14px;
   pointer-events: none;
 }
-/* Ornamen Sudut Emas Murni SVG */
+.royal-letter::after {
+  content: '';
+  position: absolute;
+  inset: 9px;
+  border: 1px dashed rgba(200, 169, 95, 0.4);
+  border-radius: 11px;
+  pointer-events: none;
+}
+
+/* Ornamen Sudut Emas Murni SVG (Bintang Faset Kerajaan 4-Sudut dengan Inti Permata) */
 .letter-corner-tl, .letter-corner-tr, .letter-corner-bl, .letter-corner-br {
   position: absolute;
-  width: 12px; height: 12px;
+  width: 13px; height: 13px;
   fill: var(--gold);
   pointer-events: none;
-  opacity: .85;
+  opacity: .9;
+  filter: drop-shadow(0 1px 1px rgba(200,169,95,.3));
+  z-index: 4;
 }
-.letter-corner-tl { top: 11px; left: 12px; }
-.letter-corner-tr { top: 11px; right: 12px; }
-.letter-corner-bl { bottom: 11px; left: 12px; }
-.letter-corner-br { bottom: 11px; right: 12px; }
+.letter-corner-tl { top: 12px; left: 12px; }
+.letter-corner-tr { top: 12px; right: 12px; }
+.letter-corner-bl { bottom: 12px; left: 12px; }
+.letter-corner-br { bottom: 12px; right: 12px; }
 
 /* Pita Emas Melintang & Segel Lilin Merah 3D */
 .wax-seal-ribbon {
   position: relative;
   width: 100%;
   height: 52px;
-  margin: .65rem 0 .75rem;
+  margin: .5rem 0 .65rem;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -162,29 +193,51 @@ button, a { -webkit-tap-highlight-color: transparent; }
 .satin-ribbon {
   position: absolute;
   left: -1.25rem; right: -1.25rem; height: 34px;
-  background: linear-gradient(90deg, transparent, rgba(200,169,95,.4) 12%, rgba(200,169,95,.85) 50%, rgba(200,169,95,.4) 88%, transparent);
-  border-top: 1px solid rgba(255,255,255,.7);
-  border-bottom: 1px solid rgba(255,255,255,.7);
-  box-shadow: 0 4px 12px rgba(0,0,0,.1);
+  background: linear-gradient(90deg, transparent, rgba(200,169,95,.35) 10%, rgba(225,200,145,.8) 30%, rgba(255,248,230,.98) 50%, rgba(225,200,145,.8) 70%, rgba(200,169,95,.35) 90%, transparent);
+  border-top: 1px solid rgba(255,255,255,.9);
+  border-bottom: 1px solid rgba(184,142,62,.45);
+  box-shadow: 0 4px 14px rgba(61,35,20,.12);
   pointer-events: none;
 }
 .wax-seal {
   pointer-events: auto;
   position: relative;
-  width: 60px; height: 60px;
+  width: 62px; height: 62px;
   border-radius: 50%;
-  background: radial-gradient(circle at 35% 35%, #c43c3c, var(--wax-seal), #5c1818);
+  background: radial-gradient(circle at 35% 32%, #db3d3d 0%, #b82525 40%, #7d1515 78%, #4e0d0d 100%);
   border: 2.5px solid rgba(255,255,255,.45);
-  box-shadow: 0 8px 24px rgba(0,0,0,.38), inset 0 2px 4px rgba(255,255,255,.35), inset 0 -2px 4px rgba(0,0,0,.5);
+  box-shadow:
+    0 10px 26px rgba(0,0,0,.38),
+    inset 0 2px 4px rgba(255,255,255,.4),
+    inset 0 -3px 5px rgba(0,0,0,.6);
   cursor: pointer;
   display: flex; align-items: center; justify-content: center;
-  color: #FDF9F3; font-family: 'Cormorant Garamond', serif; font-weight: 700;
-  font-size: 1.25rem; letter-spacing: 1px;
-  transition: transform .25s ease, opacity .4s ease;
+  transition: transform .25s cubic-bezier(.34,1.56,.64,1), opacity .4s ease, box-shadow .25s ease;
   user-select: none;
   animation: pulseGlow 2.5s infinite;
 }
-.wax-seal:hover { transform: scale(1.08); }
+.wax-seal::after {
+  content: '';
+  position: absolute;
+  inset: 4.5px;
+  border: 1.5px solid rgba(255, 230, 180, 0.35);
+  border-radius: 50%;
+  pointer-events: none;
+}
+.wax-seal span {
+  font-family: 'Cormorant Garamond', serif;
+  font-weight: 700;
+  font-size: 1.3rem;
+  letter-spacing: 1px;
+  background: linear-gradient(135deg, #FFF6E0 0%, #E8CD9B 50%, #C8A95F 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  filter: drop-shadow(0 1px 2px rgba(0,0,0,0.7));
+}
+.wax-seal:hover {
+  transform: scale(1.08);
+  box-shadow: 0 12px 30px rgba(0,0,0,.45), 0 0 16px rgba(200,169,95,.4);
+}
 .wax-seal:active { transform: scale(.95); }
 
 /* Animasi Buka Surat */
@@ -630,29 +683,47 @@ section {
        PILAR 1: COVER DENGAN LUXURY 3D ORIGAMI ENVELOPE & SURAT LENGKAP
   ═══════════════════════════════════════════════════════════ -->
   <div id="cover" role="dialog" aria-label="Undangan Pernikahan">
+    <!-- Ornamen Filigree Sudut Layar Cover -->
+    <div class="cover-filigree cover-filigree-tl">
+      <svg viewBox="0 0 60 60" width="32" height="32"><path d="M4 56 C 4 22, 22 4, 56 4 M10 56 C 10 28, 28 10, 56 10 M18 46 C 18 30, 30 18, 46 18" fill="none" stroke="var(--gold)" stroke-width="1.2"/><circle cx="56" cy="4" r="2" fill="var(--gold)"/><circle cx="4" cy="56" r="2" fill="var(--gold)"/></svg>
+    </div>
+    <div class="cover-filigree cover-filigree-tr">
+      <svg viewBox="0 0 60 60" width="32" height="32"><path d="M4 56 C 4 22, 22 4, 56 4 M10 56 C 10 28, 28 10, 56 10 M18 46 C 18 30, 30 18, 46 18" fill="none" stroke="var(--gold)" stroke-width="1.2"/><circle cx="56" cy="4" r="2" fill="var(--gold)"/><circle cx="4" cy="56" r="2" fill="var(--gold)"/></svg>
+    </div>
+    <div class="cover-filigree cover-filigree-bl">
+      <svg viewBox="0 0 60 60" width="32" height="32"><path d="M4 56 C 4 22, 22 4, 56 4 M10 56 C 10 28, 28 10, 56 10 M18 46 C 18 30, 30 18, 46 18" fill="none" stroke="var(--gold)" stroke-width="1.2"/><circle cx="56" cy="4" r="2" fill="var(--gold)"/><circle cx="4" cy="56" r="2" fill="var(--gold)"/></svg>
+    </div>
+    <div class="cover-filigree cover-filigree-br">
+      <svg viewBox="0 0 60 60" width="32" height="32"><path d="M4 56 C 4 22, 22 4, 56 4 M10 56 C 10 28, 28 10, 56 10 M18 46 C 18 30, 30 18, 46 18" fill="none" stroke="var(--gold)" stroke-width="1.2"/><circle cx="56" cy="4" r="2" fill="var(--gold)"/><circle cx="4" cy="56" r="2" fill="var(--gold)"/></svg>
+    </div>
+
     <!-- ═══════════════════════════════════════════════════════════
          PILAR 1: WARKAT SURAT UNDANGAN FISIK KERAJAAN MEWAH (ROYAL LETTER)
     ═══════════════════════════════════════════════════════════ -->
     <div class="royal-letter-scene">
       <div class="royal-letter" id="royal-letter">
-        <!-- Ornamen Sudut Emas Murni SVG -->
-        <svg class="letter-corner-tl" viewBox="0 0 16 16"><path d="M8 0L9.5 6.5L16 8L9.5 9.5L8 16L6.5 9.5L0 8L6.5 6.5L8 0Z"/></svg>
-        <svg class="letter-corner-tr" viewBox="0 0 16 16"><path d="M8 0L9.5 6.5L16 8L9.5 9.5L8 16L6.5 9.5L0 8L6.5 6.5L8 0Z"/></svg>
-        <svg class="letter-corner-bl" viewBox="0 0 16 16"><path d="M8 0L9.5 6.5L16 8L9.5 9.5L8 16L6.5 9.5L0 8L6.5 6.5L8 0Z"/></svg>
-        <svg class="letter-corner-br" viewBox="0 0 16 16"><path d="M8 0L9.5 6.5L16 8L9.5 9.5L8 16L6.5 9.5L0 8L6.5 6.5L8 0Z"/></svg>
+        <!-- Ornamen Sudut Emas Murni SVG (Bintang Faset Kerajaan 4-Sudut dengan Inti Permata) -->
+        <svg class="letter-corner-tl" viewBox="0 0 16 16"><path d="M8 0L9.5 6.5L16 8L9.5 9.5L8 16L6.5 9.5L0 8L6.5 6.5Z"/><circle cx="8" cy="8" r="1.3"/></svg>
+        <svg class="letter-corner-tr" viewBox="0 0 16 16"><path d="M8 0L9.5 6.5L16 8L9.5 9.5L8 16L6.5 9.5L0 8L6.5 6.5Z"/><circle cx="8" cy="8" r="1.3"/></svg>
+        <svg class="letter-corner-bl" viewBox="0 0 16 16"><path d="M8 0L9.5 6.5L16 8L9.5 9.5L8 16L6.5 9.5L0 8L6.5 6.5Z"/><circle cx="8" cy="8" r="1.3"/></svg>
+        <svg class="letter-corner-br" viewBox="0 0 16 16"><path d="M8 0L9.5 6.5L16 8L9.5 9.5L8 16L6.5 9.5L0 8L6.5 6.5Z"/><circle cx="8" cy="8" r="1.3"/></svg>
 
         <!-- Header Warkat Undangan -->
-        <div style="font-size:13px;color:var(--gold);line-height:1;margin-bottom:2px;">﷽</div>
-        <span class="lbl" style="font-size:7.5px;letter-spacing:.25em;margin-bottom:2px;text-align:center;">Walimatul 'Ursy</span>
-        <h1 class="font-cursive" id="cover-names" style="font-size:clamp(1.85rem,7.5vw,2.35rem);color:var(--dark);line-height:1.1;margin:2px 0;">
+        <div style="font-size:15px;color:#B88E3E;line-height:1;margin-bottom:3px;letter-spacing:0.06em;filter:drop-shadow(0 1px 1px rgba(200,169,95,0.25));">﷽</div>
+        <div style="display:flex;align-items:center;justify-content:center;gap:8px;margin-bottom:2px;">
+          <span style="width:16px;height:0.75px;background:linear-gradient(90deg,transparent,var(--gold));"></span>
+          <span class="lbl" style="font-size:7.5px;letter-spacing:.28em;color:var(--accent);font-weight:700;">WALIMATUL 'URSY</span>
+          <span style="width:16px;height:0.75px;background:linear-gradient(90deg,var(--gold),transparent);"></span>
+        </div>
+        <h1 class="font-cursive" id="cover-names" style="font-size:clamp(1.95rem,7.5vw,2.4rem);color:var(--dark);line-height:1.12;margin:2px 0 3px;text-shadow:0 1px 2px rgba(61,35,20,0.1);">
           Rizky &amp; Sinta
         </h1>
-        <p style="font-size:8.5px;font-weight:600;letter-spacing:.15em;text-transform:uppercase;color:var(--muted);margin-bottom:.5rem;" id="cover-date">
+        <p style="font-size:8.5px;font-weight:600;letter-spacing:.2em;text-transform:uppercase;color:var(--muted);margin-bottom:.55rem;" id="cover-date">
           Sabtu, 18 Oktober 2025
         </p>
 
         <!-- Potret Mempelai Berbingkai Arch Emas -->
-        <div class="arch" style="width:90px;height:112px;margin:0 auto .5rem;box-shadow:0 8px 24px rgba(61,35,20,.18);border:3px solid #fff;">
+        <div class="arch" style="width:92px;height:116px;margin:0 auto .5rem;box-shadow:0 10px 26px rgba(61,35,20,.18), 0 0 0 1px rgba(200,169,95,0.45);border:3px solid #fff;">
           <img id="cover-photo" src="images/prewed.jpeg" alt="Mempelai" style="width:100%;height:100%;object-fit:cover;object-position:top;">
         </div>
 
@@ -664,31 +735,35 @@ section {
           </div>
         </div>
 
-        <!-- Plakat Nama Tamu Undangan yang Fleksibel & Rapi -->
-        <div class="letter-guest-plaque" style="background:rgba(200,169,95,0.08);border:1px solid rgba(200,169,95,0.35);border-radius:12px;padding:.65rem .85rem;margin:.25rem 0 .5rem;">
-          <span class="lbl" style="font-size:7px;color:var(--accent);margin-bottom:2px;letter-spacing:.18em;text-align:center;">KEPADA YTH. BAPAK/IBU/SAUDARA/I:</span>
-          <h3 id="guest-name" class="badge-guest-name" style="font-family:'Cormorant Garamond',serif;font-weight:700;color:var(--dark);margin:2px 0;word-break:break-word;">
+        <!-- Plakat Nama Tamu Undangan yang Fleksibel & Rapi (Prestige Cartouche) -->
+        <div class="letter-guest-plaque" style="background:linear-gradient(180deg,#FFFFFF 0%,#FCF8F0 100%);border:1px solid rgba(200,169,95,0.45);box-shadow:0 4px 14px rgba(61,35,20,0.06),inset 0 0 12px rgba(200,169,95,0.06);border-radius:12px;padding:.65rem .85rem;margin:.25rem 0 .5rem;">
+          <span class="lbl" style="font-size:7px;color:var(--accent);margin-bottom:2px;letter-spacing:.22em;text-align:center;font-weight:700;display:block;">KEPADA YTH. BAPAK/IBU/SAUDARA/I:</span>
+          <h3 id="guest-name" class="badge-guest-name" style="font-family:'Cormorant Garamond',serif;font-weight:700;color:var(--dark);margin:2px 0 3px;word-break:break-word;font-size:clamp(1.15rem,4.8vw,1.4rem);line-height:1.22;">
             Tamu Undangan
           </h3>
-          <span style="font-size:7.5px;color:var(--muted);letter-spacing:.12em;text-transform:uppercase;">di Tempat</span>
+          <div style="display:flex;align-items:center;justify-content:center;gap:6px;margin-top:2px;">
+            <span style="width:14px;height:0.75px;background:rgba(200,169,95,0.4);"></span>
+            <span style="font-size:7.5px;color:var(--muted);letter-spacing:.18em;text-transform:uppercase;font-weight:600;">di Tempat</span>
+            <span style="width:14px;height:0.75px;background:rgba(200,169,95,0.4);"></span>
+          </div>
         </div>
 
         <!-- Teks Undangan Santun & Khidmat -->
-        <p style="font-size:9px;color:var(--muted);line-height:1.45;margin-bottom:.2rem;padding:0 .5rem;">
-          Dengan memohon rahmat &amp; berkah Allah SWT, kami mengundang Anda untuk hadir di hari bahagia kami.
+        <p style="font-size:9px;color:var(--muted);line-height:1.5;margin-bottom:.2rem;padding:0 .5rem;font-style:italic;">
+          Dengan memohon rahmat &amp; berkah Allah SWT, kami mengundang Anda untuk hadir dan memberikan doa restu pada hari bahagia kami.
         </p>
       </div>
     </div>
 
     <!-- CTA Buka (Kompak & Elegan) -->
     <div style="width:100%;text-align:center;position:relative;z-index:2;margin-top:.35rem;">
-      <button id="btn-open" class="btn btn-dark" style="max-width:300px;margin:0 auto;box-shadow:0 8px 24px rgba(61,35,20,.25);min-height:46px;">
-        <span style="font-size:10.5px;">Buka Undangan</span>
+      <button id="btn-open" class="btn btn-dark" style="max-width:300px;margin:0 auto;box-shadow:0 10px 28px rgba(36,19,10,0.35),0 2px 8px rgba(200,169,95,0.25);min-height:48px;border:1px solid rgba(200,169,95,0.5);border-radius:9999px;gap:.65rem;">
+        <span style="font-size:11px;font-weight:600;letter-spacing:.16em;text-transform:uppercase;">Buka Undangan</span>
         <svg class="float-y" style="width:1rem;height:1rem;" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M19 14l-7 7-7-7m7 7V3"/>
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.2" d="M19 14l-7 7-7-7m7 7V3"/>
         </svg>
       </button>
-      <p style="text-align:center;font-size:8.5px;color:var(--muted);margin-top:.35rem;letter-spacing:.1em;text-transform:uppercase;">
+      <p style="text-align:center;font-size:8px;color:var(--muted);margin-top:.4rem;letter-spacing:.16em;text-transform:uppercase;font-weight:600;">
         Sentuh segel lilin merah atau tombol di atas
       </p>
     </div>
