@@ -21,12 +21,6 @@
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0/dist/fancybox/fancybox.css">
 
-  <!-- Tailwind (CDN) -->
-  <script src="https://cdn.tailwindcss.com"></script>
-  <script>
-    tailwind.config = { corePlugins: { preflight: false }, theme: { extend: {} } }
-  </script>
-
   <!-- Lenis smooth scroll CSS -->
   <style>html.lenis,html.lenis body{height:auto}.lenis.lenis-smooth{scroll-behavior:auto!important}.lenis.lenis-stopped{overflow:hidden}</style>
 
@@ -81,7 +75,7 @@ button, a { -webkit-tap-highlight-color: transparent; }
 }
 
 /* ═══════════════════════════════════════════════════════════
-   PILAR 1: FLUID 3D ENVELOPE COVER (NO HARDCODED PIXEL BORDERS)
+   PILAR 1: LUXURY 3D ORIGAMI ENVELOPE & COVER EXPERIENCE
 ═══════════════════════════════════════════════════════════ */
 #cover {
   position: fixed;
@@ -92,45 +86,84 @@ button, a { -webkit-tap-highlight-color: transparent; }
   z-index: 200;
   background: var(--bg);
   display: flex; flex-direction: column;
-  align-items: center; justify-content: space-between;
+  align-items: center; justify-content: center;
+  gap: .85rem;
+  padding: 1.25rem 1rem;
   overflow: hidden;
   transition: transform 1.2s cubic-bezier(.77,0,.18,1);
+  box-sizing: border-box;
 }
 #cover.slide-away { transform: translate(-50%, -100%); }
+
+.cover-header {
+  transition: opacity .4s ease, transform .4s ease;
+}
+#cover.is-opening .cover-header {
+  opacity: 0;
+  transform: translateY(-14px);
+  pointer-events: none;
+}
 
 /* 3D Envelope Scene */
 .envelope-scene {
   perspective: 1200px;
-  width: 92%;
-  max-width: 330px;
-  height: 390px;
+  width: 94%;
+  max-width: 340px;
+  height: 230px;
   position: relative;
   display: flex;
-  align-items: flex-end;
+  align-items: center;
   justify-content: center;
   margin: 0 auto;
 }
 .envelope-box {
   position: relative;
   width: 100%;
-  height: 220px;
-  background: var(--envelope-bg);
-  border-radius: 0 0 14px 14px;
+  height: 215px;
+  background: #542205;
+  border-radius: 12px;
   box-shadow: 0 16px 40px rgba(0,0,0,.35);
   transform-style: preserve-3d;
   transition: transform .6s ease;
 }
 
-/* Flap segitiga atas (Fluid SVG/clip-path) */
+/* 1. Sisi Kiri & Kanan Amplop (Origami Wings) */
+.envelope-left-wing {
+  position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+  clip-path: polygon(0 0, 48% 50%, 0 100%);
+  background: #6a2d09;
+  border-radius: 12px 0 0 12px;
+  z-index: 3;
+  pointer-events: none;
+}
+.envelope-right-wing {
+  position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+  clip-path: polygon(100% 0, 52% 50%, 100% 100%);
+  background: #6a2d09;
+  border-radius: 0 12px 12px 0;
+  z-index: 3;
+  pointer-events: none;
+}
+
+/* 2. Saku Bawah Amplop (Pocket Lip) */
+.envelope-bottom-pocket {
+  position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+  clip-path: polygon(0 100%, 50% 36%, 100% 100%);
+  background: #562105;
+  border-radius: 0 0 12px 12px;
+  z-index: 4;
+  pointer-events: none;
+}
+
+/* 3. Flap Segitiga Atas 3D (Menutup ke bawah hingga 58%) */
 .envelope-flap {
-  position: absolute;
-  top: 0; left: 0; width: 100%; height: 135px;
-  background: linear-gradient(180deg, #7c3b12, #6a2f0a);
-  clip-path: polygon(0 0, 100% 0, 50% 100%);
+  position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+  clip-path: polygon(0 0, 100% 0, 50% 58%);
+  background: linear-gradient(180deg, #7e360c, #642807);
   transform-origin: top center;
   transition: transform .8s cubic-bezier(.4, 0, .2, 1);
-  z-index: 5;
-  filter: drop-shadow(0 4px 10px rgba(0,0,0,.3));
+  z-index: 7;
+  filter: drop-shadow(0 6px 12px rgba(0,0,0,.35));
   pointer-events: none;
 }
 .envelope-box.is-open .envelope-flap {
@@ -138,78 +171,71 @@ button, a { -webkit-tap-highlight-color: transparent; }
   z-index: 1;
 }
 
-/* Saku depan amplop (Fluid clip-path) */
-.envelope-pocket {
+/* 4. Badge Plakat Kartu Nama Tamu di Muka Amplop (Di bawah wax seal, tidak tertutup) */
+.envelope-guest-badge {
   position: absolute;
-  bottom: 0; left: 0; width: 100%; height: 155px;
-  background: linear-gradient(0deg, #5e2808, #6f310b);
-  clip-path: polygon(0 100%, 100% 100%, 100% 10%, 50% 65%, 0 10%);
-  border-radius: 0 0 14px 14px;
-  z-index: 4;
-  pointer-events: none;
+  bottom: 8px; left: 14px; right: 14px;
+  background: rgba(253, 249, 243, 0.96);
+  border: 1px solid rgba(200, 169, 95, 0.7);
+  border-radius: 8px;
+  padding: 6px 10px;
+  text-align: center;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.25);
+  z-index: 5;
+}
+.badge-guest-name {
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-weight: 700;
+  color: #3D2314;
+  line-height: 1.25;
+  word-break: break-word;
+  max-height: 48px;
+  overflow-y: auto;
+  margin: 1px 0;
 }
 
-/* Surat fisik undangan di dalam amplop */
+/* 5. Surat Fisik Undangan di Dalam Amplop */
 .envelope-card {
   position: absolute;
-  left: 10px; right: 10px; bottom: 8px;
-  height: 295px;
+  left: 8px; right: 8px; bottom: 8px;
+  height: 195px;
   background: #fffdfa;
-  border-radius: 12px;
-  border: 1px solid rgba(160,82,45,.25);
-  box-shadow: 0 8px 25px rgba(0,0,0,.15);
+  border-radius: 10px;
+  border: 1px solid rgba(200, 169, 95, 0.4);
+  box-shadow: 0 4px 16px rgba(0,0,0,.15);
   z-index: 2;
-  padding: 1.125rem 1rem .875rem;
+  padding: .625rem .5rem;
   display: flex; flex-direction: column; justify-content: space-between; text-align: center;
-  transition: transform .9s cubic-bezier(.34, 1.56, .64, 1) .35s;
+  transition: transform 1s cubic-bezier(.34, 1.56, .64, 1) .35s;
+  cursor: pointer;
 }
 .envelope-box.is-open .envelope-card {
-  transform: translateY(-135px);
+  transform: translateY(-155px);
   z-index: 6;
 }
 
-/* Kotak Nama Tamu di Surat */
-.guest-card-box {
-  background: rgba(160,82,45,.06);
-  border: 1px dashed rgba(160,82,45,.3);
-  border-radius: 8px;
-  padding: .5rem .75rem;
-  margin: .35rem 0;
-  min-height: 52px;
-  display: flex; flex-direction: column; justify-content: center;
-}
-.guest-name-text {
-  font-family: 'Cormorant Garamond', Georgia, serif;
-  font-weight: 700;
-  color: var(--dark);
-  line-height: 1.35;
-  word-break: break-word;
-  max-height: 60px;
-  overflow-y: auto;
-}
-
-/* PILAR 7: WAX SEAL STAMP 3D */
+/* PILAR 7: WAX SEAL STAMP 3D (Berada tepat di ujung flap segitiga 50%) */
 .wax-seal {
   position: absolute;
-  top: 105px; left: 50%;
-  transform: translateX(-50%);
-  width: 54px; height: 54px;
+  top: 50%; left: 50%;
+  transform: translate(-50%, -50%);
+  width: 50px; height: 50px;
   border-radius: 50%;
   background: radial-gradient(circle at 35% 35%, #b23b3b, var(--wax-seal), #5e1919);
-  border: 2px solid rgba(255,255,255,.25);
+  border: 2px solid rgba(255,255,255,.3);
   box-shadow: 0 6px 16px rgba(0,0,0,.45), inset 0 2px 4px rgba(255,255,255,.3), inset 0 -2px 4px rgba(0,0,0,.5);
   z-index: 10;
   cursor: pointer;
   display: flex; align-items: center; justify-content: center;
   color: #FDF9F3; font-family: 'Cormorant Garamond', serif; font-weight: 700;
-  font-size: 1.15rem; letter-spacing: 1px;
-  transition: transform .2s ease, opacity .4s ease;
+  font-size: 1.1rem; letter-spacing: 1px;
+  transition: transform .25s ease, opacity .4s ease;
   user-select: none;
 }
-.wax-seal:hover { transform: translateX(-50%) scale(1.08); }
-.wax-seal:active { transform: translateX(-50%) scale(.95); }
+.wax-seal:hover { transform: translate(-50%, -50%) scale(1.08); }
+.wax-seal:active { transform: translate(-50%, -50%) scale(.95); }
 .envelope-box.is-open .wax-seal {
-  opacity: 0; pointer-events: none; transform: translateX(-50%) scale(0);
+  opacity: 0; pointer-events: none; transform: translate(-50%, -50%) scale(0);
 }
 
 /* ═══════════════════════════════════════════════════════════
@@ -221,6 +247,27 @@ button, a { -webkit-tap-highlight-color: transparent; }
   pointer-events: none;
   z-index: 6;
 }
+
+/* ═══════════════════════════════════════════════════════════
+   MAIN CONTAINER & SECTIONS (BALANCED COMPACT SPACING)
+═══════════════════════════════════════════════════════════ */
+#main {
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity .8s ease;
+  padding-bottom: 4.5rem;
+}
+#main.show {
+  opacity: 1 !important;
+  pointer-events: auto !important;
+}
+
+section {
+  padding: 2.25rem 1.25rem;
+  width: 100%;
+  box-sizing: border-box;
+}
+.text-center { text-align: center; }
 
 /* ═══════════════════════════════════════════════════════════
    TYPOGRAPHY & UTILITIES
@@ -235,38 +282,44 @@ button, a { -webkit-tap-highlight-color: transparent; }
   background: #fff;
   border: 1px solid rgba(160,82,45,.13);
   border-radius: var(--radius);
-  padding: 1.5rem;
-  box-shadow: 0 6px 28px -6px rgba(61,35,20,.08);
+  padding: 1.25rem 1rem;
+  box-shadow: 0 6px 24px -6px rgba(61,35,20,.07);
   position: relative; overflow: hidden;
 }
 .card-dark {
   background: var(--dark);
   border-radius: var(--radius);
-  padding: 1.5rem;
+  padding: 1.25rem 1rem;
   position: relative; overflow: hidden;
 }
 .card-cream {
   background: var(--bg2);
   border-radius: var(--radius);
-  padding: 1.5rem;
+  padding: 1.25rem 1rem;
   position: relative; overflow: hidden;
+}
+.arch {
+  border-radius: 9999px 9999px 45% 45%;
+  overflow: hidden;
+  border: 4px solid #fff;
+  box-shadow: 0 12px 36px -6px rgba(0,0,0,.2);
 }
 .polaroid {
   background: #fff;
-  padding: 10px 10px 44px;
-  box-shadow: 0 16px 40px -8px rgba(0,0,0,.18), 0 4px 12px rgba(0,0,0,.06);
+  padding: 8px 8px 36px;
+  box-shadow: 0 14px 36px -8px rgba(0,0,0,.16), 0 4px 12px rgba(0,0,0,.05);
   position: relative; display: inline-block;
   transform-style: preserve-3d;
 }
-.polaroid img { width: 100%; height: 220px; object-fit: cover; }
+.polaroid img { width: 100%; height: 200px; object-fit: cover; }
 .polaroid-txt {
   font-family: 'Alex Brush', cursive;
-  position: absolute; bottom: 7px; left: 0; right: 0;
-  text-align: center; font-size: 1.35rem; color: var(--dark); line-height: 1;
+  position: absolute; bottom: 6px; left: 0; right: 0;
+  text-align: center; font-size: 1.3rem; color: var(--dark); line-height: 1;
 }
 
 /* Divider & Animations */
-.divider { display: flex; align-items: center; justify-content: center; gap: .75rem; padding: 1.5rem 1.25rem; opacity: .55; }
+.divider { display: flex; align-items: center; justify-content: center; gap: .75rem; padding: .625rem 1.25rem; opacity: .45; }
 .divider .ln { height: 1px; flex: 1; max-width: 4rem; background: var(--accent); }
 .kawung { flex-shrink: 0; fill: var(--accent); animation: spin 28s linear infinite; }
 @keyframes spin { to { transform: rotate(360deg); } }
@@ -275,10 +328,10 @@ button, a { -webkit-tap-highlight-color: transparent; }
 .float-y { animation: floatY 4s ease-in-out infinite; }
 .pulse-glow { animation: pulseGlow 2.5s infinite; }
 
-/* Buttons */
+/* Buttons & Inputs */
 .btn {
   display: flex; align-items: center; justify-content: center; gap: .5rem;
-  width: 100%; min-height: 52px;
+  width: 100%; min-height: 48px;
   border-radius: 9999px; border: none; cursor: pointer;
   font-family: 'Plus Jakarta Sans', sans-serif;
   font-size: 10px; font-weight: 700; letter-spacing: .2em; text-transform: uppercase;
@@ -293,6 +346,24 @@ button, a { -webkit-tap-highlight-color: transparent; }
 .btn-wa { background: #25D366; color: #fff; }
 .btn-wa:hover { opacity: .88; }
 
+.inp {
+  width: 100%;
+  box-sizing: border-box;
+  background: #fff;
+  border: 1px solid rgba(160,82,45,.25);
+  border-radius: var(--radius-sm);
+  padding: .75rem 1rem;
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 13px;
+  color: var(--dark);
+  outline: none;
+  transition: border-color .2s ease, box-shadow .2s ease;
+}
+.inp:focus {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px rgba(160,82,45,.15);
+}
+
 /* ═══════════════════════════════════════════════════════════
    PILAR 5: TACTILE DESK CALENDAR WIDGET NYATA
 ═══════════════════════════════════════════════════════════ */
@@ -301,8 +372,8 @@ button, a { -webkit-tap-highlight-color: transparent; }
   border-radius: var(--radius);
   border: 1px solid rgba(160,82,45,.15);
   box-shadow: 0 10px 32px rgba(61,35,20,.08);
-  padding: 1.5rem 1.25rem;
-  margin-block: 1.5rem;
+  padding: 1.25rem 1rem;
+  margin-block: 1rem;
   width: 100%;
 }
 .calendar-header { text-align: center; margin-bottom: 1rem; }
@@ -569,75 +640,82 @@ button, a { -webkit-tap-highlight-color: transparent; }
   </audio>
 
   <!-- ═══════════════════════════════════════════════════════════
-       PILAR 1: COVER DENGAN 3D ORIGAMI ENVELOPE & SURAT LENGKAP
+       PILAR 1: COVER DENGAN LUXURY 3D ORIGAMI ENVELOPE & SURAT LENGKAP
   ═══════════════════════════════════════════════════════════ -->
   <div id="cover" role="dialog" aria-label="Undangan Pernikahan">
-    <div style="width:100%;text-align:center;padding:2rem 1.5rem 0;position:relative;z-index:2;">
-      <span class="lbl" style="text-align:center;display:block;">Undangan Pernikahan</span>
-      <h1 class="font-cursive" id="cover-names" style="font-size:clamp(2.5rem,11vw,3.5rem);color:var(--dark);line-height:1.05;">
+    <div class="cover-header" style="width:100%;text-align:center;position:relative;z-index:2;">
+      <span class="lbl" style="text-align:center;display:block;font-size:8px;letter-spacing:.25em;margin-bottom:2px;">The Wedding of</span>
+      <h1 class="font-cursive" id="cover-names" style="font-size:clamp(2.35rem,10vw,3.15rem);color:var(--dark);line-height:1;margin:2px 0;">
         Rizky &amp; Sinta
       </h1>
-      <p style="font-size:10px;font-weight:600;letter-spacing:.18em;text-transform:uppercase;color:var(--muted);margin-top:.25rem;" id="cover-date">
+      <p style="font-size:9.5px;font-weight:600;letter-spacing:.15em;text-transform:uppercase;color:var(--muted);" id="cover-date">
         Sabtu, 18 Oktober 2025
       </p>
     </div>
 
-    <!-- 3D Origami Envelope Structure -->
+    <!-- 3D Origami Envelope Structure (Rapat, Presisi, Tanpa Celah Putih) -->
     <div class="envelope-scene">
       <div class="envelope-box" id="envelope-box">
-        <!-- Flap Segitiga 3D Fluid -->
+        <!-- 1. Sisi Lipatan Sayap Kiri & Kanan -->
+        <div class="envelope-left-wing"></div>
+        <div class="envelope-right-wing"></div>
+
+        <!-- 2. Saku Bawah Amplop -->
+        <div class="envelope-bottom-pocket"></div>
+
+        <!-- 3. Flap Segitiga Atas 3D -->
         <div class="envelope-flap"></div>
         
-        <!-- PILAR 7: Wax Seal Stamp 3D -->
+        <!-- 4. PILAR 7: Wax Seal Stamp 3D (Tepat di Ujung Flap Segitiga) -->
         <div class="wax-seal" id="wax-seal-btn" title="Ketuk untuk membuka amplop">
           <span>R&amp;S</span>
         </div>
 
-        <!-- Saku depan amplop fluid -->
-        <div class="envelope-pocket"></div>
+        <!-- 5. Plakat Nama Tamu di Depan Saku Amplop (Di Bawah Wax Seal, Tidak Terhalang) -->
+        <div class="envelope-guest-badge">
+          <span class="lbl" style="font-size:7px;color:var(--accent);margin-bottom:2px;letter-spacing:.15em;">KEPADA YTH. BAPAK/IBU/SAUDARA/I:</span>
+          <h3 id="guest-name" class="badge-guest-name">
+            Tamu Undangan
+          </h3>
+          <span style="font-size:7.5px;color:var(--muted);letter-spacing:.1em;text-transform:uppercase;">di Tempat</span>
+        </div>
 
-        <!-- Surat Fisik Lengkap & Responsif di dalam amplop -->
+        <!-- 6. Surat Fisik Lengkap di dalam amplop (Meluncur naik saat amplop dibuka) -->
         <div class="envelope-card" id="envelope-card">
-          <!-- Monogram & Basmalah -->
-          <div>
-            <div style="font-size:14px;color:var(--gold);margin-bottom:2px;">﷽</div>
-            <span class="lbl" style="font-size:7.5px;letter-spacing:.25em;margin-bottom:0;">Walimatul 'Ursy</span>
-            <h2 class="font-cursive" style="font-size:1.85rem;color:var(--dark);line-height:1;">Rizky &amp; Sinta</h2>
-          </div>
+          <div style="display:flex;flex-direction:column;align-items:center;height:100%;justify-content:space-between;">
+            <div>
+              <div style="font-size:13px;color:var(--gold);line-height:1;">﷽</div>
+              <span class="lbl" style="font-size:7px;letter-spacing:.2em;margin:1px 0;">Walimatul 'Ursy</span>
+              <h2 class="font-cursive" style="font-size:1.55rem;color:var(--dark);line-height:1;">Rizky &amp; Sinta</h2>
+            </div>
+            
+            <!-- Foto Prewedding Mempelai di Surat -->
+            <div class="arch" style="width:74px;height:88px;margin:2px auto;box-shadow:0 4px 12px rgba(0,0,0,.15);border:2.5px solid #fff;">
+              <img id="cover-photo" src="images/prewed.jpeg" alt="Mempelai" style="width:100%;height:100%;object-fit:cover;object-position:top;">
+            </div>
 
-          <!-- Divider emas mini -->
-          <div style="width:2.5rem;height:1px;background:var(--accent);margin:0 auto;opacity:.4;"></div>
+            <!-- Teks Undangan Santun & Lengkap -->
+            <p style="font-size:9px;color:var(--muted);line-height:1.4;padding:0 .25rem;">
+              Dengan memohon rahmat Allah SWT, kami mengundang Anda untuk hadir di hari bahagia kami.
+            </p>
 
-          <!-- Kotak Nama Tamu Yang Rapi & Tidak Mudah Berantakan -->
-          <div class="guest-card-box">
-            <span class="lbl" style="font-size:7.5px;margin-bottom:2px;letter-spacing:.15em;">Kepada Yth. Bapak/Ibu/Saudara/i:</span>
-            <h3 id="guest-name" class="guest-name-text">
-              Tamu Undangan
-            </h3>
-          </div>
-
-          <!-- Pesan Pengantar Santun -->
-          <p style="font-size:9.5px;color:var(--muted);line-height:1.45;padding:0 .25rem;">
-            Tanpa mengurangi rasa hormat, kami mengundang Anda untuk hadir dan memberikan doa restu pada hari bahagia kami.
-          </p>
-
-          <!-- Tanggal & Lokasi Singkat -->
-          <div style="font-size:8.5px;font-weight:700;color:var(--accent);letter-spacing:.12em;text-transform:uppercase;border-top:1px dashed rgba(160,82,45,.2);padding-top:4px;">
-            Sabtu, 18 Oktober 2025 • Jakarta
+            <div style="font-size:8px;font-weight:700;color:var(--accent);letter-spacing:.1em;text-transform:uppercase;border-top:1px dashed rgba(160,82,45,.2);padding-top:3px;width:100%;">
+              Sabtu, 18 Oktober 2025 • Jakarta
+            </div>
           </div>
         </div>
       </div>
     </div>
 
-    <!-- CTA Buka -->
-    <div style="width:100%;padding:0 1.5rem 1.75rem;position:relative;z-index:2;">
-      <button id="btn-open" class="btn btn-dark" style="box-shadow:0 8px 24px rgba(61,35,20,.25);">
-        <span style="font-size:11px;">Buka Undangan</span>
+    <!-- CTA Buka (Kompak & Elegan) -->
+    <div style="width:100%;text-align:center;position:relative;z-index:2;">
+      <button id="btn-open" class="btn btn-dark" style="max-width:300px;margin:0 auto;box-shadow:0 8px 24px rgba(61,35,20,.25);min-height:46px;">
+        <span style="font-size:10px;">Buka Undangan</span>
         <svg class="float-y" style="width:1rem;height:1rem;" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M19 14l-7 7-7-7m7 7V3"/>
         </svg>
       </button>
-      <p style="text-align:center;font-size:9px;color:var(--muted);margin-top:.45rem;letter-spacing:.1em;text-transform:uppercase;">
+      <p style="text-align:center;font-size:8.5px;color:var(--muted);margin-top:.35rem;letter-spacing:.1em;text-transform:uppercase;">
         Sentuh segel lilin merah atau tombol di atas
       </p>
     </div>
@@ -647,30 +725,30 @@ button, a { -webkit-tap-highlight-color: transparent; }
   <!-- ═══════════════════════════════════════════════════════════
        MAIN CONTENT (KAYA, LENGKAP, OTENTIK INDONESIA)
   ═══════════════════════════════════════════════════════════ -->
-  <main id="main" style="opacity:0;pointer-events:none;transition:opacity .7s ease;padding-bottom:5.5rem;">
+  <main id="main">
 
     <!-- ─── HERO ─── -->
-    <section id="hero" style="min-height:100dvh;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:4rem 1.25rem 2rem;">
+    <section id="hero" style="display:flex;flex-direction:column;align-items:center;text-align:center;padding:2rem 1.25rem 1.5rem;">
 
       <!-- Ayat Suci -->
-      <blockquote class="font-serif" style="font-style:italic;color:var(--muted);font-size:.9375rem;max-width:18rem;line-height:1.75;margin-bottom:1.75rem;padding:0 .5rem;">
+      <blockquote class="font-serif" style="font-style:italic;color:var(--muted);font-size:.9rem;max-width:18rem;line-height:1.65;margin-bottom:1.25rem;padding:0 .5rem;">
         <span id="hero-quote-text">"Dan di antara tanda-tanda kekuasaan-Nya ialah Dia menciptakan untukmu istri-istri dari jenismu sendiri, supaya kamu cenderung dan merasa tenteram kepadanya..."</span>
-        <cite id="hero-quote-source" style="display:block;font-style:normal;font-family:'Plus Jakarta Sans',sans-serif;font-size:8px;font-weight:700;letter-spacing:.25em;text-transform:uppercase;color:var(--accent);margin-top:.5rem;">
+        <cite id="hero-quote-source" style="display:block;font-style:normal;font-family:'Plus Jakarta Sans',sans-serif;font-size:8px;font-weight:700;letter-spacing:.25em;text-transform:uppercase;color:var(--accent);margin-top:.4rem;">
           (QS. Ar-Rum: 21)
         </cite>
       </blockquote>
 
       <!-- PILAR 2: Polaroid 3D Tilt -->
-      <div class="polaroid" id="hero-polaroid" data-tilt data-tilt-max="12" data-tilt-glare data-tilt-max-glare="0.25" style="transform:rotate(2deg);margin-bottom:1.75rem;">
+      <div class="polaroid" id="hero-polaroid" data-tilt data-tilt-max="12" data-tilt-glare data-tilt-max-glare="0.25" style="transform:rotate(2deg);margin-bottom:1.25rem;">
         <img id="hero-photo" src="images/prewed.jpeg" alt="Prewedding">
         <span class="polaroid-txt" id="hero-caption">Bersatu Dalam Cinta</span>
       </div>
 
       <!-- Names -->
-      <h2 class="font-cursive" id="hero-names" style="font-size:clamp(2.75rem,13vw,4rem);color:var(--dark);line-height:1.05;margin-bottom:.25rem;">
+      <h2 class="font-cursive" id="hero-names" style="font-size:clamp(2.5rem,11vw,3.5rem);color:var(--dark);line-height:1.05;margin-bottom:.2rem;">
         Rizky &amp; Sinta
       </h2>
-      <p class="lbl" id="hero-date" style="text-align:center;margin-bottom:1.5rem;">
+      <p class="lbl" id="hero-date" style="text-align:center;margin-bottom:1.25rem;">
         Sabtu, 18 Oktober 2025
       </p>
 
@@ -680,7 +758,7 @@ button, a { -webkit-tap-highlight-color: transparent; }
       <div class="calendar-widget" id="calendar-widget">
         <div class="calendar-header">
           <span class="lbl" style="font-size:8px;margin-bottom:2px;">Save The Date</span>
-          <h3 class="font-serif" id="cal-month-title" style="font-size:1.5rem;font-weight:700;color:var(--dark);">
+          <h3 class="font-serif" id="cal-month-title" style="font-size:1.4rem;font-weight:700;color:var(--dark);">
             OKTOBER 2025
           </h3>
         </div>
@@ -689,29 +767,29 @@ button, a { -webkit-tap-highlight-color: transparent; }
         </div>
 
         <!-- Integrated Countdown -->
-        <div style="display:flex;justify-content:center;align-items:center;gap:.75rem;margin-top:1.25rem;padding-top:1rem;border-top:1px dashed rgba(160,82,45,.2);">
+        <div style="display:flex;justify-content:center;align-items:center;gap:.75rem;margin-top:1rem;padding-top:.875rem;border-top:1px dashed rgba(160,82,45,.2);">
           <div style="text-align:center;">
-            <span id="cd-days" class="font-serif" style="font-size:1.75rem;font-weight:700;color:var(--dark);line-height:1;display:block;">00</span>
+            <span id="cd-days" class="font-serif" style="font-size:1.65rem;font-weight:700;color:var(--dark);line-height:1;display:block;">00</span>
             <span style="font-size:8px;text-transform:uppercase;letter-spacing:.15em;color:var(--muted);">Hari</span>
           </div>
-          <span class="font-serif" style="font-size:1.5rem;color:var(--accent);">:</span>
+          <span class="font-serif" style="font-size:1.35rem;color:var(--accent);">:</span>
           <div style="text-align:center;">
-            <span id="cd-hours" class="font-serif" style="font-size:1.75rem;font-weight:700;color:var(--dark);line-height:1;display:block;">00</span>
+            <span id="cd-hours" class="font-serif" style="font-size:1.65rem;font-weight:700;color:var(--dark);line-height:1;display:block;">00</span>
             <span style="font-size:8px;text-transform:uppercase;letter-spacing:.15em;color:var(--muted);">Jam</span>
           </div>
-          <span class="font-serif" style="font-size:1.5rem;color:var(--accent);">:</span>
+          <span class="font-serif" style="font-size:1.35rem;color:var(--accent);">:</span>
           <div style="text-align:center;">
-            <span id="cd-mins" class="font-serif" style="font-size:1.75rem;font-weight:700;color:var(--dark);line-height:1;display:block;">00</span>
+            <span id="cd-mins" class="font-serif" style="font-size:1.65rem;font-weight:700;color:var(--dark);line-height:1;display:block;">00</span>
             <span style="font-size:8px;text-transform:uppercase;letter-spacing:.15em;color:var(--muted);">Menit</span>
           </div>
-          <span class="font-serif" style="font-size:1.5rem;color:var(--accent);">:</span>
+          <span class="font-serif" style="font-size:1.35rem;color:var(--accent);">:</span>
           <div style="text-align:center;">
-            <span id="cd-secs" class="font-serif" style="font-size:1.75rem;font-weight:700;color:var(--dark);line-height:1;display:block;">00</span>
+            <span id="cd-secs" class="font-serif" style="font-size:1.65rem;font-weight:700;color:var(--dark);line-height:1;display:block;">00</span>
             <span style="font-size:8px;text-transform:uppercase;letter-spacing:.15em;color:var(--muted);">Detik</span>
           </div>
         </div>
 
-        <button id="btn-calendar" class="btn btn-outline" style="min-height:44px;margin-top:1rem;font-size:9px;">
+        <button id="btn-calendar" class="btn btn-outline" style="min-height:42px;margin-top:.875rem;font-size:9px;">
           📅 Tambahkan ke Google Calendar
         </button>
       </div>
@@ -729,10 +807,10 @@ button, a { -webkit-tap-highlight-color: transparent; }
         <canvas id="rings-canvas" width="160" height="70" style="width:160px;height:70px;"></canvas>
       </div>
 
-      <div class="text-center" style="margin-bottom:1.75rem;padding:0 .5rem;">
+      <div class="text-center" style="margin-bottom:1.25rem;padding:0 .5rem;">
         <span class="lbl" style="text-align:center;display:block;">Maha Suci Allah</span>
-        <h2 class="section-heading" style="margin-bottom:.5rem;">Pasangan Mempelai</h2>
-        <p style="font-size:11.5px;color:var(--muted);line-height:1.7;max-width:19rem;margin:0 auto;">
+        <h2 class="section-heading" style="margin-bottom:.35rem;">Pasangan Mempelai</h2>
+        <p style="font-size:11.5px;color:var(--muted);line-height:1.65;max-width:19rem;margin:0 auto;">
           Assalamu’alaikum Warahmatullahi Wabarakatuh. Dengan memohon rahmat dan ridho Allah SWT, kami bermaksud menyelenggarakan syukuran pernikahan putra-putri kami:
         </p>
       </div>
@@ -744,8 +822,8 @@ button, a { -webkit-tap-highlight-color: transparent; }
 
 
     <!-- ─── LOVE STORY ─── -->
-    <section id="love-story" style="background:var(--bg2);">
-      <div class="text-center" style="margin-bottom:2.5rem;">
+    <section id="love-story" style="background:var(--bg2);padding:2rem 1.25rem;">
+      <div class="text-center" style="margin-bottom:1.25rem;">
         <span class="lbl" style="text-align:center;display:block;">Kisah Cinta</span>
         <h2 class="section-heading">Perjalanan Kami</h2>
       </div>
@@ -757,25 +835,25 @@ button, a { -webkit-tap-highlight-color: transparent; }
 
 
     <!-- ─── ACARA ─── -->
-    <section id="acara" style="position:relative;overflow:hidden;">
-      <div class="text-center" style="margin-bottom:2rem;">
+    <section id="acara" style="position:relative;overflow:hidden;padding:2rem 1.25rem;">
+      <div class="text-center" style="margin-bottom:1.25rem;">
         <span class="lbl" style="text-align:center;display:block;">Waktu &amp; Tempat</span>
         <h2 class="section-heading">Rangkaian Acara</h2>
       </div>
-      <div id="events-container" style="display:flex;flex-direction:column;gap:1rem;"></div>
+      <div id="events-container" style="display:flex;flex-direction:column;gap:.875rem;"></div>
 
       <!-- ═══════════════════════════════════════════════════════════
            PILAR 11: PANDUAN WARNA BUSANA (DRESS CODE)
       ═══════════════════════════════════════════════════════════ -->
-      <div class="card" style="margin-top:1.5rem;text-align:center;">
+      <div class="card" style="margin-top:1.25rem;text-align:center;">
         <span class="lbl" style="text-align:center;display:block;">Dress Code</span>
-        <h3 class="font-serif" style="font-size:1.35rem;font-weight:700;color:var(--dark);margin-bottom:.5rem;" id="dresscode-title">
+        <h3 class="font-serif" style="font-size:1.35rem;font-weight:700;color:var(--dark);margin-bottom:.35rem;" id="dresscode-title">
           Panduan Busana
         </h3>
-        <p style="font-size:11px;color:var(--muted);line-height:1.6;margin-bottom:1.25rem;" id="dresscode-desc">
+        <p style="font-size:11px;color:var(--muted);line-height:1.55;margin-bottom:1rem;" id="dresscode-desc">
           Kami menyarankan para tamu undangan mengenakan pakaian formal bernuansa warna tanah (Earth Tone).
         </p>
-        <div style="display:flex;justify-content:center;gap:.75rem;flex-wrap:wrap;" id="dresscode-swatches">
+        <div style="display:flex;justify-content:center;gap:.625rem;flex-wrap:wrap;" id="dresscode-swatches">
           <!-- Diisi otomatis oleh JavaScript -->
         </div>
       </div>
@@ -788,11 +866,11 @@ button, a { -webkit-tap-highlight-color: transparent; }
     <!-- ═══════════════════════════════════════════════════════════
          PILAR 4: INFINITE 35MM VINTAGE FILMSTRIP ROLL
     ═══════════════════════════════════════════════════════════ -->
-    <section id="galeri" style="padding:3rem 0;">
-      <div class="text-center" style="margin-bottom:1.5rem;padding:0 1.25rem;">
+    <section id="galeri" style="padding:2rem 0;">
+      <div class="text-center" style="margin-bottom:1rem;padding:0 1.25rem;">
         <span class="lbl" style="text-align:center;display:block;">35mm Analog Roll</span>
         <h2 class="section-heading">Kisah Sinematik</h2>
-        <p style="font-size:10px;color:var(--muted);margin-top:.25rem;">Gulir otomatis • Sentuh untuk memperbesar foto</p>
+        <p style="font-size:10px;color:var(--muted);margin-top:.2rem;">Gulir otomatis • Sentuh untuk memperbesar foto</p>
       </div>
 
       <div class="filmstrip-container" id="filmstrip-container">
@@ -816,31 +894,31 @@ button, a { -webkit-tap-highlight-color: transparent; }
     <!-- ═══════════════════════════════════════════════════════════
          PILAR 9: KOTAK ANGPAO DIGITAL 3D INTERAKTIF
     ═══════════════════════════════════════════════════════════ -->
-    <section id="kasih" style="padding:0 1.25rem 3rem;">
+    <section id="kasih" style="padding:2rem 1.25rem;">
       <div class="angpao-box" id="angpao-envelope">
         <div class="angpao-flap"></div>
         
         <!-- Teaser sebelum dibuka -->
-        <div class="angpao-teaser" style="text-align:center;padding:1rem 0;">
+        <div class="angpao-teaser" style="text-align:center;padding:.75rem 0;">
           <span class="lbl" style="color:var(--gold);display:block;text-align:center;">Tanda Kasih Digital</span>
-          <h3 class="font-serif" style="font-size:1.75rem;font-weight:700;color:#fff;margin-bottom:.5rem;">
+          <h3 class="font-serif" style="font-size:1.65rem;font-weight:700;color:#fff;margin-bottom:.35rem;">
             🧧 Kirim Hadiah &amp; Angpao
           </h3>
-          <p style="font-size:11px;color:rgba(255,255,255,.8);line-height:1.6;margin-bottom:1.25rem;">
+          <p style="font-size:11px;color:rgba(255,255,255,.85);line-height:1.55;margin-bottom:1rem;">
             Ketuk amplop ini untuk membuka nomor rekening &amp; QRIS tanda kasih.
           </p>
-          <div style="display:inline-block;background:var(--gold);color:var(--dark);font-size:9px;font-weight:700;letter-spacing:.2em;text-transform:uppercase;padding:.625rem 1.25rem;border-radius:9999px;">
+          <div style="display:inline-block;background:var(--gold);color:var(--dark);font-size:9px;font-weight:700;letter-spacing:.2em;text-transform:uppercase;padding:.5rem 1.25rem;border-radius:9999px;">
             Ketuk untuk Membuka Amplop
           </div>
         </div>
 
         <!-- Konten setelah dibuka -->
         <div class="angpao-content">
-          <div style="text-align:center;margin-bottom:1.25rem;">
+          <div style="text-align:center;margin-bottom:1rem;">
             <span class="lbl" style="color:var(--gold);display:block;text-align:center;">Terima Kasih</span>
-            <h4 class="font-serif" style="font-size:1.5rem;font-weight:700;color:#fff;">Rekening Hadiah</h4>
+            <h4 class="font-serif" style="font-size:1.4rem;font-weight:700;color:#fff;">Rekening Hadiah</h4>
           </div>
-          <div id="bank-container" style="display:flex;flex-direction:column;gap:.75rem;"></div>
+          <div id="bank-container" style="display:flex;flex-direction:column;gap:.625rem;"></div>
         </div>
       </div>
     </section>
@@ -848,13 +926,13 @@ button, a { -webkit-tap-highlight-color: transparent; }
     <!-- ═══════════════════════════════════════════════════════════
          PILAR 6 & 7: VINTAGE POSTCARD RSVP & WAX SEAL STAMP
     ═══════════════════════════════════════════════════════════ -->
-    <section id="rsvp" style="padding:0 1.25rem 3rem;">
+    <section id="rsvp" style="padding:2rem 1.25rem;">
       <div class="postcard-card" id="postcard-rsvp" data-tilt data-tilt-max="6">
         <!-- Header Kartu Pos -->
-        <div style="display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:1.25rem;border-bottom:1px dashed rgba(160,82,45,.25);padding-bottom:.875rem;">
+        <div style="display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:1rem;border-bottom:1px dashed rgba(160,82,45,.25);padding-bottom:.75rem;">
           <div>
             <span class="font-typewriter" style="font-size:10px;color:var(--accent);letter-spacing:1px;">POST CARD / CARTE POSTALE</span>
-            <h3 class="font-serif" style="font-size:1.6rem;font-weight:700;color:var(--dark);line-height:1.1;">Konfirmasi RSVP</h3>
+            <h3 class="font-serif" style="font-size:1.5rem;font-weight:700;color:var(--dark);line-height:1.1;">Konfirmasi RSVP</h3>
           </div>
           <div style="display:flex;align-items:center;gap:.5rem;">
             <!-- Cap Pos Bulat -->
@@ -872,7 +950,7 @@ button, a { -webkit-tap-highlight-color: transparent; }
         </div>
 
         <!-- Form Kartu Pos -->
-        <form id="rsvp-form" style="display:flex;flex-direction:column;gap:.875rem;">
+        <form id="rsvp-form" style="display:flex;flex-direction:column;gap:.75rem;">
           <div>
             <label style="font-size:9px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.1em;">Nama Lengkap:</label>
             <input id="rsvp-name" class="postal-input" type="text" required placeholder="Tuliskan nama Anda di sini..." autocomplete="name">
@@ -894,16 +972,16 @@ button, a { -webkit-tap-highlight-color: transparent; }
           </div>
 
           <!-- Tombol Segel Lilin Merah 3D -->
-          <div style="display:flex;flex-direction:column;align-items:center;margin-top:1rem;">
-            <button type="submit" id="btn-submit-postcard" class="btn btn-dark" style="background:var(--wax-seal);box-shadow:0 6px 18px rgba(150,45,45,.35);">
+          <div style="display:flex;flex-direction:column;align-items:center;margin-top:.75rem;">
+            <button type="submit" id="btn-submit-postcard" class="btn btn-dark" style="background:var(--wax-seal);box-shadow:0 6px 18px rgba(150,45,45,.35);min-height:46px;">
               <span>💌 Kirim Kartu Pos (Segel Lilin)</span>
             </button>
-            <div id="rsvp-status" style="display:none;text-align:center;background:#fff;color:var(--dark);border:1px solid var(--accent);border-radius:var(--radius-sm);padding:.625rem 1rem;font-size:11px;font-weight:600;margin-top:.75rem;width:100%;"></div>
+            <div id="rsvp-status" style="display:none;text-align:center;background:#fff;color:var(--dark);border:1px solid var(--accent);border-radius:var(--radius-sm);padding:.5rem 1rem;font-size:11px;font-weight:600;margin-top:.625rem;width:100%;"></div>
           </div>
         </form>
 
-        <div style="margin-top:1.25rem;border-top:1px dashed rgba(160,82,45,.2);padding-top:.875rem;">
-          <button id="btn-wa-rsvp" class="btn btn-wa" style="min-height:44px;font-size:9px;">
+        <div style="margin-top:1rem;border-top:1px dashed rgba(160,82,45,.2);padding-top:.75rem;">
+          <button id="btn-wa-rsvp" class="btn btn-wa" style="min-height:42px;font-size:9px;">
             <span>Konfirmasi Langsung via WhatsApp</span>
           </button>
         </div>
@@ -911,25 +989,25 @@ button, a { -webkit-tap-highlight-color: transparent; }
     </section>
 
     <!-- ─── BUKU TAMU & FLYING HEARTS ─── -->
-    <section id="guestbook" style="padding:0 1.25rem 3rem;">
+    <section id="guestbook" style="padding:2rem 1.25rem;">
       <div class="card-cream">
-        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:1.25rem;">
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:1rem;">
           <div>
             <span class="lbl">Pesan Bahagia</span>
             <h2 class="section-heading">Ucapan &amp; Doa</h2>
           </div>
 
           <!-- PILAR 10: Tombol Hati Terbang (Live Flying Hearts) -->
-          <button id="btn-heart-spawner" title="Kirim Hati Cinta" style="background:#fff;border:1.5px solid var(--accent);border-radius:9999px;padding:.5rem .875rem;display:flex;align-items:center;gap:.375rem;cursor:pointer;box-shadow:0 4px 12px rgba(160,82,45,.15);">
-            <span style="font-size:16px;">❤️</span>
+          <button id="btn-heart-spawner" title="Kirim Hati Cinta" style="background:#fff;border:1.5px solid var(--accent);border-radius:9999px;padding:.375rem .75rem;display:flex;align-items:center;gap:.375rem;cursor:pointer;box-shadow:0 4px 12px rgba(160,82,45,.15);">
+            <span style="font-size:15px;">❤️</span>
             <span id="heart-counter" style="font-size:10px;font-weight:700;color:var(--accent);">+1 Cinta</span>
           </button>
         </div>
 
-        <form id="gb-form" style="display:flex;flex-direction:column;gap:.75rem;margin-bottom:1.5rem;">
+        <form id="gb-form" style="display:flex;flex-direction:column;gap:.625rem;margin-bottom:1.25rem;">
           <input id="gb-name" class="inp" type="text" required placeholder="Nama Anda" autocomplete="name">
-          <textarea id="gb-msg" class="inp" rows="3" required placeholder="Tuliskan ucapan dan doa tulus Anda untuk kedua mempelai..." style="resize:none;min-height:80px;"></textarea>
-          <button type="submit" class="btn btn-dark" style="min-height:46px;">
+          <textarea id="gb-msg" class="inp" rows="3" required placeholder="Tuliskan ucapan dan doa tulus Anda untuk kedua mempelai..." style="resize:none;min-height:75px;"></textarea>
+          <button type="submit" class="btn btn-dark" style="min-height:44px;">
             <span>Kirim Pesan Doa</span>
           </button>
         </form>
@@ -939,35 +1017,35 @@ button, a { -webkit-tap-highlight-color: transparent; }
     </section>
 
     <!-- ─── FOOTER ─── -->
-    <footer style="padding:3.5rem 1.25rem 2rem;text-align:center;position:relative;overflow:hidden;">
+    <footer style="padding:2rem 1.25rem 4.5rem;text-align:center;position:relative;overflow:hidden;">
       <div style="position:relative;z-index:1;">
         <span class="lbl" style="text-align:center;display:block;">Sampai Jumpa</span>
-        <h2 class="font-cursive" id="footer-names" style="font-size:2.75rem;color:var(--dark);margin-bottom:.375rem;">Rizky &amp; Sinta</h2>
-        <p id="footer-date" style="font-size:10px;font-weight:600;letter-spacing:.18em;text-transform:uppercase;color:var(--muted);margin-bottom:1.5rem;">Sabtu, 18 Oktober 2025</p>
+        <h2 class="font-cursive" id="footer-names" style="font-size:2.5rem;color:var(--dark);margin-bottom:.25rem;">Rizky &amp; Sinta</h2>
+        <p id="footer-date" style="font-size:10px;font-weight:600;letter-spacing:.18em;text-transform:uppercase;color:var(--muted);margin-bottom:1.25rem;">Sabtu, 18 Oktober 2025</p>
 
         <!-- ═══════════════════════════════════════════════════════════
              PILAR 12: BUILT-IN GUEST WHATSAPP LINK GENERATOR
         ═══════════════════════════════════════════════════════════ -->
-        <div style="background:#fff;border:1px dashed rgba(160,82,45,.25);border-radius:var(--radius);padding:1.25rem 1rem;margin-top:1.5rem;text-align:left;">
-          <div style="display:flex;align-items:center;gap:.5rem;margin-bottom:.5rem;">
+        <div style="background:#fff;border:1px dashed rgba(160,82,45,.25);border-radius:var(--radius);padding:1.25rem 1rem;margin-top:1.25rem;text-align:left;">
+          <div style="display:flex;align-items:center;gap:.5rem;margin-bottom:.35rem;">
             <span style="font-size:16px;">📲</span>
             <span style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:var(--accent);">
               Alat Bantu Pengantin: Buat Link Tamu WA
             </span>
           </div>
-          <p style="font-size:10px;color:var(--muted);line-height:1.5;margin-bottom:.75rem;">
+          <p style="font-size:10px;color:var(--muted);line-height:1.5;margin-bottom:.625rem;">
             Ketik nama tamu di bawah untuk membuat link personal &amp; pesan undangan santun siap kirim ke WhatsApp:
           </p>
-          <input id="wa-gen-name" class="inp" type="text" placeholder="Contoh: Bapak Joko &amp; Istri" style="min-height:42px;font-size:12px;margin-bottom:.625rem;">
+          <input id="wa-gen-name" class="inp" type="text" placeholder="Contoh: Bapak Joko &amp; Istri" style="min-height:40px;font-size:12px;margin-bottom:.5rem;">
           <div style="display:grid;grid-template-columns:1fr 1fr;gap:.5rem;">
-            <button id="btn-wa-copy" class="btn btn-outline" style="min-height:40px;font-size:8px;">
+            <button id="btn-wa-copy" class="btn btn-outline" style="min-height:38px;font-size:8px;">
               📋 Salin Link
             </button>
-            <button id="btn-wa-send" class="btn btn-wa" style="min-height:40px;font-size:8px;">
+            <button id="btn-wa-send" class="btn btn-wa" style="min-height:38px;font-size:8px;">
               💬 Buka WhatsApp
             </button>
           </div>
-          <p id="wa-gen-status" style="font-size:9px;color:var(--accent);font-weight:600;margin-top:.375rem;display:none;"></p>
+          <p id="wa-gen-status" style="font-size:9px;color:var(--accent);font-weight:600;margin-top:.35rem;display:none;"></p>
         </div>
 
         <p style="font-size:8px;font-weight:700;letter-spacing:.25em;text-transform:uppercase;color:rgba(123,100,83,.5);margin-top:2rem;">

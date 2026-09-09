@@ -161,6 +161,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const envelopeBox = document.getElementById('envelope-box');
     const waxSealBtn  = document.getElementById('wax-seal-btn');
     const btnOpen     = document.getElementById('btn-open');
+    const envelopeCard= document.getElementById('envelope-card');
     const cover       = document.getElementById('cover');
     const main        = document.getElementById('main');
     const musicBtn    = document.getElementById('music-btn');
@@ -178,25 +179,23 @@ document.addEventListener('DOMContentLoaded', () => {
       playSFX('seal');
 
       // 1. Amplop membuka flap 3D
-      envelopeBox.classList.add('is-open');
+      if (cover) cover.classList.add('is-opening');
+      if (envelopeBox) envelopeBox.classList.add('is-open');
 
       // 2. Bunyi kertas desiran saat surat naik
       setTimeout(() => playSFX('rustle'), 350);
 
       // 3. Tirai cover meluncur ke atas membuka halaman utama
       setTimeout(() => {
-        cover.classList.add('slide-away');
-        document.body.classList.remove('locked');
-        if (main) main.classList.add('show');
-        playSFX('chime');
-      }, 1200);
+        dismissCover();
+      }, 1600);
 
       // 4. Munculkan kontrol musik & navigasi
       setTimeout(() => {
         if (musicBtn) musicBtn.classList.add('show');
         if (floatNav) floatNav.classList.add('show');
         if (waShare)  waShare.classList.add('show');
-      }, 1800);
+      }, 2100);
 
       // 5. Putar musik latar
       if (bgMusic) {
@@ -206,11 +205,29 @@ document.addEventListener('DOMContentLoaded', () => {
       }
 
       // 6. Inisialisasi Lenis smooth scroll
-      setTimeout(() => initLenis(), 1500);
+      setTimeout(() => initLenis(), 1800);
     }
 
-    if (waxSealBtn) waxSealBtn.addEventListener('click', openEnvelope);
-    if (btnOpen)    btnOpen.addEventListener('click', openEnvelope);
+    function dismissCover() {
+      if (cover) cover.classList.add('slide-away');
+      document.body.classList.remove('locked');
+      if (main) {
+        main.classList.add('show');
+        main.style.opacity = '1';
+        main.style.pointerEvents = 'auto';
+      }
+      playSFX('chime');
+    }
+
+    if (waxSealBtn)   waxSealBtn.addEventListener('click', openEnvelope);
+    if (btnOpen)      btnOpen.addEventListener('click', openEnvelope);
+    if (envelopeCard) envelopeCard.addEventListener('click', () => {
+      if (envelopeBox && envelopeBox.classList.contains('is-open')) {
+        dismissCover();
+      } else {
+        openEnvelope();
+      }
+    });
   })();
 
   /* ═══════════════════════════════════════════════════════════
@@ -909,6 +926,12 @@ document.addEventListener('DOMContentLoaded', () => {
     if (qText && C.quote.text)   qText.textContent = `"${C.quote.text}"`;
     if (qSrc  && C.quote.source) qSrc.textContent  = C.quote.source;
   }
+
+  // Cover & Hero Photos
+  const cp = document.getElementById('cover-photo');
+  if (cp && C.coverPhoto) cp.src = C.coverPhoto;
+  const hp = document.getElementById('hero-photo');
+  if (hp && C.heroPhoto) hp.src = C.heroPhoto;
 
   const yr = document.getElementById('year');
   if (yr) yr.textContent = new Date().getFullYear();
