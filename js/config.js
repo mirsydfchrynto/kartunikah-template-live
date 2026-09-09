@@ -1,49 +1,43 @@
 /**
  * ╔══════════════════════════════════════════════════════════════════════════╗
- * ║                  KARTUNIKAH — PUSAT KONTROL UNDANGAN                     ║
- * ║         Semua kustomisasi (Warna, Teks, Foto, Musik, Acara)             ║
+ * ║                  KARTUNIKAH — PUSAT KONTROL MASTERPIECE                  ║
+ * ║     Semua Pengaturan (Warna, Teks, Foto, Audio 8D, Kalender, Angpao)     ║
  * ║                   CUKUP DIUBAH DI FILE INI SAJA!                         ║
  * ╚══════════════════════════════════════════════════════════════════════════╝
  *
  * 💡 PANDUAN CEPAT:
  * 1. NAMA TAMU:
- *    - Default: diatur pada `defaultGuestName` di bawah ini.
- *    - Per Tamu (Personal): Tambahkan `?to=Nama+Tamu` di akhir link web saat disebar di WhatsApp!
- *      Contoh: https://link-undangan.com/?to=Bapak+Budi+Santoso
+ *    - Default: diatur pada `defaultGuestName`.
+ *    - Personal: Gunakan fitur "Generator WhatsApp" di footer website ini untuk
+ *      membuat link otomatis per tamu (?to=Nama+Tamu) dan langsung kirim ke chat WA!
  * 2. GANTI FOTO:
- *    - Masukkan file foto ke folder `images/`
- *    - Lalu ganti nama filenya di bagian `coverPhoto`, `heroPhoto`, `groom.photo`, `bride.photo`.
- * 3. GANTI WARNA:
- *    - Cukup ganti kode HEX (contoh: `#A0522D`) di bagian `theme` di bawah.
+ *    - Letakkan file foto di folder `images/` lalu sesuaikan path di bawah.
+ * 3. GANTI WARNA & TEMA:
+ *    - Ganti kode warna HEX di bagian `theme`.
  */
 
 const CONFIG = {
 
   // ════════════════════════════════════════════════════════════════════════
-  // 💌 1. NAMA TAMU DEFAULT (Jika membuka link tanpa ?to=...)
+  // 💌 1. NAMA TAMU DEFAULT (Jika link dibuka polosan tanpa ?to=...)
   // ════════════════════════════════════════════════════════════════════════
   defaultGuestName: 'Tamu Undangan',
 
 
   // ════════════════════════════════════════════════════════════════════════
-  // 🎨 2. TEMA WARNA (Ganti kode hex sesuai konsep pernikahan)
+  // 🎨 2. TEMA WARNA (Dapat disesuaikan dengan palet pernikahan Anda)
   // ════════════════════════════════════════════════════════════════════════
-  /*
-   * 🌟 REKOMENDASI KOMBINASI WARNA POPULER:
-   * • Etnik Jawa / Terracotta : primaryBg: '#FDF9F3', accentColor: '#A0522D', darkColor: '#3D2314'
-   * • Emerald / Sage Green   : primaryBg: '#F4F8F5', accentColor: '#2D6A4F', darkColor: '#1B4332'
-   * • Dusty Rose / Mauve     : primaryBg: '#FCF5F7', accentColor: '#C27088', darkColor: '#4A2833'
-   * • Navy & Gold            : primaryBg: '#F8F9FD', accentColor: '#C8A95F', darkColor: '#1A2B4C'
-   */
   theme: {
-    primaryBg:    '#FDF9F3',   // Latar belakang halaman utama
-    sectionBg:    '#F4EDE2',   // Latar belakang section selingan (Kisah Cinta, Doa)
-    accentColor:  '#A0522D',   // Warna aksen tombol, garis, dan highlight (Terracotta)
+    primaryBg:    '#FDF9F3',   // Latar belakang utama (Ivory/Krem)
+    sectionBg:    '#F4EDE2',   // Latar belakang section selingan
+    accentColor:  '#A0522D',   // Aksen utama (Terracotta / Sienna)
     darkColor:    '#3D2314',   // Warna teks utama & kartu gelap
-    mutedColor:   '#7B6453',   // Warna teks keterangan/sekunder
-    goldColor:    '#C8A95F',   // Warna emas ornamen
-    outerBg:      '#261510',   // Warna background di luar layar HP (pada layar desktop)
-    petalColors:  ['#F0C4A0', '#E8AE8A', '#FAE0C8', '#D9B98A'], // Warna kelopak bunga gugur
+    mutedColor:   '#7B6453',   // Warna teks sekunder / keterangan
+    goldColor:    '#C8A95F',   // Warna emas ornamen & bintang
+    outerBg:      '#261510',   // Warna background di luar layar HP (pada desktop)
+    envelopeColor:'#8B4513',   // Warna kertas amplop 3D (Saddle Brown / Terracotta)
+    waxSealColor: '#962D2D',   // Warna cap segel lilin merah 3D
+    petalColors:  ['#F0C4A0', '#E8AE8A', '#FAE0C8', '#D9B98A'], // Warna kelopak bunga gugur 3D
   },
 
 
@@ -57,8 +51,8 @@ const CONFIG = {
     motherName:   'Ibu Hj. Sri Wahyuni',
     instagram:    '@rizky.pratama',
     photo:        'images/prewed.jpeg',
-    photoCrop:    '30% 15%',   // Posisi fokus wajah (object-position CSS: horizontal vertikal)
-    photoScale:   '1.5',       // Zoom foto profil jika pakai foto berdua
+    photoCrop:    '30% 15%',   // Posisi fokus wajah (object-position CSS)
+    photoScale:   '1.5',       // Skala pembesaran foto
   },
 
 
@@ -72,17 +66,17 @@ const CONFIG = {
     motherName:   'Ibu Dra. Endang Lestari',
     instagram:    '@sinta.rahayu',
     photo:        'images/prewed.jpeg',
-    photoCrop:    '70% 15%',   // Posisi fokus wajah
-    photoScale:   '1.5',       // Zoom foto
+    photoCrop:    '70% 15%',
+    photoScale:   '1.5',
   },
 
 
   // ════════════════════════════════════════════════════════════════════════
-  // 📅 5. TANGGAL PERNIKAHAN & HITUNG MUNDUR
+  // 📅 5. TANGGAL PERNIKAHAN & HITUNG MUNDUR (Otomatis hitung kalender)
   // ════════════════════════════════════════════════════════════════════════
-  weddingDate:        '2025-10-18T08:30:00', // Format: TAHUN-BULAN-TANGGALTJAM:MENIT:DETIK
+  weddingDate:        '2025-10-18T08:30:00', // Format: YYYY-MM-DDTHH:mm:ss
   weddingDateDisplay: 'Sabtu, 18 Oktober 2025',
-  calendarStart:      '20251018T013000Z',   // Format Google Calendar UTC (YYYYMMDDTHHmmssZ)
+  calendarStart:      '20251018T013000Z',   // Format UTC Google Calendar
   calendarEnd:        '20251018T100000Z',
 
 
@@ -96,7 +90,7 @@ const CONFIG = {
 
 
   // ════════════════════════════════════════════════════════════════════════
-  // 📍 7. RANGKAIAN ACARA (Bisa tambah atau kurangi sesi acara)
+  // 📍 7. RANGKAIAN ACARA (Bisa ditambah/dikurangi sesuai kebutuhan)
   // ════════════════════════════════════════════════════════════════════════
   events: [
     {
@@ -107,7 +101,7 @@ const CONFIG = {
       venue:     'Masjid Agung Al-Azhar',
       address:   'Jl. Sisingamangaraja, Kebayoran Baru, Jakarta Selatan',
       mapsUrl:   'https://maps.google.com/maps?q=Masjid+Al+Azhar+Jakarta',
-      cardStyle: 'light',  // Pilihan: 'light' (kartu putih) atau 'dark' (kartu gelap)
+      cardStyle: 'light',  // 'light' (kartu terang) atau 'dark' (kartu gelap)
     },
     {
       subtitle:  'Perayaan Cinta',
@@ -123,7 +117,23 @@ const CONFIG = {
 
 
   // ════════════════════════════════════════════════════════════════════════
-  // 💑 8. KISAH CINTA (Love Story Timeline)
+  // 👗 8. PANDUAN WARNA BUSANA (DRESS CODE SWATCHES)
+  // ════════════════════════════════════════════════════════════════════════
+  dressCode: {
+    title:       'Panduan Busana (Dress Code)',
+    description: 'Kami menyarankan para tamu undangan mengenakan pakaian formal bernuansa warna tanah (Earth Tone) yang selaras.',
+    colors: [
+      { name: 'Terracotta', hex: '#A0522D' },
+      { name: 'Warm Cream', hex: '#EED9C4' },
+      { name: 'Sage Green', hex: '#879F84' },
+      { name: 'Champagne',  hex: '#D9C5A0' },
+      { name: 'Muted Gold', hex: '#C8A95F' },
+    ]
+  },
+
+
+  // ════════════════════════════════════════════════════════════════════════
+  // 💑 9. KISAH CINTA (Love Story Timeline)
   // ════════════════════════════════════════════════════════════════════════
   loveStory: [
     {
@@ -148,40 +158,50 @@ const CONFIG = {
 
 
   // ════════════════════════════════════════════════════════════════════════
-  // 📸 9. ALBUM GALERI FOTO (Bisa link online atau path foto lokal 'images/...')
+  // 🎞️ 10. ALBUM ROL FILM 35MM (Foto untuk Filmstrip Roll & FancyBox)
   // ════════════════════════════════════════════════════════════════════════
   gallery: [
     {
       src:     'https://images.unsplash.com/photo-1606800052052-a08af7148866?w=1200&q=85',
       thumb:   'https://images.unsplash.com/photo-1606800052052-a08af7148866?w=600&q=75',
       caption: 'Prewedding di Kebun Teh',
+      filmDate:'18 OCT 2025'
     },
     {
       src:     'https://images.unsplash.com/photo-1519741497674-611481863552?w=1200&q=85',
       thumb:   'https://images.unsplash.com/photo-1519741497674-611481863552?w=600&q=75',
       caption: 'Momen Berdua di Pantai',
+      filmDate:'18 OCT 2025'
     },
     {
       src:     'https://images.unsplash.com/photo-1583939003579-730e3918a45a?w=1200&q=85',
       thumb:   'https://images.unsplash.com/photo-1583939003579-730e3918a45a?w=600&q=75',
       caption: 'Cincin Pertunangan',
+      filmDate:'18 OCT 2025'
     },
     {
       src:     'https://images.unsplash.com/photo-1520854221256-17451cc331bf?w=1200&q=85',
       thumb:   'https://images.unsplash.com/photo-1520854221256-17451cc331bf?w=600&q=75',
       caption: 'Malam Sebelum Hari H',
+      filmDate:'18 OCT 2025'
     },
     {
       src:     'https://images.unsplash.com/photo-1604928135898-0c306d8fc9ba?w=1200&q=85',
       thumb:   'https://images.unsplash.com/photo-1604928135898-0c306d8fc9ba?w=600&q=75',
       caption: 'Pelaminan yang Indah',
+      filmDate:'18 OCT 2025'
     },
   ],
 
 
   // ════════════════════════════════════════════════════════════════════════
-  // 💳 10. REKENING BANK & HADIAH DIGITAL (Bisa tambah rekening lain)
+  // 🧧 11. ANGPAO DIGITAL 3D & REKENING BANK
   // ════════════════════════════════════════════════════════════════════════
+  angpao: {
+    title:       'Amplop Digital & Tanda Kasih',
+    description: 'Doa restu Anda merupakan hadiah terindah bagi kami. Namun jika ingin memberikan tanda kasih secara digital, silakan ketuk amplop di bawah ini:',
+    qrisImage:   '', // Kosongkan jika tidak memakai QRIS, atau isi 'images/qris.jpg'
+  },
   bankAccounts: [
     {
       bank:          'Bank BCA',
@@ -197,33 +217,35 @@ const CONFIG = {
 
 
   // ════════════════════════════════════════════════════════════════════════
-  // 📱 11. PENGATURAN WHATSAPP (RSVP & Tombol Bagikan)
+  // 🎧 12. AUDIO & EFEK SUARA SPASIAL 8D
+  // ════════════════════════════════════════════════════════════════════════
+  musicUrl:     'audio/janji-suci.mp3', // File lagu latar
+  sfxEnabled:   true,                   // Suara prosedural (kertas amplop, segel lilin, lonceng)
+  coverPhoto:   'images/prewed.jpeg',   // Foto di kartu undangan
+  heroPhoto:    'images/prewed.jpeg',   // Foto polaroid beranda
+
+
+  // ════════════════════════════════════════════════════════════════════════
+  // 📱 13. PENGATURAN WHATSAPP & GENERATOR UNDANGAN TAMU
   // ════════════════════════════════════════════════════════════════════════
   whatsapp: {
-    rsvpNumber:  '6281234567890',  // Nomor HP penerima pesan konfirmasi tamu (gunakan format 62...)
-    shareText:   'Assalamu\'alaikum, kami mengundang Anda ke pernikahan kami 💍',
+    rsvpNumber:  '6281234567890', // Nomor WA penerima RSVP (format: 62...)
+    shareText:   'Assalamu\'alaikum, kami mengundang Anda untuk hadir di hari pernikahan kami 💍',
+    // Draf pesan yang otomatis disiapkan oleh "Generator Tautan Tamu WhatsApp":
+    invitationTemplate: `Assalamu'alaikum Warahmatullahi Wabarakatuh,\n\nKepada Yth. *{nama_tamu}*,\n\nTanpa mengurangi rasa hormat, perkenankan kami mengundang Bapak/Ibu/Saudara/i untuk menghadiri hari bahagia pernikahan kami:\n\n*Ahmad Rizky Pratama & Dewi Sinta Rahayu*\n\nInformasi lengkap dan konfirmasi kehadiran dapat diakses melalui tautan undangan digital berikut:\n👉 {link_undangan}\n\nMerupakan suatu kehormatan dan kebahagiaan bagi kami apabila Bapak/Ibu/Saudara/i berkenan hadir dan memberikan doa restu.\n\nTerima kasih,\n*Rizky & Sinta*`
   },
 
 
   // ════════════════════════════════════════════════════════════════════════
-  // 🎵 12. MUSIK LATAR & FOTO UTAMA
-  // ════════════════════════════════════════════════════════════════════════
-  musicUrl:   'audio/janji-suci.mp3', // Path lagu mp3
-  coverPhoto: 'images/prewed.jpeg',    // Foto di halaman sampul pembuka (bingkai Arch)
-  heroPhoto:  'images/prewed.jpeg',    // Foto di section beranda (bingkai Polaroid)
-
-
-  // ════════════════════════════════════════════════════════════════════════
-  // 💬 13. PESAN AWAL BUKU TAMU (Ucapan & Doa Demo)
+  // 💬 14. PESAN DEMO BUKU TAMU
   // ════════════════════════════════════════════════════════════════════════
   mockMessages: [
-    { name: 'Budi & Rina Santoso',   message: 'Selamat menempuh hidup baru! Semoga menjadi keluarga yang sakinah, mawaddah wa rahmah. Barakallahu lakuma 🤲' },
-    { name: 'Pak Hendra Wijaya',     message: 'Alhamdulillah, akhirnya jadi juga! Selamat ya Rizky dan Sinta. Semoga langgeng dan segera dikaruniai momongan.' },
-    { name: 'Anisa & Keluarga',      message: 'Doa kami selalu menyertai kalian. Jadilah pasangan yang saling mendukung dan menguatkan. Aamiin 🙏' },
-    { name: 'Tim Arsitek Nusantara', message: 'Selamat bahagia Mas Rizky! Undangannya cantik banget. Nanti kami hadir semua ya! 🎉' },
+    { name: 'Budi & Rina Santoso',   message: 'Selamat menempuh hidup baru! Semoga menjadi keluarga yang sakinah, mawaddah wa rahmah. Barakallahu lakuma 🤲', likes: 12 },
+    { name: 'Pak Hendra Wijaya',     message: 'Alhamdulillah, akhirnya jadi juga! Selamat ya Rizky dan Sinta. Semoga langgeng dan segera dikaruniai momongan.', likes: 8 },
+    { name: 'Anisa & Keluarga',      message: 'Doa kami selalu menyertai kalian. Jadilah pasangan yang saling mendukung dan menguatkan. Aamiin 🙏', likes: 15 },
+    { name: 'Tim Arsitek Nusantara', message: 'Selamat bahagia Mas Rizky! Undangannya cantik dan sangat interaktif. Nanti kami hadir semua ya! 🎉', likes: 20 },
   ],
 
 };
 
-// Buat objek CONFIG dapat diakses secara global oleh script.js
 window.CONFIG = CONFIG;
