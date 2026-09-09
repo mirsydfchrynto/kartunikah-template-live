@@ -1,8 +1,8 @@
 /**
  * ╔══════════════════════════════════════════════════════════════════════════╗
  * ║         KARTUNIKAH — ENGINE MASTERPIECE 2D / 3D / 8D                     ║
- * ║   Semua 12 Pilar Inovasi: Amplop 3D, Kalender Meja, Rol Film 35mm,       ║
- * ║   Kartu Pos Pos Udara, Angpao 3D, Audio Spasial 8D & SFX Prosedural      ║
+ * ║   Semua 12 Pilar Inovasi: Surat Kerajaan, Kalender Meja, Marquee Galeri,  ║
+ * ║   Kartu Pos Pos Udara, Tanda Kasih Digital, Audio Spasial 8D & SFX       ║
  * ╚══════════════════════════════════════════════════════════════════════════╝
  */
 'use strict';
@@ -155,13 +155,12 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   /* ═══════════════════════════════════════════════════════════
-     3. PILAR 1: 3D ORIGAMI ENVELOPE OPENING EXPERIENCE
+     3. PILAR 1: WARKAT SURAT KERAJAAN MEWAH & SEGEL LILIN 3D
   ═══════════════════════════════════════════════════════════ */
-  (function init3DEnvelope() {
-    const envelopeBox = document.getElementById('envelope-box');
+  (function initCoverLetter() {
+    const royalLetter = document.getElementById('royal-letter');
     const waxSealBtn  = document.getElementById('wax-seal-btn');
     const btnOpen     = document.getElementById('btn-open');
-    const envelopeCard= document.getElementById('envelope-card');
     const cover       = document.getElementById('cover');
     const main        = document.getElementById('main');
     const musicBtn    = document.getElementById('music-btn');
@@ -170,32 +169,31 @@ document.addEventListener('DOMContentLoaded', () => {
     const bgMusic     = document.getElementById('bg-music');
     let isOpening     = false;
 
-    function openEnvelope() {
+    function openInvitation() {
       if (isOpening) return;
       isOpening = true;
 
-      // Haptic & Sound Segel
+      // Haptic & Sound Segel Lilin
       triggerHaptic([30, 40, 50]);
       playSFX('seal');
 
-      // 1. Amplop membuka flap 3D
+      // 1. Animasi membuka surat kerajaan (segel memudar, warkat terangkat anggun)
       if (cover) cover.classList.add('is-opening');
-      if (envelopeBox) envelopeBox.classList.add('is-open');
 
-      // 2. Bunyi kertas desiran saat surat naik
-      setTimeout(() => playSFX('rustle'), 350);
+      // 2. Bunyi kertas desiran halus
+      setTimeout(() => playSFX('rustle'), 300);
 
       // 3. Tirai cover meluncur ke atas membuka halaman utama
       setTimeout(() => {
         dismissCover();
-      }, 1600);
+      }, 750);
 
       // 4. Munculkan kontrol musik & navigasi
       setTimeout(() => {
         if (musicBtn) musicBtn.classList.add('show');
         if (floatNav) floatNav.classList.add('show');
         if (waShare)  waShare.classList.add('show');
-      }, 2100);
+      }, 1100);
 
       // 5. Putar musik latar
       if (bgMusic) {
@@ -205,7 +203,7 @@ document.addEventListener('DOMContentLoaded', () => {
       }
 
       // 6. Inisialisasi Lenis smooth scroll
-      setTimeout(() => initLenis(), 1800);
+      setTimeout(() => initLenis(), 1000);
     }
 
     function dismissCover() {
@@ -219,15 +217,9 @@ document.addEventListener('DOMContentLoaded', () => {
       playSFX('chime');
     }
 
-    if (waxSealBtn)   waxSealBtn.addEventListener('click', openEnvelope);
-    if (btnOpen)      btnOpen.addEventListener('click', openEnvelope);
-    if (envelopeCard) envelopeCard.addEventListener('click', () => {
-      if (envelopeBox && envelopeBox.classList.contains('is-open')) {
-        dismissCover();
-      } else {
-        openEnvelope();
-      }
-    });
+    if (waxSealBtn)  waxSealBtn.addEventListener('click', (e) => { e.stopPropagation(); openInvitation(); });
+    if (btnOpen)     btnOpen.addEventListener('click', (e) => { e.stopPropagation(); openInvitation(); });
+    if (royalLetter) royalLetter.addEventListener('click', () => openInvitation());
   })();
 
   /* ═══════════════════════════════════════════════════════════
@@ -454,30 +446,38 @@ document.addEventListener('DOMContentLoaded', () => {
   })();
 
   /* ═══════════════════════════════════════════════════════════
-     8. PILAR 4: INFINITE 35MM VINTAGE FILMSTRIP ROLL
+     8. PILAR 4: LUXURY CINEMATIC MARQUEE GALLERY
   ═══════════════════════════════════════════════════════════ */
   (function initFilmstripGallery() {
-    const track = document.getElementById('filmstrip-track');
+    const track = document.getElementById('gallery-marquee-track') || document.getElementById('filmstrip-track');
     if (!track || !C.gallery) return;
 
-    // Masukkan 2 set foto agar loop berjalan mulus tanpa celah
+    // Gandakan array 2x untuk infinite seamless marquee roll
     const photos = [...C.gallery, ...C.gallery];
     track.innerHTML = '';
 
-    photos.forEach((item, idx) => {
-      const frame = document.createElement('div');
-      frame.className = 'film-frame';
-      frame.innerHTML = `
-        <a href="${item.src}" data-fancybox="filmstrip" data-caption="${item.caption || ''}">
-          <img src="${item.thumb || item.src}" alt="${item.caption || 'Foto'}" loading="lazy">
+    photos.forEach((item) => {
+      const card = document.createElement('div');
+      card.className = 'gallery-card';
+      const imgSrc  = item.thumb || item.src;
+      const fullSrc = item.src || item.thumb;
+      const caption = item.caption || 'Momen Bahagia';
+      const dateStr = item.filmDate || '18 OKT 2025';
+
+      card.innerHTML = `
+        <a href="${fullSrc}" data-fancybox="gallery" data-caption="${caption}" style="display:block;width:100%;height:100%;text-decoration:none;">
+          <img class="gallery-card-img" src="${imgSrc}" alt="${caption}" loading="lazy" onerror="this.onerror=null;this.src='images/prewed.jpeg';">
+          <div class="gallery-card-info">
+            <span class="gallery-card-caption">${caption}</span>
+            <span class="gallery-card-date">${dateStr}</span>
+          </div>
         </a>
-        <span class="film-date-stamp">${item.filmDate || '18 OCT 2025'}</span>
       `;
-      track.appendChild(frame);
+      track.appendChild(card);
     });
 
     if (typeof Fancybox !== 'undefined') {
-      Fancybox.bind('[data-fancybox="filmstrip"]', { animated: true });
+      Fancybox.bind('[data-fancybox="gallery"]', { animated: true });
     }
   })();
 
@@ -510,23 +510,24 @@ document.addEventListener('DOMContentLoaded', () => {
   })();
 
   /* ═══════════════════════════════════════════════════════════
-     10. PILAR 9: KOTAK ANGPAO DIGITAL 3D INTERAKTIF
+     10. PILAR 9: KADO & TANDA KASIH DIGITAL INTERAKTIF
   ═══════════════════════════════════════════════════════════ */
-  (function init3DAngpao() {
-    const angpaoBox = document.getElementById('angpao-envelope');
+  (function initTandaKasih() {
+    const giftBox = document.getElementById('gift-envelope');
     const bankContainer = document.getElementById('bank-container');
-    if (!angpaoBox || !bankContainer) return;
+    if (!giftBox || !bankContainer) return;
 
-    angpaoBox.addEventListener('click', (e) => {
+    giftBox.addEventListener('click', (e) => {
       if (e.target.closest('.bank-copy')) return; // Jangan toggle jika klik tombol salin
-      angpaoBox.classList.toggle('is-opened');
+      giftBox.classList.toggle('is-opened');
       triggerHaptic(25);
       playSFX('rustle');
     });
 
-    // Render daftar rekening
+    // Render daftar rekening & tanda kasih
     bankContainer.innerHTML = '';
-    (C.bankAccounts || []).forEach(acc => {
+    const accounts = C.tandaKasih?.bankAccounts || C.bankAccounts || [];
+    accounts.forEach(acc => {
       const row = document.createElement('div');
       row.style.cssText = 'background:rgba(255,255,255,0.12);border-radius:var(--radius-sm);padding:.875rem 1rem;display:flex;align-items:center;justify-content:space-between;gap:.75rem;border:1px solid rgba(255,255,255,0.2);';
       row.innerHTML = `

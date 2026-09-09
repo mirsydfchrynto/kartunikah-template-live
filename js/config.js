@@ -1,7 +1,7 @@
 /**
  * ╔══════════════════════════════════════════════════════════════════════════╗
  * ║                  KARTUNIKAH — PUSAT KONTROL MASTERPIECE                  ║
- * ║     Semua Pengaturan (Warna, Teks, Foto, Audio 8D, Kalender, Angpao)     ║
+ * ║  Semua Pengaturan (Warna, Teks, Foto, Audio 8D, Kalender, Tanda Kasih) ║
  * ║                   CUKUP DIUBAH DI FILE INI SAJA!                         ║
  * ╚══════════════════════════════════════════════════════════════════════════╝
  *
@@ -158,7 +158,7 @@ const CONFIG = {
 
 
   // ════════════════════════════════════════════════════════════════════════
-  // 🎞️ 10. ALBUM ROL FILM 35MM (Foto untuk Filmstrip Roll & FancyBox)
+  // 🎞️ 10. ALBUM FOTO KISAH SINEMATIK (Galeri Berjalan & FancyBox)
   // ════════════════════════════════════════════════════════════════════════
   gallery: [
     {
@@ -182,24 +182,30 @@ const CONFIG = {
     {
       src:     'https://images.unsplash.com/photo-1520854221256-17451cc331bf?w=1200&q=85',
       thumb:   'https://images.unsplash.com/photo-1520854221256-17451cc331bf?w=600&q=75',
-      caption: 'Malam Sebelum Hari H',
+      caption: 'Malam Sebelum Hari Bahagia',
       filmDate:'18 OCT 2025'
     },
     {
-      src:     'https://images.unsplash.com/photo-1604928135898-0c306d8fc9ba?w=1200&q=85',
-      thumb:   'https://images.unsplash.com/photo-1604928135898-0c306d8fc9ba?w=600&q=75',
-      caption: 'Pelaminan yang Indah',
+      src:     'https://images.unsplash.com/photo-1511285560929-80b456fea0bc?w=1200&q=85',
+      thumb:   'https://images.unsplash.com/photo-1511285560929-80b456fea0bc?w=600&q=75',
+      caption: 'Senyum Bahagia Bersama',
+      filmDate:'18 OCT 2025'
+    },
+    {
+      src:     'https://images.unsplash.com/photo-1465495976277-4387d4b0b4c6?w=1200&q=85',
+      thumb:   'https://images.unsplash.com/photo-1465495976277-4387d4b0b4c6?w=600&q=75',
+      caption: 'Janji Suci Selamanya',
       filmDate:'18 OCT 2025'
     },
   ],
 
 
   // ════════════════════════════════════════════════════════════════════════
-  // 🧧 11. ANGPAO DIGITAL 3D & REKENING BANK
+  // 🎁 11. KADO & TANDA KASIH DIGITAL (REKENING BANK)
   // ════════════════════════════════════════════════════════════════════════
-  angpao: {
-    title:       'Amplop Digital & Tanda Kasih',
-    description: 'Doa restu Anda merupakan hadiah terindah bagi kami. Namun jika ingin memberikan tanda kasih secara digital, silakan ketuk amplop di bawah ini:',
+  tandaKasih: {
+    title:       'Kado & Tanda Kasih Digital',
+    description: 'Doa restu Anda merupakan karunia terindah bagi kami. Namun jika ingin memberikan tanda kasih secara digital, silakan ketuk amplop di bawah ini:',
     qrisImage:   '', // Kosongkan jika tidak memakai QRIS, atau isi 'images/qris.jpg'
   },
   bankAccounts: [
@@ -245,7 +251,7 @@ const CONFIG = {
     { name: 'Anisa & Keluarga',      message: 'Doa kami selalu menyertai kalian. Jadilah pasangan yang saling mendukung dan menguatkan. Aamiin 🙏', likes: 15 },
     { name: 'Tim Arsitek Nusantara', message: 'Selamat bahagia Mas Rizky! Undangannya cantik dan sangat interaktif. Nanti kami hadir semua ya! 🎉', likes: 20 },
   ],
-
 };
 
+CONFIG.angpao = CONFIG.tandaKasih; // Alias kompatibilitas
 window.CONFIG = CONFIG;
