@@ -551,7 +551,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const num = btn.dataset.num;
         const orig = btn.textContent;
         const done = () => {
-          btn.textContent = '✅ Disalin!';
+          btn.textContent = 'Tersalin';
           setTimeout(() => btn.textContent = orig, 2000);
         };
         if (navigator.clipboard && window.isSecureContext) {
@@ -585,7 +585,7 @@ document.addEventListener('DOMContentLoaded', () => {
       const attendVal = document.getElementById('rsvp-attend')?.value;
 
       submitBtn.disabled = true;
-      submitBtn.innerHTML = '<span>Menyegel Kartu Pos...</span>';
+      submitBtn.innerHTML = '<span>Menyimpan Konfirmasi...</span>';
 
       await new Promise(r => setTimeout(r, 800));
 
@@ -599,14 +599,14 @@ document.addEventListener('DOMContentLoaded', () => {
       if (statusEl) {
         statusEl.style.display = 'block';
         statusEl.textContent = attendVal === 'hadir'
-          ? `💌 Terima kasih ${nameVal}! Kartu pos kehadiran Anda telah tersimpan rapi.`
-          : `🙏 Terima kasih ${nameVal}. Doa tulus Anda sangat berarti bagi kami.`;
+          ? `Terima kasih Bapak/Ibu/Saudara/i ${nameVal}. Konfirmasi kehadiran Anda telah tersimpan dengan rapi.`
+          : `Terima kasih Bapak/Ibu/Saudara/i ${nameVal}. Doa tulus Anda sangat berarti bagi kami.`;
         setTimeout(() => statusEl.style.display = 'none', 8000);
       }
 
       form.reset();
       submitBtn.disabled = false;
-      submitBtn.innerHTML = '<span>💌 Kirim Kartu Pos (Segel Lilin)</span>';
+      submitBtn.innerHTML = '<svg style="width:14px;height:14px;" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg><span>Kirim Konfirmasi Kehadiran</span>';
     });
 
     if (waBtn) {
@@ -618,7 +618,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const g = C.groom?.shortName || 'Rizky';
         const b = C.bride?.shortName  || 'Sinta';
         const status = attendVal === 'hadir' ? '*hadir*' : attendVal === 'tidak' ? '*tidak dapat hadir*' : '*hadir*';
-        const msg = `Assalamu'alaikum Warahmatullahi Wabarakatuh,\n\nSaya *${nameVal}*, mengonfirmasi bahwa saya ${status} pada acara pernikahan *${g} & ${b}*.\n\nTerima kasih atas undangannya 🙏`;
+        const msg = `Assalamu'alaikum Warahmatullahi Wabarakatuh,\n\nSaya *${nameVal}*, mengonfirmasi bahwa saya ${status} pada acara pernikahan *${g} & ${b}*.\n\nTerima kasih atas undangannya.`;
         window.open(`https://wa.me/${C.whatsapp?.rsvpNumber || ''}?text=${encodeURIComponent(msg)}`, '_blank');
       });
     }
@@ -633,26 +633,26 @@ document.addEventListener('DOMContentLoaded', () => {
     let count = 0;
     if (!btn) return;
 
-    const heartEmojis = ['❤️', '💖', '💕', '✨', '💐', '🥰'];
+    const heartColors = ['#A0522D', '#C8A95F', '#C43C3C', '#D9B98A'];
 
     btn.addEventListener('click', (e) => {
       count++;
-      if (counterEl) counterEl.textContent = `+${count} Cinta`;
+      if (counterEl) counterEl.textContent = `+${count} Doa`;
       triggerHaptic(15);
       playSFX('heart');
 
-      // Munculkan 3-4 hati sekaligus dengan lintasan acak
+      // Munculkan 3 hati vektor estetis sekaligus dengan lintasan acak
       for (let i = 0; i < 3; i++) {
         const heart = document.createElement('div');
         heart.className = 'flying-heart';
-        heart.textContent = heartEmojis[Math.floor(Math.random() * heartEmojis.length)];
+        const col = heartColors[Math.floor(Math.random() * heartColors.length)];
+        heart.innerHTML = `<svg viewBox="0 0 24 24" width="20" height="20" style="fill:${col};filter:drop-shadow(0 2px 6px rgba(0,0,0,0.15));"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>`;
         const rect = btn.getBoundingClientRect();
         const startX = rect.left + rect.width / 2 + (Math.random() - 0.5) * 40;
         const startY = rect.top;
 
         heart.style.left = `${startX}px`;
         heart.style.top = `${startY}px`;
-        heart.style.fontSize = `${Math.floor(Math.random() * 12 + 18)}px`;
         document.body.appendChild(heart);
 
         setTimeout(() => heart.remove(), 2400);
@@ -661,54 +661,7 @@ document.addEventListener('DOMContentLoaded', () => {
   })();
 
   /* ═══════════════════════════════════════════════════════════
-     13. PILAR 12: BUILT-IN GUEST WHATSAPP LINK GENERATOR
-  ═══════════════════════════════════════════════════════════ */
-  (function initWAGenerator() {
-    const input = document.getElementById('wa-gen-name');
-    const btnCopy = document.getElementById('btn-wa-copy');
-    const btnSend = document.getElementById('btn-wa-send');
-    const statusEl = document.getElementById('wa-gen-status');
-    if (!input || !btnCopy || !btnSend) return;
-
-    function getGeneratedData() {
-      const rawName = input.value.trim() || 'Tamu Undangan';
-      const encodedName = encodeURIComponent(rawName);
-      const baseUrl = location.origin + location.pathname;
-      const customUrl = `${baseUrl}?to=${encodedName}`;
-
-      const tpl = C.whatsapp?.invitationTemplate ||
-        `Kepada Yth. *{nama_tamu}*,\nKami mengundang Anda ke pernikahan kami:\n👉 {link_undangan}`;
-
-      const fullMessage = tpl
-        .replace(/{nama_tamu}/g, rawName)
-        .replace(/{link_undangan}/g, customUrl);
-
-      return { customUrl, fullMessage };
-    }
-
-    btnCopy.addEventListener('click', () => {
-      triggerHaptic(20);
-      playSFX('chime');
-      const { customUrl } = getGeneratedData();
-      navigator.clipboard.writeText(customUrl).then(() => {
-        if (statusEl) {
-          statusEl.style.display = 'block';
-          statusEl.textContent = '✅ Link undangan berhasil disalin ke clipboard!';
-          setTimeout(() => statusEl.style.display = 'none', 3000);
-        }
-      });
-    });
-
-    btnSend.addEventListener('click', () => {
-      triggerHaptic(20);
-      playSFX('chime');
-      const { fullMessage } = getGeneratedData();
-      window.open(`https://wa.me/?text=${encodeURIComponent(fullMessage)}`, '_blank');
-    });
-  })();
-
-  /* ═══════════════════════════════════════════════════════════
-     14. MEMPELAI & LOVE STORY RENDERER
+     13. MEMPELAI & LOVE STORY RENDERER
   ═══════════════════════════════════════════════════════════ */
   (function renderMempelai() {
     const container = document.getElementById('mempelai-container');
@@ -755,7 +708,7 @@ document.addEventListener('DOMContentLoaded', () => {
           <h4 class="font-serif" style="font-size:1.1rem;font-weight:700;color:var(--dark);margin-bottom:.375rem;">${item.title}</h4>
           <p style="font-size:11px;color:var(--muted);line-height:1.7;">${item.desc}</p>
         </div>`;
-      const dotHTML = `<div class="timeline-dot">${item.icon || '♥'}</div>`;
+      const dotHTML = `<div class="timeline-dot" style="font-family:'Cormorant Garamond',serif;font-weight:700;font-size:1.15rem;">${item.icon || 'I'}</div>`;
       if (isLeft) {
         row.innerHTML = `<div style="padding-right:.75rem;">${cardHTML}</div>${dotHTML}<div></div>`;
       } else {
@@ -766,7 +719,7 @@ document.addEventListener('DOMContentLoaded', () => {
   })();
 
   /* ═══════════════════════════════════════════════════════════
-     15. RENDER EVENTS (RANGKAIAN ACARA)
+     14. RENDER EVENTS (RANGKAIAN ACARA)
   ═══════════════════════════════════════════════════════════ */
   (function renderEvents() {
     const container = document.getElementById('events-container');
@@ -793,15 +746,16 @@ document.addEventListener('DOMContentLoaded', () => {
           <p style="font-weight:700;font-size:.875rem;color:${tc};">${ev.venue}</p>
           <p style="font-size:10px;color:${sc};line-height:1.65;margin-bottom:1.5rem;padding:0 .25rem;">${ev.address}</p>
           <a href="${ev.mapsUrl}" target="_blank" rel="noopener"
-            class="btn" style="min-height:48px;background:${btnBg};color:${btnCol};border:1px solid ${bc};text-decoration:none;">
-            📍 Buka Google Maps
+            class="btn" style="min-height:46px;background:${btnBg};color:${btnCol};border:1px solid ${bc};text-decoration:none;gap:.5rem;">
+            <svg style="width:14px;height:14px;" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
+            <span>Petunjuk Lokasi (Google Maps)</span>
           </a>
         </div>`);
     });
   })();
 
   /* ═══════════════════════════════════════════════════════════
-     16. BUKU TAMU & COUNTDOWN
+     15. BUKU TAMU & COUNTDOWN
   ═══════════════════════════════════════════════════════════ */
   (function initGuestbook() {
     const list = document.getElementById('gb-list');
@@ -813,7 +767,10 @@ document.addEventListener('DOMContentLoaded', () => {
       div.innerHTML = `
         <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:4px;">
           <p style="font-size:9px;font-weight:700;letter-spacing:.15em;text-transform:uppercase;color:var(--accent);">${name}</p>
-          <button class="gb-like-btn" style="background:none;border:none;cursor:pointer;font-size:10px;color:var(--muted);">❤️ <span>${likes}</span></button>
+          <button class="gb-like-btn" style="background:none;border:none;cursor:pointer;font-size:10px;color:var(--muted);display:flex;align-items:center;gap:4px;">
+            <svg style="width:11px;height:11px;fill:var(--accent);" viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
+            <span>${likes}</span>
+          </button>
         </div>
         <p style="font-size:11px;color:var(--dark);line-height:1.65;">${msg}</p>
       `;

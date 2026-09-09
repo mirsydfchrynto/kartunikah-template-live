@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover">
   <title>Undangan Pernikahan — Rizky &amp; Sinta</title>
   <meta name="description" content="Dengan penuh rasa syukur, kami mengundang Anda untuk merayakan momen bahagia pernikahan kami.">
-  <meta property="og:title"       content="The Wedding of Rizky &amp; Sinta ✨">
+  <meta property="og:title"       content="The Wedding of Rizky &amp; Sinta">
   <meta property="og:description" content="Sabtu, 18 Oktober 2025 — Buka undangan digital kami.">
   <meta property="og:image"       content="https://mirsydfchrynto.github.io/kartunikah-template-live/images/prewed.jpeg">
   <meta property="og:url"         content="https://mirsydfchrynto.github.io/kartunikah-template-live/">
@@ -134,14 +134,13 @@ button, a { -webkit-tap-highlight-color: transparent; }
   border-radius: 14px;
   pointer-events: none;
 }
-/* Ornamen Sudut Emas ⚜ */
+/* Ornamen Sudut Emas Murni SVG */
 .letter-corner-tl, .letter-corner-tr, .letter-corner-bl, .letter-corner-br {
   position: absolute;
-  font-size: 13px;
-  color: var(--gold);
-  line-height: 1;
+  width: 12px; height: 12px;
+  fill: var(--gold);
   pointer-events: none;
-  opacity: .8;
+  opacity: .85;
 }
 .letter-corner-tl { top: 11px; left: 12px; }
 .letter-corner-tr { top: 11px; right: 12px; }
@@ -359,9 +358,12 @@ section {
   animation: pulseGlow 2s infinite;
 }
 .cal-date.wedding-day::after {
-  content: '❤️';
-  position: absolute; top: -7px; right: -4px;
-  font-size: 10px;
+  content: '';
+  position: absolute; top: 3px; right: 4px;
+  width: 5px; height: 5px;
+  background: var(--gold);
+  border-radius: 50%;
+  box-shadow: 0 0 4px rgba(255,255,255,.9);
 }
 
 /* ═══════════════════════════════════════════════════════════
@@ -633,11 +635,11 @@ section {
     ═══════════════════════════════════════════════════════════ -->
     <div class="royal-letter-scene">
       <div class="royal-letter" id="royal-letter">
-        <!-- Ornamen Sudut Kerajaan ⚜ -->
-        <div class="letter-corner-tl">⚜</div>
-        <div class="letter-corner-tr">⚜</div>
-        <div class="letter-corner-bl">⚜</div>
-        <div class="letter-corner-br">⚜</div>
+        <!-- Ornamen Sudut Emas Murni SVG -->
+        <svg class="letter-corner-tl" viewBox="0 0 16 16"><path d="M8 0L9.5 6.5L16 8L9.5 9.5L8 16L6.5 9.5L0 8L6.5 6.5L8 0Z"/></svg>
+        <svg class="letter-corner-tr" viewBox="0 0 16 16"><path d="M8 0L9.5 6.5L16 8L9.5 9.5L8 16L6.5 9.5L0 8L6.5 6.5L8 0Z"/></svg>
+        <svg class="letter-corner-bl" viewBox="0 0 16 16"><path d="M8 0L9.5 6.5L16 8L9.5 9.5L8 16L6.5 9.5L0 8L6.5 6.5L8 0Z"/></svg>
+        <svg class="letter-corner-br" viewBox="0 0 16 16"><path d="M8 0L9.5 6.5L16 8L9.5 9.5L8 16L6.5 9.5L0 8L6.5 6.5L8 0Z"/></svg>
 
         <!-- Header Warkat Undangan -->
         <div style="font-size:13px;color:var(--gold);line-height:1;margin-bottom:2px;">﷽</div>
@@ -760,8 +762,9 @@ section {
           </div>
         </div>
 
-        <button id="btn-calendar" class="btn btn-outline" style="min-height:42px;margin-top:.875rem;font-size:9px;">
-          📅 Tambahkan ke Google Calendar
+        <button id="btn-calendar" class="btn btn-outline" style="min-height:42px;margin-top:.875rem;font-size:9.5px;gap:.5rem;">
+          <svg style="width:14px;height:14px;" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
+          <span>Simpan Tanggal ke Google Calendar</span>
         </button>
       </div>
 
@@ -866,7 +869,7 @@ section {
         <div class="gift-teaser" style="text-align:center;padding:.75rem 0;">
           <span class="lbl" style="color:var(--gold);display:block;text-align:center;">Kado &amp; Hadiah Digital</span>
           <h3 class="font-serif" style="font-size:1.65rem;font-weight:700;color:#fff;margin-bottom:.35rem;">
-            🎁 Kado &amp; Tanda Kasih
+            Kado &amp; Tanda Kasih
           </h3>
           <p style="font-size:11px;color:rgba(255,255,255,.88);line-height:1.55;margin-bottom:1rem;">
             Doa restu Anda adalah hadiah terindah. Bagi yang berkenan memberikan tanda kasih, silakan ketuk kotak ini.
@@ -929,24 +932,26 @@ section {
             <div>
               <label style="font-size:9px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.1em;">Kepastian:</label>
               <select id="rsvp-attend" class="postal-input" required style="font-weight:600;">
-                <option value="" disabled selected>Hadir?</option>
-                <option value="hadir">✅ Ya, Hadir</option>
-                <option value="tidak">❌ Titip Doa</option>
+                <option value="" disabled selected>Konfirmasi Kehadiran</option>
+                <option value="hadir">Hadir</option>
+                <option value="tidak">Berhalangan Hadir</option>
               </select>
             </div>
           </div>
 
           <!-- Tombol Segel Lilin Merah 3D -->
           <div style="display:flex;flex-direction:column;align-items:center;margin-top:.75rem;">
-            <button type="submit" id="btn-submit-postcard" class="btn btn-dark" style="background:var(--wax-seal);box-shadow:0 6px 18px rgba(150,45,45,.35);min-height:46px;">
-              <span>💌 Kirim Kartu Pos (Segel Lilin)</span>
+            <button type="submit" id="btn-submit-postcard" class="btn btn-dark" style="background:var(--wax-seal);box-shadow:0 6px 18px rgba(150,45,45,.35);min-height:46px;gap:.5rem;">
+              <svg style="width:14px;height:14px;" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>
+              <span>Kirim Konfirmasi Kehadiran</span>
             </button>
             <div id="rsvp-status" style="display:none;text-align:center;background:#fff;color:var(--dark);border:1px solid var(--accent);border-radius:var(--radius-sm);padding:.5rem 1rem;font-size:11px;font-weight:600;margin-top:.625rem;width:100%;"></div>
           </div>
         </form>
 
         <div style="margin-top:1rem;border-top:1px dashed rgba(160,82,45,.2);padding-top:.75rem;">
-          <button id="btn-wa-rsvp" class="btn btn-wa" style="min-height:42px;font-size:9px;">
+          <button id="btn-wa-rsvp" class="btn btn-wa" style="min-height:42px;font-size:9px;gap:.5rem;">
+            <svg style="width:14px;height:14px;fill:currentColor;" viewBox="0 0 24 24"><path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981z"/></svg>
             <span>Konfirmasi Langsung via WhatsApp</span>
           </button>
         </div>
@@ -962,10 +967,10 @@ section {
             <h2 class="section-heading">Ucapan &amp; Doa</h2>
           </div>
 
-          <!-- PILAR 10: Tombol Hati Terbang (Live Flying Hearts) -->
-          <button id="btn-heart-spawner" title="Kirim Hati Cinta" style="background:#fff;border:1.5px solid var(--accent);border-radius:9999px;padding:.375rem .75rem;display:flex;align-items:center;gap:.375rem;cursor:pointer;box-shadow:0 4px 12px rgba(160,82,45,.15);">
-            <span style="font-size:15px;">❤️</span>
-            <span id="heart-counter" style="font-size:10px;font-weight:700;color:var(--accent);">+1 Cinta</span>
+          <!-- Tombol Doa & Restu (Live Floating Hearts) -->
+          <button id="btn-heart-spawner" title="Kirim Doa &amp; Restu" style="background:#fff;border:1.5px solid rgba(160,82,45,.25);border-radius:9999px;padding:.375rem .85rem;display:flex;align-items:center;gap:.4rem;cursor:pointer;box-shadow:0 4px 12px rgba(160,82,45,.12);">
+            <svg style="width:13px;height:13px;fill:var(--accent);" viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
+            <span id="heart-counter" style="font-size:10px;font-weight:700;color:var(--accent);letter-spacing:.05em;">Kirim Doa</span>
           </button>
         </div>
 
@@ -982,39 +987,20 @@ section {
     </section>
 
     <!-- ─── FOOTER ─── -->
-    <footer style="padding:2rem 1.25rem 4.5rem;text-align:center;position:relative;overflow:hidden;">
+    <footer style="padding:2.5rem 1.25rem 5rem;text-align:center;position:relative;overflow:hidden;">
       <div style="position:relative;z-index:1;">
         <span class="lbl" style="text-align:center;display:block;">Sampai Jumpa</span>
-        <h2 class="font-cursive" id="footer-names" style="font-size:2.5rem;color:var(--dark);margin-bottom:.25rem;">Rizky &amp; Sinta</h2>
-        <p id="footer-date" style="font-size:10px;font-weight:600;letter-spacing:.18em;text-transform:uppercase;color:var(--muted);margin-bottom:1.25rem;">Sabtu, 18 Oktober 2025</p>
+        <h2 class="font-cursive" id="footer-names" style="font-size:2.65rem;color:var(--dark);margin-bottom:.35rem;">Rizky &amp; Sinta</h2>
+        <p id="footer-date" style="font-size:10px;font-weight:600;letter-spacing:.18em;text-transform:uppercase;color:var(--muted);margin-bottom:1.5rem;">Sabtu, 18 Oktober 2025</p>
 
-        <!-- ═══════════════════════════════════════════════════════════
-             PILAR 12: BUILT-IN GUEST WHATSAPP LINK GENERATOR
-        ═══════════════════════════════════════════════════════════ -->
-        <div style="background:#fff;border:1px dashed rgba(160,82,45,.25);border-radius:var(--radius);padding:1.25rem 1rem;margin-top:1.25rem;text-align:left;">
-          <div style="display:flex;align-items:center;gap:.5rem;margin-bottom:.35rem;">
-            <span style="font-size:16px;">📲</span>
-            <span style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:var(--accent);">
-              Alat Bantu Pengantin: Buat Link Tamu WA
-            </span>
-          </div>
-          <p style="font-size:10px;color:var(--muted);line-height:1.5;margin-bottom:.625rem;">
-            Ketik nama tamu di bawah untuk membuat link personal &amp; pesan undangan santun siap kirim ke WhatsApp:
-          </p>
-          <input id="wa-gen-name" class="inp" type="text" placeholder="Contoh: Bapak Joko &amp; Istri" style="min-height:40px;font-size:12px;margin-bottom:.5rem;">
-          <div style="display:grid;grid-template-columns:1fr 1fr;gap:.5rem;">
-            <button id="btn-wa-copy" class="btn btn-outline" style="min-height:38px;font-size:8px;">
-              📋 Salin Link
-            </button>
-            <button id="btn-wa-send" class="btn btn-wa" style="min-height:38px;font-size:8px;">
-              💬 Buka WhatsApp
-            </button>
-          </div>
-          <p id="wa-gen-status" style="font-size:9px;color:var(--accent);font-weight:600;margin-top:.35rem;display:none;"></p>
-        </div>
+        <p style="font-family:'Cormorant Garamond',serif;font-style:italic;font-size:1.05rem;color:var(--muted);max-width:18rem;margin:0 auto 1.5rem;line-height:1.6;">
+          Merupakan suatu kehormatan dan kebahagiaan bagi kami apabila Bapak/Ibu/Saudara/i berkenan hadir dan memberikan doa restu.
+        </p>
 
-        <p style="font-size:8px;font-weight:700;letter-spacing:.25em;text-transform:uppercase;color:rgba(123,100,83,.5);margin-top:2rem;">
-          &copy; <span id="year"></span> Kartunikah Digital Template
+        <div class="divider" style="opacity:.3;margin-bottom:1.5rem;"><div class="ln"></div><svg class="kawung" style="width:1rem;height:1rem;" viewBox="0 0 100 100"><path d="M50 0C60 30 70 40 100 50 70 60 60 70 50 100 40 70 30 60 0 50 30 40 40 30 50 0Z"/></svg><div class="ln"></div></div>
+
+        <p style="font-size:8.5px;font-weight:700;letter-spacing:.25em;text-transform:uppercase;color:rgba(123,100,83,.55);">
+          &copy; <span id="year"></span> The Wedding of Rizky &amp; Sinta
         </p>
       </div>
     </footer>
