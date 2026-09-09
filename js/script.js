@@ -32,12 +32,31 @@ document.addEventListener('DOMContentLoaded', () => {
   })();
 
   /* ═══════════════════════════════════════════════════════════
-     1. GUEST NAME DARI URL (?to=Nama+Tamu)
+     1. GUEST NAME DARI URL (?to=Nama+Tamu) DENGAN AUTO FONT SCALING
   ═══════════════════════════════════════════════════════════ */
   const rawGuest  = new URLSearchParams(location.search).get('to');
   const guestName = rawGuest ? decodeURIComponent(rawGuest.replace(/\+/g, ' ')) : (C.defaultGuestName || 'Tamu Undangan');
   const guestDisplay = document.getElementById('guest-name');
-  if (guestDisplay) guestDisplay.textContent = guestName;
+  if (guestDisplay) {
+    guestDisplay.textContent = guestName;
+    // Dynamic font scaling untuk nama tamu yang sangat panjang agar tidak berantakan
+    if (guestName.length > 60) {
+      guestDisplay.style.fontSize = '12px';
+      guestDisplay.style.lineHeight = '1.3';
+    } else if (guestName.length > 35) {
+      guestDisplay.style.fontSize = '13.5px';
+      guestDisplay.style.lineHeight = '1.35';
+    } else {
+      guestDisplay.style.fontSize = 'clamp(14px, 3.8vw, 17px)';
+      guestDisplay.style.lineHeight = '1.35';
+    }
+  }
+
+  // Pre-fill nama di form RSVP jika tamu membuka link personal
+  const rsvpNameInput = document.getElementById('rsvp-name');
+  if (rsvpNameInput && rawGuest) {
+    rsvpNameInput.value = guestName;
+  }
 
   /* ═══════════════════════════════════════════════════════════
      2. PILAR 3: WEB AUDIO API — 8D SPATIAL & PROCEDURAL SFX

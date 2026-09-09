@@ -21,7 +21,7 @@
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0/dist/fancybox/fancybox.css">
 
-  <!-- Tailwind (CDN — utility classes only) -->
+  <!-- Tailwind (CDN) -->
   <script src="https://cdn.tailwindcss.com"></script>
   <script>
     tailwind.config = { corePlugins: { preflight: false }, theme: { extend: {} } }
@@ -48,7 +48,7 @@ img { display: block; max-width: 100%; }
 button, a { -webkit-tap-highlight-color: transparent; }
 
 /* ═══════════════════════════════════════════════════════════
-   CSS CUSTOM PROPERTIES — Diambil dari CONFIG.theme
+   CSS CUSTOM PROPERTIES
 ═══════════════════════════════════════════════════════════ */
 :root {
   --bg:           #FDF9F3;
@@ -81,7 +81,7 @@ button, a { -webkit-tap-highlight-color: transparent; }
 }
 
 /* ═══════════════════════════════════════════════════════════
-   PILAR 1: 3D ORIGAMI ENVELOPE COVER EXPERIENCE
+   PILAR 1: FLUID 3D ENVELOPE COVER (NO HARDCODED PIXEL BORDERS)
 ═══════════════════════════════════════════════════════════ */
 #cover {
   position: fixed;
@@ -100,93 +100,100 @@ button, a { -webkit-tap-highlight-color: transparent; }
 
 /* 3D Envelope Scene */
 .envelope-scene {
-  perspective: 1100px;
-  width: 88%; max-width: 320px;
-  height: 380px;
+  perspective: 1200px;
+  width: 92%;
+  max-width: 330px;
+  height: 390px;
   position: relative;
-  display: flex; align-items: center; justify-content: center;
-  margin-top: .5rem;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  margin: 0 auto;
 }
 .envelope-box {
   position: relative;
-  width: 100%; height: 260px;
+  width: 100%;
+  height: 220px;
   background: var(--envelope-bg);
-  border-radius: .75rem;
+  border-radius: 0 0 14px 14px;
   box-shadow: 0 16px 40px rgba(0,0,0,.35);
   transform-style: preserve-3d;
   transition: transform .6s ease;
 }
-/* Flap segitiga atas */
+
+/* Flap segitiga atas (Fluid SVG/clip-path) */
 .envelope-flap {
-  position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+  position: absolute;
+  top: 0; left: 0; width: 100%; height: 135px;
+  background: linear-gradient(180deg, #7c3b12, #6a2f0a);
+  clip-path: polygon(0 0, 100% 0, 50% 100%);
   transform-origin: top center;
   transition: transform .8s cubic-bezier(.4, 0, .2, 1);
   z-index: 5;
+  filter: drop-shadow(0 4px 10px rgba(0,0,0,.3));
   pointer-events: none;
 }
-.envelope-flap::before {
-  content: '';
-  position: absolute; top: 0; left: 0;
-  border-left: 140px solid transparent;
-  border-right: 140px solid transparent;
-  border-top: 135px solid var(--envelope-bg);
-  filter: drop-shadow(0 4px 8px rgba(0,0,0,.25));
-}
-@media (min-width: 350px) {
-  .envelope-flap::before {
-    border-left: 160px solid transparent;
-    border-right: 160px solid transparent;
-    border-top: 145px solid var(--envelope-bg);
-  }
-}
-/* Saat amplop dibuka */
 .envelope-box.is-open .envelope-flap {
   transform: rotateX(180deg);
   z-index: 1;
 }
 
-/* Saku depan amplop */
+/* Saku depan amplop (Fluid clip-path) */
 .envelope-pocket {
-  position: absolute; inset: 0; z-index: 4; pointer-events: none;
-}
-.envelope-pocket::before {
-  content: ''; position: absolute; bottom: 0; left: 0; right: 0;
-  border-left: 140px solid #733910;
-  border-right: 140px solid #733910;
-  border-bottom: 150px solid #7f3e12;
-  border-radius: 0 0 .75rem .75rem;
-}
-@media (min-width: 350px) {
-  .envelope-pocket::before {
-    border-left: 160px solid #733910;
-    border-right: 160px solid #733910;
-    border-bottom: 160px solid #7f3e12;
-  }
+  position: absolute;
+  bottom: 0; left: 0; width: 100%; height: 155px;
+  background: linear-gradient(0deg, #5e2808, #6f310b);
+  clip-path: polygon(0 100%, 100% 100%, 100% 10%, 50% 65%, 0 10%);
+  border-radius: 0 0 14px 14px;
+  z-index: 4;
+  pointer-events: none;
 }
 
-/* Surat di dalam amplop */
+/* Surat fisik undangan di dalam amplop */
 .envelope-card {
-  position: absolute; top: 20px; left: 15px; right: 15px; height: 250px;
-  background: #fff;
-  border-radius: .75rem;
-  box-shadow: 0 4px 15px rgba(0,0,0,.15);
+  position: absolute;
+  left: 10px; right: 10px; bottom: 8px;
+  height: 295px;
+  background: #fffdfa;
+  border-radius: 12px;
+  border: 1px solid rgba(160,82,45,.25);
+  box-shadow: 0 8px 25px rgba(0,0,0,.15);
   z-index: 2;
-  padding: .75rem;
-  display: flex; flex-direction: column; align-items: center; justify-content: center;
-  transition: transform .9s cubic-bezier(.34, 1.56, .64, 1) .4s;
-  overflow: hidden;
+  padding: 1.125rem 1rem .875rem;
+  display: flex; flex-direction: column; justify-content: space-between; text-align: center;
+  transition: transform .9s cubic-bezier(.34, 1.56, .64, 1) .35s;
 }
 .envelope-box.is-open .envelope-card {
-  transform: translateY(-90px);
+  transform: translateY(-135px);
   z-index: 6;
+}
+
+/* Kotak Nama Tamu di Surat */
+.guest-card-box {
+  background: rgba(160,82,45,.06);
+  border: 1px dashed rgba(160,82,45,.3);
+  border-radius: 8px;
+  padding: .5rem .75rem;
+  margin: .35rem 0;
+  min-height: 52px;
+  display: flex; flex-direction: column; justify-content: center;
+}
+.guest-name-text {
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-weight: 700;
+  color: var(--dark);
+  line-height: 1.35;
+  word-break: break-word;
+  max-height: 60px;
+  overflow-y: auto;
 }
 
 /* PILAR 7: WAX SEAL STAMP 3D */
 .wax-seal {
   position: absolute;
-  top: 90px; left: 50%;
+  top: 105px; left: 50%;
   transform: translateX(-50%);
-  width: 58px; height: 58px;
+  width: 54px; height: 54px;
   border-radius: 50%;
   background: radial-gradient(circle at 35% 35%, #b23b3b, var(--wax-seal), #5e1919);
   border: 2px solid rgba(255,255,255,.25);
@@ -195,7 +202,7 @@ button, a { -webkit-tap-highlight-color: transparent; }
   cursor: pointer;
   display: flex; align-items: center; justify-content: center;
   color: #FDF9F3; font-family: 'Cormorant Garamond', serif; font-weight: 700;
-  font-size: 1.25rem; letter-spacing: 1px;
+  font-size: 1.15rem; letter-spacing: 1px;
   transition: transform .2s ease, opacity .4s ease;
   user-select: none;
 }
@@ -244,12 +251,6 @@ button, a { -webkit-tap-highlight-color: transparent; }
   padding: 1.5rem;
   position: relative; overflow: hidden;
 }
-.arch {
-  border-radius: 9999px 9999px 45% 45%;
-  overflow: hidden;
-  border: 5px solid #fff;
-  box-shadow: 0 16px 48px -8px rgba(0,0,0,.22);
-}
 .polaroid {
   background: #fff;
   padding: 10px 10px 44px;
@@ -293,7 +294,7 @@ button, a { -webkit-tap-highlight-color: transparent; }
 .btn-wa:hover { opacity: .88; }
 
 /* ═══════════════════════════════════════════════════════════
-   PILAR 5: TACTILE DESK CALENDAR WIDGET
+   PILAR 5: TACTILE DESK CALENDAR WIDGET NYATA
 ═══════════════════════════════════════════════════════════ */
 .calendar-widget {
   background: #fff;
@@ -304,9 +305,7 @@ button, a { -webkit-tap-highlight-color: transparent; }
   margin-block: 1.5rem;
   width: 100%;
 }
-.calendar-header {
-  text-align: center; margin-bottom: 1rem;
-}
+.calendar-header { text-align: center; margin-bottom: 1rem; }
 .calendar-grid {
   display: grid; grid-template-columns: repeat(7, 1fr);
   gap: 6px; text-align: center;
@@ -344,7 +343,6 @@ button, a { -webkit-tap-highlight-color: transparent; }
   position: relative;
   box-shadow: inset 0 6px 16px rgba(0,0,0,.5), inset 0 -6px 16px rgba(0,0,0,.5);
 }
-/* Lubang perforasi film atas-bawah */
 .filmstrip-sprockets {
   height: 14px; width: 100%;
   background-image: radial-gradient(#2d1f17 40%, transparent 40%);
@@ -395,7 +393,6 @@ button, a { -webkit-tap-highlight-color: transparent; }
   position: relative;
   box-shadow: 0 10px 30px rgba(61,35,20,.1);
 }
-/* Prangko bergigi */
 .postal-stamp {
   width: 60px; height: 72px;
   background: var(--bg2);
@@ -407,7 +404,6 @@ button, a { -webkit-tap-highlight-color: transparent; }
 .postal-stamp img { width: 100%; height: 48px; object-fit: cover; border-radius: 2px; }
 .postal-stamp span { font-size: 7px; font-weight: 700; color: var(--accent); margin-top: 2px; letter-spacing: .5px; }
 
-/* Cap pos bulat */
 .postal-mark {
   width: 64px; height: 64px;
   border: 2px solid rgba(160,82,45,.45);
@@ -449,9 +445,7 @@ button, a { -webkit-tap-highlight-color: transparent; }
   transition: transform .5s ease;
   transform-origin: top center;
 }
-.angpao-content {
-  display: none; animation: fadeIn .4s ease;
-}
+.angpao-content { display: none; animation: fadeIn .4s ease; }
 .angpao-box.is-opened .angpao-flap { transform: rotateX(180deg); }
 .angpao-box.is-opened .angpao-content { display: block; }
 .angpao-box.is-opened .angpao-teaser { display: none; }
@@ -502,7 +496,7 @@ button, a { -webkit-tap-highlight-color: transparent; }
 @keyframes eqJump { 0%{height:3px} 100%{height:14px} }
 
 /* ═══════════════════════════════════════════════════════════
-   FLOATING ELEMENTS (Fixed strictly in viewport)
+   FLOATING ELEMENTS
 ═══════════════════════════════════════════════════════════ */
 #music-btn {
   position: fixed; top: 1rem; z-index: 190;
@@ -575,23 +569,23 @@ button, a { -webkit-tap-highlight-color: transparent; }
   </audio>
 
   <!-- ═══════════════════════════════════════════════════════════
-       PILAR 1: COVER DENGAN 3D ORIGAMI ENVELOPE OPENING
+       PILAR 1: COVER DENGAN 3D ORIGAMI ENVELOPE & SURAT LENGKAP
   ═══════════════════════════════════════════════════════════ -->
   <div id="cover" role="dialog" aria-label="Undangan Pernikahan">
-    <div style="width:100%;text-align:center;padding:2.25rem 1.5rem 0;position:relative;z-index:2;">
-      <span class="lbl" style="text-align:center;display:block;">The Wedding of</span>
-      <h1 class="font-cursive" id="cover-names" style="font-size:clamp(2.5rem,12vw,3.75rem);color:var(--dark);line-height:1.05;">
+    <div style="width:100%;text-align:center;padding:2rem 1.5rem 0;position:relative;z-index:2;">
+      <span class="lbl" style="text-align:center;display:block;">Undangan Pernikahan</span>
+      <h1 class="font-cursive" id="cover-names" style="font-size:clamp(2.5rem,11vw,3.5rem);color:var(--dark);line-height:1.05;">
         Rizky &amp; Sinta
       </h1>
       <p style="font-size:10px;font-weight:600;letter-spacing:.18em;text-transform:uppercase;color:var(--muted);margin-top:.25rem;" id="cover-date">
-        18 Oktober 2025
+        Sabtu, 18 Oktober 2025
       </p>
     </div>
 
     <!-- 3D Origami Envelope Structure -->
     <div class="envelope-scene">
       <div class="envelope-box" id="envelope-box">
-        <!-- Flap Segitiga 3D -->
+        <!-- Flap Segitiga 3D Fluid -->
         <div class="envelope-flap"></div>
         
         <!-- PILAR 7: Wax Seal Stamp 3D -->
@@ -599,39 +593,59 @@ button, a { -webkit-tap-highlight-color: transparent; }
           <span>R&amp;S</span>
         </div>
 
-        <!-- Saku depan amplop -->
+        <!-- Saku depan amplop fluid -->
         <div class="envelope-pocket"></div>
 
-        <!-- Kartu fisik meluncur keluar -->
+        <!-- Surat Fisik Lengkap & Responsif di dalam amplop -->
         <div class="envelope-card" id="envelope-card">
-          <div class="arch" style="width:100px;height:120px;margin-bottom:.5rem;">
-            <img id="cover-photo" src="images/prewed.jpeg" alt="Mempelai" style="width:100%;height:100%;object-fit:cover;object-position:top;">
+          <!-- Monogram & Basmalah -->
+          <div>
+            <div style="font-size:14px;color:var(--gold);margin-bottom:2px;">﷽</div>
+            <span class="lbl" style="font-size:7.5px;letter-spacing:.25em;margin-bottom:0;">Walimatul 'Ursy</span>
+            <h2 class="font-cursive" style="font-size:1.85rem;color:var(--dark);line-height:1;">Rizky &amp; Sinta</h2>
           </div>
-          <span class="lbl" style="font-size:8px;margin-bottom:2px;">Kepada Yth.</span>
-          <p class="font-serif" id="guest-name" style="font-size:1.1rem;font-weight:700;color:var(--dark);text-align:center;line-height:1.2;">
-            Tamu Undangan
+
+          <!-- Divider emas mini -->
+          <div style="width:2.5rem;height:1px;background:var(--accent);margin:0 auto;opacity:.4;"></div>
+
+          <!-- Kotak Nama Tamu Yang Rapi & Tidak Mudah Berantakan -->
+          <div class="guest-card-box">
+            <span class="lbl" style="font-size:7.5px;margin-bottom:2px;letter-spacing:.15em;">Kepada Yth. Bapak/Ibu/Saudara/i:</span>
+            <h3 id="guest-name" class="guest-name-text">
+              Tamu Undangan
+            </h3>
+          </div>
+
+          <!-- Pesan Pengantar Santun -->
+          <p style="font-size:9.5px;color:var(--muted);line-height:1.45;padding:0 .25rem;">
+            Tanpa mengurangi rasa hormat, kami mengundang Anda untuk hadir dan memberikan doa restu pada hari bahagia kami.
           </p>
+
+          <!-- Tanggal & Lokasi Singkat -->
+          <div style="font-size:8.5px;font-weight:700;color:var(--accent);letter-spacing:.12em;text-transform:uppercase;border-top:1px dashed rgba(160,82,45,.2);padding-top:4px;">
+            Sabtu, 18 Oktober 2025 • Jakarta
+          </div>
         </div>
       </div>
     </div>
 
     <!-- CTA Buka -->
-    <div style="width:100%;padding:0 1.5rem 2rem;position:relative;z-index:2;">
+    <div style="width:100%;padding:0 1.5rem 1.75rem;position:relative;z-index:2;">
       <button id="btn-open" class="btn btn-dark" style="box-shadow:0 8px 24px rgba(61,35,20,.25);">
         <span style="font-size:11px;">Buka Undangan</span>
         <svg class="float-y" style="width:1rem;height:1rem;" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M19 14l-7 7-7-7m7 7V3"/>
         </svg>
       </button>
-      <p style="text-align:center;font-size:9px;color:var(--muted);margin-top:.5rem;letter-spacing:.1em;text-transform:uppercase;">
-        Sentuh segel lilin atau tombol di atas
+      <p style="text-align:center;font-size:9px;color:var(--muted);margin-top:.45rem;letter-spacing:.1em;text-transform:uppercase;">
+        Sentuh segel lilin merah atau tombol di atas
       </p>
     </div>
   </div><!-- /cover -->
 
 
   <!-- ═══════════════════════════════════════════════════════════
-       MAIN CONTENT
+       MAIN CONTENT (KAYA, LENGKAP, OTENTIK INDONESIA)
   ═══════════════════════════════════════════════════════════ -->
   <main id="main" style="opacity:0;pointer-events:none;transition:opacity .7s ease;padding-bottom:5.5rem;">
 
@@ -640,7 +654,7 @@ button, a { -webkit-tap-highlight-color: transparent; }
 
       <!-- Ayat Suci -->
       <blockquote class="font-serif" style="font-style:italic;color:var(--muted);font-size:.9375rem;max-width:18rem;line-height:1.75;margin-bottom:1.75rem;padding:0 .5rem;">
-        <span id="hero-quote-text">"Dan di antara tanda-tanda kekuasaan-Nya ialah Dia menciptakan untukmu istri-istri dari jenismu sendiri..."</span>
+        <span id="hero-quote-text">"Dan di antara tanda-tanda kekuasaan-Nya ialah Dia menciptakan untukmu istri-istri dari jenismu sendiri, supaya kamu cenderung dan merasa tenteram kepadanya..."</span>
         <cite id="hero-quote-source" style="display:block;font-style:normal;font-family:'Plus Jakarta Sans',sans-serif;font-size:8px;font-weight:700;letter-spacing:.25em;text-transform:uppercase;color:var(--accent);margin-top:.5rem;">
           (QS. Ar-Rum: 21)
         </cite>
@@ -715,9 +729,12 @@ button, a { -webkit-tap-highlight-color: transparent; }
         <canvas id="rings-canvas" width="160" height="70" style="width:160px;height:70px;"></canvas>
       </div>
 
-      <div class="text-center" style="margin-bottom:2rem;">
-        <span class="lbl" style="text-align:center;display:block;">Pasangan Mempelai</span>
-        <h2 class="section-heading">Bersatu dalam Cinta</h2>
+      <div class="text-center" style="margin-bottom:1.75rem;padding:0 .5rem;">
+        <span class="lbl" style="text-align:center;display:block;">Maha Suci Allah</span>
+        <h2 class="section-heading" style="margin-bottom:.5rem;">Pasangan Mempelai</h2>
+        <p style="font-size:11.5px;color:var(--muted);line-height:1.7;max-width:19rem;margin:0 auto;">
+          Assalamu’alaikum Warahmatullahi Wabarakatuh. Dengan memohon rahmat dan ridho Allah SWT, kami bermaksud menyelenggarakan syukuran pernikahan putra-putri kami:
+        </p>
       </div>
       <div id="mempelai-container" style="display:flex;flex-direction:column;gap:.875rem;"></div>
     </section>
@@ -784,7 +801,7 @@ button, a { -webkit-tap-highlight-color: transparent; }
 
         <!-- Track Film Bergerak Terus Menerus -->
         <div class="filmstrip-track" id="filmstrip-track">
-          <!-- Diisi otomatis oleh JS (dua set foto untuk continuous loop) -->
+          <!-- Diisi otomatis oleh JS -->
         </div>
 
         <!-- Lubang Perforasi Bawah -->
@@ -844,7 +861,7 @@ button, a { -webkit-tap-highlight-color: transparent; }
             <div class="postal-mark">
               <span>POSTAL</span>
               <span style="font-size:6px;">18.10.25</span>
-              <span>VERONA</span>
+              <span>JAKARTA</span>
             </div>
             <!-- Prangko Bergigi -->
             <div class="postal-stamp">
@@ -926,7 +943,7 @@ button, a { -webkit-tap-highlight-color: transparent; }
       <div style="position:relative;z-index:1;">
         <span class="lbl" style="text-align:center;display:block;">Sampai Jumpa</span>
         <h2 class="font-cursive" id="footer-names" style="font-size:2.75rem;color:var(--dark);margin-bottom:.375rem;">Rizky &amp; Sinta</h2>
-        <p id="footer-date" style="font-size:10px;font-weight:600;letter-spacing:.18em;text-transform:uppercase;color:var(--muted);margin-bottom:1.5rem;">18 Oktober 2025</p>
+        <p id="footer-date" style="font-size:10px;font-weight:600;letter-spacing:.18em;text-transform:uppercase;color:var(--muted);margin-bottom:1.5rem;">Sabtu, 18 Oktober 2025</p>
 
         <!-- ═══════════════════════════════════════════════════════════
              PILAR 12: BUILT-IN GUEST WHATSAPP LINK GENERATOR
