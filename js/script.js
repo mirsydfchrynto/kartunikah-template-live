@@ -24,7 +24,7 @@ document.addEventListener('DOMContentLoaded', () => {
      1. GUEST NAME from ?to=NamaTamu
   ───────────────────────────────────── */
   const rawGuest  = new URLSearchParams(location.search).get('to');
-  const guestName = rawGuest ? decodeURIComponent(rawGuest.replace(/\+/g,' ')) : 'Tamu Undangan';
+  const guestName = rawGuest ? decodeURIComponent(rawGuest.replace(/\+/g,' ')) : (C.defaultGuestName || 'Tamu Undangan');
   ['guest-name','qr-label'].forEach(id => {
     const el = document.getElementById(id);
     if (el) el.textContent = guestName;
@@ -57,6 +57,26 @@ document.addEventListener('DOMContentLoaded', () => {
     // Polaroid caption
     const cap = document.getElementById('hero-caption');
     if (cap) cap.textContent = `Bersatu Dalam Cinta`;
+
+    // Quote / Ayat
+    if (C.quote) {
+      const qText = document.getElementById('hero-quote-text');
+      const qSrc  = document.getElementById('hero-quote-source');
+      if (qText && C.quote.text)   qText.textContent = `"${C.quote.text}"`;
+      if (qSrc  && C.quote.source) qSrc.textContent  = C.quote.source;
+    }
+
+    // Music source from config
+    if (C.musicUrl) {
+      const audio = document.getElementById('bg-music');
+      if (audio) {
+        const src = audio.querySelector('source');
+        if (src && src.getAttribute('src') !== C.musicUrl) {
+          src.src = C.musicUrl;
+          audio.load();
+        }
+      }
+    }
 
     // Photos
     const cp = document.getElementById('cover-photo');
